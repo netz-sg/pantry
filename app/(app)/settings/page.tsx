@@ -4,6 +4,7 @@ import { users } from "@/db/schema"
 import { eq } from "drizzle-orm"
 import { redirect } from "next/navigation"
 import { SettingsForm } from "@/components/settings/settings-form"
+import { User, Shield } from "lucide-react"
 
 export default async function SettingsPage() {
   const session = await auth()
@@ -20,12 +21,25 @@ export default async function SettingsPage() {
     redirect("/signin")
   }
 
-  // Convert to plain object if needed, specifically dates if passed to client
-  // But my UserData type in form expects string | null for image/name
-  
   return (
-    <div className="container py-10">
-      <h1 className="text-3xl font-bold mb-8 text-center md:text-left">Einstellungen</h1>
+    <div className="container max-w-5xl mx-auto py-8 md:py-12">
+      {/* Header Section */}
+      <div className="mb-10">
+        <div className="flex items-center gap-3 mb-3">
+          <div className="p-3 rounded-xl bg-gradient-to-br from-blue-500/20 to-purple-500/20 border border-blue-500/30">
+            <User className="w-6 h-6 text-blue-400" />
+          </div>
+          <div>
+            <h1 className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
+              Einstellungen
+            </h1>
+            <p className="text-sm text-zinc-400 mt-1">
+              Verwalten Sie Ihr Profil und Ihre Sicherheitseinstellungen
+            </p>
+          </div>
+        </div>
+      </div>
+
       <SettingsForm 
         user={{
             id: user.id,

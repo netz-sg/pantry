@@ -34,30 +34,39 @@ export async function getSystemInfo(): Promise<SystemInfo> {
     let hasUpdate = false
     let latestVersion = currentVersion
 
+    // Only check for updates if git repository exists
     try {
-      // Fetch latest from git
-      await execAsync("git fetch origin", { timeout: 5000 })
+      // Check if .git directory exists
+      const gitExists = await fs.access(path.join(process.cwd(), ".git"))
+        .then(() => true)
+        .catch(() => false)
       
-      // Check if there are updates
-      const { stdout } = await execAsync("git rev-list HEAD...origin/main --count")
-      const commitsBehind = parseInt(stdout.trim())
-      
-      hasUpdate = commitsBehind > 0
-      
-      if (hasUpdate) {
-        // Try to get version from remote package.json
-        try {
-          const { stdout: remoteVersion } = await execAsync(
-            "git show origin/main:package.json"
-          )
-          const remotePkg = JSON.parse(remoteVersion)
-          latestVersion = remotePkg.version
-        } catch {
-          latestVersion = currentVersion
+      if (gitExists) {
+        // Fetch latest from git
+        await execAsync("git fetch origin", { timeout: 5000 })
+        
+        // Check if there are updates
+        const { stdout } = await execAsync("git rev-list HEAD...origin/main --count")
+        const commitsBehind = parseInt(stdout.trim())
+        
+        hasUpdate = commitsBehind > 0
+        
+        if (hasUpdate) {
+          // Try to get version from remote package.json
+          try {
+            const { stdout: remoteVersion } = await execAsync(
+              "git show origin/main:package.json"
+            )
+            const remotePkg = JSON.parse(remoteVersion)
+            latestVersion = remotePkg.version
+          } catch {
+            latestVersion = currentVersion
+          }
         }
       }
+      // Silently skip update check if no git repo
     } catch (error) {
-      console.error("Failed to check for updates:", error)
+      // Silently ignore errors
     }
 
     return {
