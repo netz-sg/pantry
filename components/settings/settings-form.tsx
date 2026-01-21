@@ -157,7 +157,7 @@ function ProfileSection({ user }: { user: UserData }) {
                         </div>
                     </div>
                 </CardContent>
-                <CardFooter className="bg-zinc-900/30 border-t border-zinc-800">
+                <CardFooter className="px-6 py-4 bg-zinc-900/20">
                     <Button 
                         type="submit" 
                         disabled={isPending}
@@ -285,7 +285,7 @@ function PasswordSection() {
                         </div>
                     </div>
                 </CardContent>
-                <CardFooter className="bg-zinc-900/30 border-t border-zinc-800">
+                <CardFooter className="px-6 py-4 bg-zinc-900/20">
                     <Button 
                         type="submit" 
                         disabled={isPending}
