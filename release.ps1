@@ -140,12 +140,32 @@ if ($pushNow -ne "n" -and $pushNow -ne "N") {
     if ($LASTEXITCODE -eq 0) {
         Write-Host "Commits erfolgreich gepusht" -ForegroundColor Green
         
-        # Push tags wenn vorhanden
+        # Push tags wenn vorhanden und GitHub Release erstellen
         $hasTags = git tag --points-at HEAD
         if (![string]::IsNullOrEmpty($hasTags)) {
             git push origin --tags
             if ($LASTEXITCODE -eq 0) {
                 Write-Host "Tags erfolgreich gepusht" -ForegroundColor Green
+                
+                # GitHub Release erstellen (wenn gh CLI installiert ist)
+                $ghInstalled = Get-Command gh -ErrorAction SilentlyContinue
+                if ($ghInstalled -and $newVersion) {
+                    Write-Host ""
+                    Write-Host "Erstelle GitHub Release..." -ForegroundColor Cyan
+                    
+                    $releaseCmd = "gh release create v$newVersion --title `"Release v$newVersion`""
+                    if (![string]::IsNullOrWhiteSpace($releaseNotes)) {
+                        $releaseCmd += " --notes `"$releaseNotes`""
+                    } else {
+                        $releaseCmd += " --generate-notes"
+                    }
+                    
+                    Invoke-Expression $releaseCmd
+                    
+                    if ($LASTEXITCODE -eq 0) {
+                        Write-Host "GitHub Release v$newVersion erstellt!" -ForegroundColor Green
+                    }
+                }
             }
         }
     } else {
