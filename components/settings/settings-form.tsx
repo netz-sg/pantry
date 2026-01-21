@@ -11,6 +11,7 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { Camera, Save, Lock, User, Loader2, Shield, AtSign, UserCircle, Eye, EyeOff } from 'lucide-react'
 import Image from 'next/image'
 import { toast } from 'sonner'
+import { UpdateTestCard } from './update-test-card'
 
 type UserData = {
     id: string
@@ -36,6 +37,7 @@ const initialState: State = {
 export function SettingsForm({ user }: { user: UserData }) {
     return (
         <div className="grid gap-6 md:grid-cols-1 lg:grid-cols-1">
+            <UpdateTestCard />
             <ProfileSection user={user} />
             <PasswordSection />
         </div>

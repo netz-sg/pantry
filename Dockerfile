@@ -36,7 +36,6 @@ COPY --from=builder /app/.next/static ./.next/static
 COPY --from=builder /app/package*.json ./
 COPY --from=builder /app/drizzle ./drizzle
 COPY --from=builder /app/node_modules/better-sqlite3 ./node_modules/better-sqlite3
-COPY --from=builder /app/.git ./.git
 COPY docker-entrypoint.sh /app/
 
 # Create data directory for SQLite
