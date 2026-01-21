@@ -17,18 +17,18 @@ export default function IngredientScaler({ scale, onScaleChange }: IngredientSca
   };
 
   return (
-    <div className="flex items-center bg-zinc-50 rounded-lg border border-zinc-200 p-0.5">
+    <div className="flex items-center bg-white/5 rounded-lg border border-white/10 p-0.5">
       <button
         onClick={handleDecrease}
-        className="w-7 h-7 flex items-center justify-center hover:bg-white rounded shadow-sm text-zinc-500 transition-colors"
+        className="w-7 h-7 flex items-center justify-center hover:bg-white/10 rounded shadow-sm text-zinc-400 hover:text-white transition-colors"
         aria-label="Decrease servings"
       >
         <Minus size={12} />
       </button>
-      <span className="w-8 text-center text-xs font-bold tabular-nums">{scale}x</span>
+      <span className="w-8 text-center text-xs font-bold tabular-nums text-white">{scale}x</span>
       <button
         onClick={handleIncrease}
-        className="w-7 h-7 flex items-center justify-center hover:bg-white rounded shadow-sm text-zinc-500 transition-colors"
+        className="w-7 h-7 flex items-center justify-center hover:bg-white/10 rounded shadow-sm text-zinc-400 hover:text-white transition-colors"
         aria-label="Increase servings"
       >
         <Plus size={12} />

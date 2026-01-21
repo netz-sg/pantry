@@ -34,15 +34,38 @@ export async function addShoppingItem(formData: FormData) {
   const unit = formData.get('unit') as string;
   const recipeId = formData.get('recipeId') as string;
 
-  await db.insert(shoppingListItems).values({
-    userId: session.user.id,
-    nameDe,
-    nameEn,
-    quantity,
-    unit,
-    checked: false,
-    recipeId: recipeId || null,
+  // Check for existing item to merge
+  const existingItem = await db.query.shoppingListItems.findFirst({
+    where: and(
+      eq(shoppingListItems.userId, session.user.id),
+      eq(shoppingListItems.checked, false),
+      eq(shoppingListItems.unit, unit),
+      // We check if either name matches (flexible)
+      nameDe ? eq(shoppingListItems.nameDe, nameDe) : undefined
+    ),
   });
+
+  if (existingItem) {
+    // Update existing item
+    await db
+      .update(shoppingListItems)
+      .set({
+        quantity: (existingItem.quantity || 0) + quantity,
+        updatedAt: new Date(),
+      })
+      .where(eq(shoppingListItems.id, existingItem.id));
+  } else {
+    // Create new item
+    await db.insert(shoppingListItems).values({
+      userId: session.user.id,
+      nameDe,
+      nameEn,
+      quantity,
+      unit,
+      checked: false,
+      recipeId: recipeId || null,
+    });
+  }
 
   revalidatePath('/shopping', 'page');
 }

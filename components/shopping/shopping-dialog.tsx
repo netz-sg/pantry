@@ -26,69 +26,39 @@ export default function ShoppingDialog({ open, onOpenChange, locale }: ShoppingD
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-[400px]">
+      <DialogContent className="sm:max-w-[400px] bg-zinc-900 border-white/10 text-white">
         <DialogHeader>
-          <DialogTitle>Artikel hinzufügen</DialogTitle>
+          <DialogTitle className="text-white">Artikel hinzufügen</DialogTitle>
         </DialogHeader>
         <form action={handleSubmit} className="space-y-4">
-          <div className="grid grid-cols-2 gap-3">
+          <div className="grid grid-cols-1 gap-3">
             <div className="space-y-2">
-              <Label htmlFor="nameDe">Name (Deutsch) *</Label>
+              <Label htmlFor="nameDe" className="text-zinc-400">Name</Label>
               <Input
                 id="nameDe"
                 name="nameDe"
                 required
                 placeholder="z.B. Milch"
+                className="bg-zinc-950 border-white/10 text-white placeholder:text-zinc-600 focus-visible:ring-white/20"
               />
             </div>
-            <div className="space-y-2">
-              <Label htmlFor="nameEn">Name (English)</Label>
-              <Input
-                id="nameEn"
-                name="nameEn"
-                placeholder="e.g. Milk"
-              />
-            </div>
+            {/* English name removed */}
           </div>
 
-          <div className="grid grid-cols-2 gap-3">
-            <div className="space-y-2">
-              <Label htmlFor="quantity">Menge *</Label>
-              <Input
-                id="quantity"
-                name="quantity"
-                type="number"
-                step="0.1"
-                required
-                defaultValue="1"
-              />
-            </div>
-            <div className="space-y-2">
-              <Label htmlFor="unit">Einheit *</Label>
-              <select
-                id="unit"
-                name="unit"
-                className="w-full px-3 py-2 border border-zinc-200 rounded-lg text-sm"
-                defaultValue="Stk"
-                required
-              >
-                {UNITS.map((unit) => (
-                  <option key={unit.value} value={unit.value}>
-                    {locale === 'de' ? unit.labelDe : unit.labelEn}
-                  </option>
-                ))}
-              </select>
-            </div>
+          <div className="hidden">
+            <Input type="hidden" name="quantity" value="1" />
+            <Input type="hidden" name="unit" value="Stk" />
           </div>
 
           <div className="flex gap-3 pt-4">
-            <Button type="submit" className="flex-1">
+            <Button type="submit" className="flex-1 bg-white text-black hover:bg-zinc-200">
               Hinzufügen
             </Button>
             <Button
               type="button"
               variant="outline"
               onClick={() => onOpenChange(false)}
+              className="border-white/10 text-white hover:bg-white/10 hover:text-white"
             >
               Abbrechen
             </Button>

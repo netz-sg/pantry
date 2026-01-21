@@ -85,8 +85,10 @@ export const pantryItems = sqliteTable('pantry_items', {
   quantity: real('quantity').notNull(),
   unit: text('unit').notNull(),
   location: text('location'), // 'fridge', 'freezer', 'pantry', 'cabinet'
+  category: text('category'), // 'produce', 'dairy', 'meat', 'grains', 'canned', 'spices', 'beverages', 'snacks', 'other'
   expiryDate: text('expiry_date'), // ISO date string, nullable
   icon: text('icon'), // emoji or icon identifier
+  lowStockThreshold: real('low_stock_threshold'), // nullable, triggers low stock warning when quantity <= threshold
   createdAt: integer('created_at', { mode: 'timestamp' }).$defaultFn(() => new Date()),
   updatedAt: integer('updated_at', { mode: 'timestamp' }).$defaultFn(() => new Date()),
 });

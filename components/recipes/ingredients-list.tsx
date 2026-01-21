@@ -40,25 +40,25 @@ export default function IngredientsList({ ingredients, scale, locale }: Ingredie
         return (
           <label
             key={ingredient.id}
-            className={`flex items-start gap-3 py-2 border-b border-zinc-100 last:border-0 cursor-pointer group select-none transition-all duration-300 ${
+            className={`flex items-start gap-3 py-2 border-b border-white/5 last:border-0 cursor-pointer group select-none transition-all duration-300 ${
               isChecked ? 'opacity-40 grayscale' : 'hover:translate-x-1'
             }`}
           >
              <div className={`mt-1 w-5 h-5 rounded-full border-2 flex items-center justify-center shrink-0 transition-all ${
-               isChecked ? 'bg-zinc-900 border-zinc-900' : 'border-zinc-300 bg-transparent group-hover:border-zinc-400'
+               isChecked ? 'bg-white border-white' : 'border-zinc-600 bg-transparent group-hover:border-zinc-400'
              }`}>
                <Check
                 size={10}
-                className={`text-white transition-transform duration-300 ${isChecked ? 'scale-100' : 'scale-0'}`}
+                className={`text-black transition-transform duration-300 ${isChecked ? 'scale-100' : 'scale-0'}`}
                 strokeWidth={4}
               />
             </div>
             
             <div className="flex-1 text-sm md:text-base leading-relaxed">
-              <span className={`font-semibold text-zinc-900 ${isChecked ? 'line-through decoration-zinc-300' : ''}`}>
+              <span className={`font-semibold text-zinc-200 ${isChecked ? 'line-through decoration-zinc-500' : ''}`}>
                  {(ingredient.amount * scale).toLocaleString(locale, { maximumFractionDigits: 1 })} {ingredient.unit}
               </span> 
-              <span className={`font-normal text-zinc-600 ml-1.5 ${isChecked ? 'line-through decoration-zinc-300' : ''}`}>
+              <span className={`font-normal text-zinc-400 ml-1.5 ${isChecked ? 'line-through decoration-zinc-500' : ''}`}>
                  {name || 'Unnamed ingredient'}
               </span>
             </div>

@@ -14,8 +14,8 @@ function MobileNavButton({ icon: Icon, href, active }: MobileNavButtonProps) {
   return (
     <Link
       href={href}
-      className={`flex flex-col items-center gap-1 ${
-        active ? 'text-zinc-900' : 'text-zinc-400'
+      className={`flex flex-col items-center gap-1 transition-colors ${
+        active ? 'text-white' : 'text-zinc-500 hover:text-zinc-300'
       }`}
     >
       <Icon size={22} strokeWidth={active ? 2.5 : 2} />
@@ -29,7 +29,7 @@ export default function MobileNav({ locale }: { locale: string }) {
   const isActive = (path: string) => pathname.includes(path);
 
   return (
-    <nav className="md:hidden fixed bottom-0 left-0 right-0 bg-white border-t border-zinc-100 px-6 py-3 flex justify-between z-40 pb-safe">
+    <nav className="md:hidden fixed bottom-6 left-6 right-6 bg-[#09090b]/80 backdrop-blur-xl border border-white/10 rounded-2xl flex justify-between px-6 py-4 z-40 shadow-2xl">
       <MobileNavButton
         icon={LayoutGrid}
         href="/dashboard"

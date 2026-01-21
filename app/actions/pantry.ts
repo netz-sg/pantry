@@ -34,8 +34,10 @@ export async function addPantryItem(formData: FormData) {
   const quantity = parseFloat(formData.get('quantity') as string) || 1;
   const unit = formData.get('unit') as string;
   const location = formData.get('location') as string;
+  const category = formData.get('category') as string;
   const icon = formData.get('icon') as string;
   const expiryDate = formData.get('expiryDate') as string;
+  const lowStockThreshold = formData.get('lowStockThreshold') ? parseFloat(formData.get('lowStockThreshold') as string) : null;
 
   await db.insert(pantryItems).values({
     userId: session.user.id,
@@ -44,8 +46,10 @@ export async function addPantryItem(formData: FormData) {
     quantity,
     unit,
     location,
+    category: category || null,
     icon,
     expiryDate: expiryDate || null,
+    lowStockThreshold,
   });
 
   revalidatePath('/pantry', 'page');
@@ -72,8 +76,10 @@ export async function updatePantryItem(itemId: string, formData: FormData) {
   const quantity = parseFloat(formData.get('quantity') as string) || 1;
   const unit = formData.get('unit') as string;
   const location = formData.get('location') as string;
+  const category = formData.get('category') as string;
   const icon = formData.get('icon') as string;
   const expiryDate = formData.get('expiryDate') as string;
+  const lowStockThreshold = formData.get('lowStockThreshold') ? parseFloat(formData.get('lowStockThreshold') as string) : null;
 
   await db
     .update(pantryItems)
@@ -83,8 +89,10 @@ export async function updatePantryItem(itemId: string, formData: FormData) {
       quantity,
       unit,
       location,
+      category: category || null,
       icon,
       expiryDate: expiryDate || null,
+      lowStockThreshold,
     })
     .where(eq(pantryItems.id, itemId));
 

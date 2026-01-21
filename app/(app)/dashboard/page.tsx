@@ -61,8 +61,8 @@ export default async function DashboardPage() {
       {featuredRecipe && (
         <section className="space-y-6">
           <div className="flex items-center gap-4">
-             <div className="w-1 h-8 bg-black rounded-full" />
-             <h2 className="text-2xl font-bold text-zinc-900 tracking-tight">Empfehlung des Tages</h2>
+             <div className="w-1 h-8 bg-white rounded-full" />
+             <h2 className="text-2xl font-bold text-white tracking-tight">Empfehlung des Tages</h2>
           </div>
           <FeaturedRecipe recipe={featuredRecipe} locale={locale} />
         </section>
@@ -73,12 +73,12 @@ export default async function DashboardPage() {
         <section className="space-y-8">
           <div className="flex justify-between items-end px-2">
             <div>
-              <h2 className="text-2xl font-bold text-zinc-900 tracking-tight mb-1">Frisch gekocht</h2>
-               <p className="text-zinc-500 text-sm font-medium">Deine neuesten Kreationen</p>
+              <h2 className="text-2xl font-bold text-white tracking-tight mb-1">Frisch gekocht</h2>
+               <p className="text-zinc-400 text-sm font-medium">Deine neuesten Kreationen</p>
             </div>
             <Link
               href="/recipes"
-              className="px-5 py-2.5 rounded-xl bg-white border border-zinc-200 text-sm font-bold text-zinc-600 hover:text-black hover:border-black hover:bg-zinc-50 transition-all"
+              className="px-5 py-2.5 rounded-xl bg-white/5 border border-white/10 text-sm font-bold text-zinc-300 hover:text-white hover:border-white hover:bg-white/10 transition-all"
             >
               Alle ansehen
             </Link>
@@ -94,17 +94,17 @@ export default async function DashboardPage() {
 
       {/* Empty State */}
       {allRecipes.length === 0 && (
-        <div className="flex flex-col items-center justify-center py-32 text-center border-4 border-dashed border-zinc-200 rounded-[32px] bg-white">
-          <div className="w-24 h-24 bg-zinc-50 rounded-full flex items-center justify-center mb-8 shadow-inner">
-            <Plus size={40} className="text-zinc-300" />
+        <div className="flex flex-col items-center justify-center py-32 text-center border-4 border-dashed border-white/10 rounded-[32px] bg-zinc-900/50 backdrop-blur-md">
+          <div className="w-24 h-24 bg-white/5 rounded-full flex items-center justify-center mb-8 shadow-inner ring-1 ring-white/10">
+            <Plus size={40} className="text-zinc-500" />
           </div>
-          <h2 className="text-3xl font-bold text-zinc-900 mb-4 tracking-tight">Deine Küche ist leer</h2>
-          <p className="text-zinc-500 max-w-md mb-8 text-lg">
+          <h2 className="text-3xl font-bold text-white mb-4 tracking-tight">Deine Küche ist leer</h2>
+          <p className="text-zinc-400 max-w-md mb-8 text-lg">
             Starte deine kulinarische Reise und füge dein allererstes Rezept hinzu.
           </p>
           <Link
             href="/recipes/new"
-            className="px-8 py-4 bg-black text-white rounded-2xl font-bold hover:bg-zinc-800 transition-all hover:-translate-y-1 shadow-xl"
+            className="px-8 py-4 bg-white text-black rounded-2xl font-bold hover:bg-zinc-200 transition-all hover:-translate-y-1 shadow-xl shadow-white/5"
           >
             Erstes Rezept erstellen
           </Link>

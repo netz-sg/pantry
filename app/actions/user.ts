@@ -9,7 +9,16 @@ import bcrypt from "bcryptjs"
 import { writeFile, mkdir } from "fs/promises"
 import path from "path"
 
-export async function updateProfile(prevState: any, formData: FormData) {
+type ActionState = {
+    error?: string
+    success?: string
+    user?: {
+        name?: string | null
+        image?: string | null
+    }
+}
+
+export async function updateProfile(prevState: any, formData: FormData): Promise<ActionState> {
   const session = await auth()
   if (!session?.user?.id) return { error: "Nicht authentifiziert" }
 
@@ -72,7 +81,7 @@ export async function updateProfile(prevState: any, formData: FormData) {
   }
 }
 
-export async function changePassword(prevState: any, formData: FormData) {
+export async function changePassword(prevState: any, formData: FormData): Promise<ActionState> {
     const session = await auth()
     if (!session?.user?.id) return { error: "Nicht authentifiziert" }
 

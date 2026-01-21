@@ -14,7 +14,6 @@ import {
   DialogTitle,
   DialogFooter,
 } from "@/components/ui/dialog"
-import { toast } from 'sonner'; // Assuming sonner is used, or I'll just use alert for failure if no toast component found. I will omit toast for now to avoid errors if not installed, or check imports. The file didn't have toast.
 
 interface Ingredient {
   name: string;
@@ -188,17 +187,17 @@ export default function RecipeForm({ locale, recipeId, initialData }: RecipeForm
     <div className="space-y-8">
       {/* Scraper Section */}
       {!recipeId && (
-        <div className="bg-zinc-50 p-6 rounded-2xl border border-zinc-100">
-          <h3 className="font-bold text-lg mb-4 flex items-center gap-2">
-            <Download size={20} className="text-zinc-500" />
+        <div className="bg-zinc-900 p-6 rounded-2xl border border-white/10 shadow-lg shadow-black/20">
+          <h3 className="font-bold text-lg mb-4 flex items-center gap-2 text-white">
+            <Download size={20} className="text-blue-400" />
             Rezept importieren
           </h3>
           <div className="flex gap-2">
              <div className="relative flex-1">
-                <LinkIcon className="absolute left-3 top-1/2 -translate-y-1/2 text-zinc-400" size={16} />
+                <LinkIcon className="absolute left-3 top-1/2 -translate-y-1/2 text-zinc-500" size={16} />
                 <Input 
                   placeholder="Rezept URL (z.B. Chefkoch...)" 
-                  className="pl-9 bg-white" 
+                  className="pl-9 bg-zinc-950 border-white/10 text-white placeholder:text-zinc-600 focus-visible:ring-blue-500/50" 
                   value={scrapeUrl}
                   onChange={(e) => setScrapeUrl(e.target.value)}
                   onKeyDown={(e) => {
@@ -209,11 +208,11 @@ export default function RecipeForm({ locale, recipeId, initialData }: RecipeForm
                   }}
                 />
              </div>
-             <Button onClick={handleScrape} disabled={isScraping || !scrapeUrl}>
+             <Button onClick={handleScrape} disabled={isScraping || !scrapeUrl} className="bg-white text-black hover:bg-zinc-200">
                {isScraping ? <Loader2 className="animate-spin" size={18} /> : 'Importieren'}
              </Button>
           </div>
-          <p className="text-xs text-zinc-400 mt-2">
+          <p className="text-xs text-zinc-500 mt-2">
             Unterstützt viele gängige Rezept-Webseiten.
           </p>
         </div>
@@ -224,26 +223,27 @@ export default function RecipeForm({ locale, recipeId, initialData }: RecipeForm
         <input type="hidden" name="instructions" value={JSON.stringify(instructions)} />
 
         {/* Basic Info */}
-        <div className="space-y-4">
-          <h3 className="font-bold text-lg">Grundinformationen</h3>
+        <div className="space-y-6 bg-zinc-900/50 p-6 rounded-2xl border border-white/5 backdrop-blur-sm">
+          <h3 className="font-bold text-xl text-white">Grundinformationen</h3>
 
           <div className="space-y-2">
-            <Label htmlFor="titleDe">Titel *</Label>
+            <Label htmlFor="titleDe" className="text-zinc-400">Titel *</Label>
             <Input
               id="titleDe"
               name="titleDe"
               required
               placeholder="z.B. Spaghetti Carbonara"
               defaultValue={data?.titleDe || ''}
+              className="bg-zinc-950 border-white/10 text-white placeholder:text-zinc-600 focus-visible:ring-white/20"
             />
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="descriptionDe">Beschreibung</Label>
+            <Label htmlFor="descriptionDe" className="text-zinc-400">Beschreibung</Label>
             <textarea
               id="descriptionDe"
               name="descriptionDe"
-              className="w-full px-3 py-2 border border-zinc-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-zinc-900/10 text-sm"
+              className="w-full px-3 py-2 bg-zinc-950 border border-white/10 rounded-lg text-white placeholder:text-zinc-600 focus:outline-none focus:ring-2 focus:ring-white/20 text-sm min-h-[100px]"
               rows={3}
               placeholder="Beschreibe dein Rezept..."
               defaultValue={data?.descriptionDe || ''}
@@ -252,68 +252,74 @@ export default function RecipeForm({ locale, recipeId, initialData }: RecipeForm
 
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             <div className="space-y-2">
-              <Label htmlFor="prepTime">Vorbereitungszeit (Min)</Label>
+              <Label htmlFor="prepTime" className="text-zinc-400">Vorbereitungszeit (Min)</Label>
               <Input
                 id="prepTime"
                 name="prepTime"
                 type="number"
                 placeholder="15"
                 defaultValue={data?.prepTime || ''}
+                className="bg-zinc-950 border-white/10 text-white placeholder:text-zinc-600 focus-visible:ring-white/20"
               />
             </div>
             <div className="space-y-2">
-              <Label htmlFor="cookTime">Kochzeit (Min)</Label>
+              <Label htmlFor="cookTime" className="text-zinc-400">Kochzeit (Min)</Label>
               <Input
                 id="cookTime"
                 name="cookTime"
                 type="number"
                 placeholder="30"
                 defaultValue={data?.cookTime || ''}
+                className="bg-zinc-950 border-white/10 text-white placeholder:text-zinc-600 focus-visible:ring-white/20"
               />
             </div>
             <div className="space-y-2">
-              <Label htmlFor="servings">Portionen</Label>
+              <Label htmlFor="servings" className="text-zinc-400">Portionen</Label>
               <Input
                 id="servings"
                 name="servings"
                 type="number"
                 defaultValue={data?.servings || 2}
+                className="bg-zinc-950 border-white/10 text-white placeholder:text-zinc-600 focus-visible:ring-white/20"
               />
             </div>
             <div className="space-y-2">
-              <Label htmlFor="calories">Kalorien</Label>
+              <Label htmlFor="calories" className="text-zinc-400">Kalorien</Label>
               <Input
                 id="calories"
                 name="calories"
                 type="number"
                 placeholder="450"
                 defaultValue={data?.calories || ''}
+                className="bg-zinc-950 border-white/10 text-white placeholder:text-zinc-600 focus-visible:ring-white/20"
               />
             </div>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="space-y-2">
-              <Label htmlFor="category">Kategorie</Label>
+              <Label htmlFor="category" className="text-zinc-400">Kategorie</Label>
               <div className="flex gap-2">
-                <select
-                  id="category"
-                  name="category"
-                  className="flex-1 px-3 py-2 border border-zinc-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-zinc-900/10 text-sm bg-white"
-                  value={selectedCategory}
-                  onChange={(e) => setSelectedCategory(e.target.value)}
-                >
-                  <option value="">Wähle eine Kategorie</option>
-                  {categories.map((cat) => (
-                    <option key={cat.id} value={cat.value}>
-                      {cat.label}
-                    </option>
-                  ))}
-                </select>
+                 <div className="relative flex-1">
+                    <select
+                      id="category"
+                      name="category"
+                      className="w-full appearance-none px-3 py-2 bg-zinc-950 border border-white/10 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-white/20 text-sm"
+                      value={selectedCategory}
+                      onChange={(e) => setSelectedCategory(e.target.value)}
+                    >
+                      <option value="" className="bg-zinc-900">Wähle eine Kategorie</option>
+                      {categories.map((cat) => (
+                        <option key={cat.id} value={cat.value} className="bg-zinc-900">
+                          {cat.label}
+                        </option>
+                      ))}
+                    </select>
+                 </div>
                 <Button 
                   type="button" 
                   variant="outline" 
-                  className="px-3"
+                  className="px-3 border-white/10 bg-zinc-900 text-white hover:bg-zinc-800 hover:text-white"
                   onClick={() => setShowCategoryDialog(true)}
                   title="Neue Kategorie erstellen"
                 >
@@ -322,36 +328,38 @@ export default function RecipeForm({ locale, recipeId, initialData }: RecipeForm
               </div>
             </div>
             <div className="space-y-2">
-              <Label htmlFor="imageUrl">Bild URL</Label>
+              <Label htmlFor="imageUrl" className="text-zinc-400">Bild URL</Label>
               <Input
                 id="imageUrl"
                 name="imageUrl"
                 type="url"
                 placeholder="https://..."
                 defaultValue={data?.imageUrl || ''}
+                className="bg-zinc-950 border-white/10 text-white placeholder:text-zinc-600 focus-visible:ring-white/20"
               />
             </div>
           </div>
         </div>
 
         {/* Ingredients */}
-        <div className="space-y-4">
+        <div className="space-y-4 bg-zinc-900/50 p-6 rounded-2xl border border-white/5 backdrop-blur-sm">
           <div className="flex justify-between items-center">
-            <h3 className="font-bold text-lg">Zutaten *</h3>
-            <Button type="button" onClick={addIngredient} size="sm" variant="outline">
+            <h3 className="font-bold text-xl text-white">Zutaten *</h3>
+            <Button type="button" onClick={addIngredient} size="sm" variant="outline" className="border-white/10 text-white hover:bg-white/10">
               <Plus size={14} className="mr-1" /> Zutat
             </Button>
           </div>
 
           <div className="space-y-3">
             {ingredients.map((ingredient, index) => (
-              <div key={index} className="flex gap-2 items-start bg-zinc-50 p-3 rounded-lg">
+              <div key={index} className="flex gap-2 items-start bg-zinc-900/50 p-3 rounded-lg border border-white/5">
                 <div className="flex-1 grid grid-cols-3 gap-2">
                   <Input
                     placeholder="Zutat"
                     value={ingredient.name}
                     onChange={(e) => updateIngredient(index, 'name', e.target.value)}
                     required
+                    className="bg-zinc-950 border-white/10 text-white placeholder:text-zinc-600 focus-visible:ring-white/20"
                   />
                   <Input
                     placeholder="Menge"
@@ -360,11 +368,12 @@ export default function RecipeForm({ locale, recipeId, initialData }: RecipeForm
                     value={ingredient.amount}
                     onChange={(e) => updateIngredient(index, 'amount', e.target.value)}
                     required
+                    className="bg-zinc-950 border-white/10 text-white placeholder:text-zinc-600 focus-visible:ring-white/20"
                   />
                   <select
                     value={ingredient.unit}
                     onChange={(e) => updateIngredient(index, 'unit', e.target.value)}
-                    className="px-3 py-2 border border-zinc-200 rounded-lg text-sm"
+                    className="px-3 py-2 bg-zinc-950 border border-white/10 rounded-lg text-sm text-white focus:outline-none focus:ring-2 focus:ring-white/20"
                   >
                     <option value="g">g</option>
                     <option value="kg">kg</option>
@@ -382,7 +391,7 @@ export default function RecipeForm({ locale, recipeId, initialData }: RecipeForm
                     onClick={() => removeIngredient(index)}
                     size="sm"
                     variant="ghost"
-                    className="text-red-500"
+                    className="text-zinc-500 hover:text-red-400 hover:bg-red-500/10"
                   >
                     <Minus size={14} />
                   </Button>
@@ -393,18 +402,18 @@ export default function RecipeForm({ locale, recipeId, initialData }: RecipeForm
         </div>
 
         {/* Instructions */}
-        <div className="space-y-4">
+        <div className="space-y-4 bg-zinc-900/50 p-6 rounded-2xl border border-white/5 backdrop-blur-sm">
           <div className="flex justify-between items-center">
-            <h3 className="font-bold text-lg">Zubereitung *</h3>
-            <Button type="button" onClick={addInstruction} size="sm" variant="outline">
+            <h3 className="font-bold text-xl text-white">Zubereitung *</h3>
+            <Button type="button" onClick={addInstruction} size="sm" variant="outline" className="border-white/10 text-white hover:bg-white/10">
               <Plus size={14} className="mr-1" /> Schritt
             </Button>
           </div>
 
           <div className="space-y-3">
             {instructions.map((instruction, index) => (
-              <div key={index} className="flex gap-2 items-start bg-zinc-50 p-3 rounded-lg">
-                <div className="w-6 h-6 rounded-full bg-zinc-200 flex items-center justify-center text-xs font-bold text-zinc-600 shrink-0 mt-2">
+              <div key={index} className="flex gap-2 items-start bg-zinc-900/50 p-3 rounded-lg border border-white/5">
+                <div className="w-6 h-6 rounded-full bg-zinc-800 flex items-center justify-center text-xs font-bold text-zinc-400 shrink-0 mt-2 border border-white/5">
                   {index + 1}
                 </div>
                 <div className="flex-1">
@@ -412,7 +421,7 @@ export default function RecipeForm({ locale, recipeId, initialData }: RecipeForm
                     placeholder="Anleitung"
                     value={instruction.instruction}
                     onChange={(e) => updateInstruction(index, 'instruction', e.target.value)}
-                    className="w-full px-3 py-2 border border-zinc-200 rounded-lg text-sm"
+                    className="w-full px-3 py-2 bg-zinc-950 border border-white/10 rounded-lg text-white placeholder:text-zinc-600 focus:outline-none focus:ring-2 focus:ring-white/20 text-sm"
                     rows={2}
                     required
                   />
@@ -423,7 +432,7 @@ export default function RecipeForm({ locale, recipeId, initialData }: RecipeForm
                     onClick={() => removeInstruction(index)}
                     size="sm"
                     variant="ghost"
-                    className="text-red-500"
+                    className="text-zinc-500 hover:text-red-400 hover:bg-red-500/10"
                   >
                     <Minus size={14} />
                   </Button>
@@ -434,24 +443,24 @@ export default function RecipeForm({ locale, recipeId, initialData }: RecipeForm
         </div>
 
         {/* Submit */}
-        <div className="flex gap-3 pt-6 border-t">
-          <Button type="submit" className="flex-1">
+        <div className="flex gap-3 pt-6 border-t border-white/10">
+          <Button type="submit" className="flex-1 bg-white text-black hover:bg-zinc-200">
             {recipeId ? 'Rezept aktualisieren' : 'Rezept erstellen'}
           </Button>
-          <Button type="button" variant="outline" onClick={() => window.history.back()}>
+          <Button type="button" variant="outline" onClick={() => window.history.back()} className="border-white/10 text-white hover:bg-white/10 hover:text-white">
             Abbrechen
           </Button>
         </div>
       </form>
 
       <Dialog open={showCategoryDialog} onOpenChange={setShowCategoryDialog}>
-        <DialogContent>
+        <DialogContent className="bg-zinc-900 border-white/10 text-white">
           <DialogHeader>
-            <DialogTitle>Neue Kategorie erstellen</DialogTitle>
+            <DialogTitle className="text-white">Neue Kategorie erstellen</DialogTitle>
           </DialogHeader>
           <div className="space-y-4 py-4">
             <div className="space-y-2">
-              <Label htmlFor="new-category">Name der Kategorie</Label>
+              <Label htmlFor="new-category" className="text-zinc-400">Name der Kategorie</Label>
               <Input 
                 id="new-category" 
                 placeholder="z.B. Meine Spezialrezepte" 
@@ -463,12 +472,13 @@ export default function RecipeForm({ locale, recipeId, initialData }: RecipeForm
                         handleCreateCategory();
                     }
                 }}
+                className="bg-zinc-950 border-white/10 text-white placeholder:text-zinc-600 focus-visible:ring-white/20"
               />
             </div>
           </div>
           <DialogFooter>
-            <Button variant="outline" onClick={() => setShowCategoryDialog(false)}>Abbrechen</Button>
-            <Button onClick={handleCreateCategory} disabled={!newCategoryName.trim() || isCreatingCategory}>
+            <Button variant="outline" onClick={() => setShowCategoryDialog(false)} className="border-white/10 text-white hover:bg-white/10 hover:text-white">Abbrechen</Button>
+            <Button onClick={handleCreateCategory} disabled={!newCategoryName.trim() || isCreatingCategory} className="bg-white text-black hover:bg-zinc-200">
               {isCreatingCategory && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
               Erstellen
             </Button>

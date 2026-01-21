@@ -58,6 +58,19 @@ export const PANTRY_LOCATIONS = [
   { value: 'cabinet', labelDe: 'Schrank', labelEn: 'Cabinet', icon: '🗄️' },
 ] as const;
 
+// Pantry Categories
+export const PANTRY_CATEGORIES = [
+  { value: 'produce', labelDe: 'Obst & Gemüse', labelEn: 'Produce', icon: '🥬' },
+  { value: 'dairy', labelDe: 'Milchprodukte', labelEn: 'Dairy', icon: '🥛' },
+  { value: 'meat', labelDe: 'Fleisch & Fisch', labelEn: 'Meat & Fish', icon: '🥩' },
+  { value: 'grains', labelDe: 'Getreide', labelEn: 'Grains', icon: '🌾' },
+  { value: 'canned', labelDe: 'Konserven', labelEn: 'Canned', icon: '🥫' },
+  { value: 'spices', labelDe: 'Gewürze', labelEn: 'Spices', icon: '🧂' },
+  { value: 'beverages', labelDe: 'Getränke', labelEn: 'Beverages', icon: '🥤' },
+  { value: 'snacks', labelDe: 'Snacks', labelEn: 'Snacks', icon: '🍿' },
+  { value: 'other', labelDe: 'Sonstiges', labelEn: 'Other', icon: '📦' },
+] as const;
+
 // Days of the Week
 export const WEEKDAYS = [
   { value: 0, labelDe: 'Sonntag', labelEn: 'Sunday', short: 'So' },

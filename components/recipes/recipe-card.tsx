@@ -40,9 +40,9 @@ export default function RecipeCard({ recipe, locale }: RecipeCardProps) {
   return (
     <Link
       href={`/recipes/${recipe.id}`}
-      className="group cursor-pointer bg-white rounded-[24px] hover:shadow-2xl hover:shadow-zinc-200/50 transition-all duration-300 flex flex-col overflow-hidden relative border border-transparent hover:-translate-y-1"
+      className="group cursor-pointer bg-zinc-900/50 backdrop-blur-md rounded-[24px] hover:shadow-2xl hover:shadow-black/20 hover:bg-zinc-900/80 transition-all duration-300 flex flex-col overflow-hidden relative border border-white/5 hover:border-white/10 hover:-translate-y-1"
     >
-      <div className="relative aspect-[4/3] overflow-hidden bg-zinc-100">
+      <div className="relative aspect-[4/3] overflow-hidden bg-zinc-800/50">
         {recipe.imageUrl ? (
           <img
             src={recipe.imageUrl}
@@ -50,15 +50,15 @@ export default function RecipeCard({ recipe, locale }: RecipeCardProps) {
             className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
           />
         ) : (
-          <div className="w-full h-full bg-zinc-50 flex items-center justify-center text-zinc-300 group-hover:bg-zinc-100 transition-colors">
+          <div className="w-full h-full bg-zinc-800/50 flex items-center justify-center text-zinc-600 group-hover:bg-zinc-800 transition-colors">
             <span className="text-4xl filter grayscale opacity-50">📷</span>
           </div>
         )}
-        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-60 group-hover:opacity-40 transition-opacity" />
+        <div className="absolute inset-0 bg-gradient-to-t from-[#09090b] via-transparent to-transparent opacity-80 group-hover:opacity-60 transition-opacity" />
         
         {/* Badges over image */}
         <div className="absolute bottom-4 left-4 right-4 flex justify-between items-end">
-           <span className="px-3 py-1 bg-white/20 backdrop-blur-md rounded-full text-white text-[10px] font-bold uppercase tracking-widest border border-white/20">
+           <span className="px-3 py-1 bg-black/40 backdrop-blur-md rounded-full text-white text-[10px] font-bold uppercase tracking-widest border border-white/10">
             {recipe.category || 'Rezept'}
           </span>
           {totalTime > 0 && (
@@ -77,29 +77,29 @@ export default function RecipeCard({ recipe, locale }: RecipeCardProps) {
         <button
           onClick={handleFavoriteClick}
           disabled={isPending}
-          className="absolute top-4 right-4 bg-white/10 backdrop-blur-md border border-white/20 p-2 rounded-xl text-white opacity-0 group-hover:opacity-100 transition-all hover:bg-white hover:text-red-500"
+          className="absolute top-4 right-4 bg-black/20 backdrop-blur-md border border-white/10 p-2 rounded-xl text-white opacity-0 group-hover:opacity-100 transition-all hover:bg-red-500 hover:border-red-500 hover:text-white"
         >
           <Heart size={16} className={isFavorite ? 'fill-current' : ''} />
         </button>
       </div>
 
       <div className="p-6 flex flex-col flex-1">
-        <h4 className="translate-y-0 group-hover:-translate-y-1 transition-transform duration-300 text-xl font-bold text-zinc-900 mb-2 leading-tight line-clamp-1">
+        <h4 className="translate-y-0 group-hover:-translate-y-1 transition-transform duration-300 text-xl font-bold text-white mb-2 leading-tight line-clamp-1">
           {title || 'Untitled Recipe'}
         </h4>
-        <p className="text-sm text-zinc-500 line-clamp-2 leading-relaxed mb-6 font-medium">
+        <p className="text-sm text-zinc-400 line-clamp-2 leading-relaxed mb-6 font-medium group-hover:text-zinc-300 transition-colors">
           {description || 'Keine Beschreibung verfügbar.'}
         </p>
         
-        <div className="mt-auto pt-6 border-t border-zinc-100 flex items-center justify-between">
+        <div className="mt-auto pt-6 border-t border-white/5 flex items-center justify-between">
           <div className="flex -space-x-2">
            {/* Mock avatars or just a nice generic indicator */}
-            <div className="w-6 h-6 rounded-full bg-zinc-100 border-2 border-white flex items-center justify-center text-[10px] text-zinc-400">🍽️</div>
-            <span className="pl-3 text-xs font-bold text-zinc-400 self-center uppercase tracking-wider">
+            <div className="w-6 h-6 rounded-full bg-zinc-800 border-2 border-[#121214] flex items-center justify-center text-[10px] text-zinc-500">🍽️</div>
+            <span className="pl-3 text-xs font-bold text-zinc-500 self-center uppercase tracking-wider group-hover:text-zinc-400">
               {recipe.servings} Portionen
             </span>
           </div>
-          <span className="w-8 h-8 rounded-full bg-zinc-50 flex items-center justify-center text-zinc-400 group-hover:bg-black group-hover:text-white transition-colors duration-300">
+          <span className="w-8 h-8 rounded-full bg-white/5 flex items-center justify-center text-zinc-500 group-hover:bg-white group-hover:text-black transition-colors duration-300">
             <Maximize2 size={14} />
           </span>
         </div>

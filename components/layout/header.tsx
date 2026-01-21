@@ -36,10 +36,8 @@ export default function Header() {
       href={href}
       className={`flex items-center gap-2 px-4 py-2 rounded-full transition-all duration-300 ${
         isActive(href)
-          ? 'bg-zinc-900 text-white shadow-lg shadow-zinc-900/10'
-          : isDarkHeroState 
-            ? 'text-zinc-300 hover:text-white hover:bg-white/10' 
-            : 'text-zinc-500 hover:text-zinc-900 hover:bg-zinc-100'
+          ? 'bg-zinc-800 text-white shadow-lg shadow-black/20'
+          : 'text-zinc-400 hover:text-white hover:bg-white/5'
       }`}
     >
       <Icon size={18} strokeWidth={isActive(href) ? 2.5 : 2} />
@@ -50,7 +48,7 @@ export default function Header() {
   return (
     <header
       className={`fixed top-0 left-0 right-0 z-40 transition-all duration-300 ${
-        scrolled ? 'bg-white/80 backdrop-blur-xl border-b border-zinc-200/50 py-3' : 'bg-transparent py-5'
+        scrolled ? 'bg-[#09090b]/80 backdrop-blur-xl border-b border-white/5 py-3' : 'bg-transparent py-5'
       }`}
     >
       <div className="max-w-7xl mx-auto px-6 md:px-12 flex items-center justify-between">
@@ -66,15 +64,13 @@ export default function Header() {
               priority
             />
           </div>
-          <span className={`font-bold text-xl tracking-tight ${isDarkHeroState ? 'text-white' : 'text-zinc-900'}`}>
+          <span className="font-bold text-xl tracking-tight text-white">
             Pantry
           </span>
         </Link>
-
+        
         {/* Desktop Navigation */}
-        <nav className={`hidden lg:flex items-center p-1.5 rounded-full border shadow-sm backdrop-blur-md transition-colors ${
-          isDarkHeroState ? 'bg-black/20 border-white/10' : 'bg-white/50 border-zinc-200/50'
-        }`}>
+        <nav className={`hidden lg:flex items-center p-1.5 rounded-full border shadow-sm backdrop-blur-md transition-colors bg-white/5 border-white/10`}>
           <NavLink href="/dashboard" icon={LayoutGrid} label="Dashboard" />
           <NavLink href="/recipes" icon={BookOpen} label="Rezepte" />
           <NavLink href="/favorites" icon={Heart} label="Favoriten" />
@@ -87,16 +83,14 @@ export default function Header() {
         <div className="flex items-center gap-4">
           <Link href="/settings" className="flex items-center gap-3 group mr-2">
             <div className="hidden md:flex flex-col items-end">
-              <span className={`text-sm font-bold ${isDarkHeroState ? 'text-white' : 'text-zinc-900'}`}>
+              <span className="text-sm font-bold text-white">
                 {session?.user?.name || 'User'}
               </span>
-              <span className={`text-[10px] uppercase tracking-wider font-medium ${isDarkHeroState ? 'text-zinc-300' : 'text-zinc-500'}`}>
+              <span className="text-[10px] uppercase tracking-wider font-medium text-zinc-400">
                 Chefkoch
               </span>
             </div>
-            <div className={`w-10 h-10 rounded-full overflow-hidden flex items-center justify-center border-2 transition-all ${
-               isDarkHeroState ? 'border-white/20' : 'border-zinc-200'
-            }`}>
+            <div className="w-10 h-10 rounded-full overflow-hidden flex items-center justify-center border-2 transition-all border-white/10 group-hover:border-white/20">
               {session?.user?.image ? (
                 <img 
                    src={session.user.image} 
@@ -104,7 +98,7 @@ export default function Header() {
                    className="w-full h-full object-cover"
                 />
               ) : (
-                <div className={`w-full h-full flex items-center justify-center ${isDarkHeroState ? 'bg-white/10 text-white' : 'bg-zinc-100 text-zinc-500'}`}>
+                <div className="w-full h-full flex items-center justify-center bg-white/10 text-white">
                   <User size={20} />
                 </div>
               )}
@@ -112,11 +106,7 @@ export default function Header() {
           </Link>
           <button
             onClick={() => signOut({ callbackUrl: '/signin' })}
-            className={`w-10 h-10 rounded-full flex items-center justify-center transition-all ${
-              isDarkHeroState 
-                ? 'bg-white/10 text-white hover:bg-white hover:text-zinc-900' 
-                : 'bg-zinc-100 text-zinc-500 hover:bg-zinc-200 hover:text-zinc-900'
-            }`}
+            className="w-10 h-10 rounded-full flex items-center justify-center transition-all bg-white/5 text-zinc-400 hover:bg-white/10 hover:text-white border border-white/5"
             title="Abmelden"
           >
              <LogOut size={18} />

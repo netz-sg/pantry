@@ -13,11 +13,11 @@ export default async function FavoritesPage() {
     <div className="space-y-8 animate-in fade-in slide-in-from-bottom-2 duration-700">
       {/* Header */}
       <div className="pt-4">
-        <h1 className="text-4xl font-extrabold tracking-tight text-zinc-900 mb-2">Favoriten</h1>
-        <p className="text-zinc-500 text-lg">Deine kuratierte Auswahl an Lieblingsgerichten.</p>
+        <h1 className="text-4xl font-extrabold tracking-tight text-white mb-2">Favoriten</h1>
+        <p className="text-zinc-400 text-lg">Deine kuratierte Auswahl an Lieblingsgerichten.</p>
       </div>
       
-      <div className="h-px bg-zinc-100" />
+      <div className="h-px bg-white/10" />
 
       {/* Favorites Grid */}
       {favoriteRecipes.length > 0 ? (
@@ -27,12 +27,12 @@ export default async function FavoritesPage() {
           ))}
         </div>
       ) : (
-        <div className="col-span-full py-32 text-center border-4 border-dashed border-zinc-100 rounded-3xl bg-white">
-          <div className="w-24 h-24 bg-red-50 rounded-full flex items-center justify-center mx-auto mb-6">
-            <Heart className="text-red-300 fill-red-100" size={40} />
+        <div className="col-span-full py-32 text-center border-4 border-dashed border-white/10 rounded-3xl bg-zinc-900/50 backdrop-blur-md">
+          <div className="w-24 h-24 bg-red-500/10 rounded-full flex items-center justify-center mx-auto mb-6 ring-1 ring-red-500/20">
+            <Heart className="text-red-500 fill-red-500/20" size={40} />
           </div>
-          <h2 className="text-2xl font-bold text-zinc-900 mb-2">Keine Favoriten</h2>
-          <p className="text-zinc-500 max-w-md mx-auto">
+          <h2 className="text-2xl font-bold text-white mb-2">Keine Favoriten</h2>
+          <p className="text-zinc-400 max-w-md mx-auto">
             Markiere Rezepte mit dem Herz-Symbol, um sie hier wiederzufinden.
           </p>
         </div>

@@ -116,33 +116,33 @@ export default function PlannerPage() {
   return (
     <div className="space-y-8 select-none">
       {/* Header Area */}
-      <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 pb-6 border-b border-zinc-200/60">
+      <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 pb-6 border-b border-white/10">
         <div className="space-y-1">
-           <h1 className="text-3xl md:text-4xl font-black tracking-tight text-zinc-900">Wochenplaner</h1>
-           <div className="flex items-center gap-2 text-zinc-500 font-medium">
+           <h1 className="text-3xl md:text-4xl font-black tracking-tight text-white">Wochenplaner</h1>
+           <div className="flex items-center gap-2 text-zinc-400 font-medium">
                 <CalendarIcon size={18} />
                 <span>{formatWeekRange(currentWeekStart)}</span>
            </div>
         </div>
 
         <div className="flex items-center gap-3">
-             <div className="flex items-center bg-white rounded-xl shadow-sm border border-zinc-200 p-1">
-                <Button onClick={handlePrevWeek} variant="ghost" size="icon" className="h-9 w-9 hover:bg-zinc-100 rounded-lg text-zinc-500">
+             <div className="flex items-center bg-zinc-900 border border-white/10 rounded-xl shadow-sm p-1">
+                <Button onClick={handlePrevWeek} variant="ghost" size="icon" className="h-9 w-9 hover:bg-white/10 rounded-lg text-zinc-400 hover:text-white">
                     <ChevronLeft size={20} />
                 </Button>
-                <div className="w-px h-5 bg-zinc-200 mx-1" />
-                <Button onClick={handleJumpToToday} variant="ghost" className="h-9 px-3 text-xs font-bold uppercase tracking-wider text-zinc-600 hover:text-black hover:bg-zinc-100 rounded-lg">
+                <div className="w-px h-5 bg-white/10 mx-1" />
+                <Button onClick={handleJumpToToday} variant="ghost" className="h-9 px-3 text-xs font-bold uppercase tracking-wider text-zinc-400 hover:text-white hover:bg-white/10 rounded-lg">
                     Heute
                 </Button>
-                <div className="w-px h-5 bg-zinc-200 mx-1" />
-                <Button onClick={handleNextWeek} variant="ghost" size="icon" className="h-9 w-9 hover:bg-zinc-100 rounded-lg text-zinc-500">
+                <div className="w-px h-5 bg-white/10 mx-1" />
+                <Button onClick={handleNextWeek} variant="ghost" size="icon" className="h-9 w-9 hover:bg-white/10 rounded-lg text-zinc-400 hover:text-white">
                     <ChevronRight size={20} />
                 </Button>
              </div>
              
              <Button 
                 onClick={handleGenerateShoppingList} 
-                className="h-11 px-5 rounded-xl gap-2 font-semibold shadow-lg shadow-blue-500/20 bg-zinc-900 hover:bg-zinc-800 text-white"
+                className="h-11 px-5 rounded-xl gap-2 font-semibold shadow-lg shadow-blue-500/10 bg-white hover:bg-zinc-200 text-black border border-white/20"
              >
                 <ShoppingBag size={18} />
                 <span className="hidden md:inline">Einkaufsliste</span>
@@ -160,28 +160,28 @@ export default function PlannerPage() {
                     className={`
                         flex flex-col gap-4 p-5 rounded-[2rem] border transition-all duration-500 relative overflow-hidden group/day
                         ${isCurrentDay 
-                            ? 'bg-gradient-to-br from-blue-50/50 to-white border-blue-200/60 shadow-xl shadow-blue-500/5' 
-                            : 'bg-white border-zinc-100/80 shadow-sm hover:shadow-xl hover:shadow-zinc-900/5 hover:border-zinc-200/60'
+                            ? 'bg-gradient-to-br from-blue-900/40 to-zinc-900 border-blue-500/30 shadow-xl shadow-blue-900/20' 
+                            : 'bg-zinc-900/50 border-white/5 shadow-sm hover:shadow-xl hover:shadow-black/20 hover:border-white/10'
                         }
                     `}
                 >
                     {/* Background decorations */}
-                    <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-transparent to-zinc-50/50 rounded-bl-[4rem] -z-10 opacity-0 group-hover/day:opacity-100 transition-opacity" />
+                    <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-transparent to-white/5 rounded-bl-[4rem] -z-10 opacity-0 group-hover/day:opacity-100 transition-opacity" />
 
                     {/* Day Header */}
-                    <div className="flex items-center justify-between pb-4 border-b border-zinc-100">
+                    <div className="flex items-center justify-between pb-4 border-b border-white/5">
                         <div className="flex flex-col">
-                            <span className={`text-xs font-bold uppercase tracking-[0.2em] mb-0.5 ${isCurrentDay ? 'text-blue-600' : 'text-zinc-400'}`}>
+                            <span className={`text-xs font-bold uppercase tracking-[0.2em] mb-0.5 ${isCurrentDay ? 'text-blue-400' : 'text-zinc-500'}`}>
                                 {date.toLocaleDateString(locale === 'de' ? 'de-DE' : 'en-US', { weekday: 'long' })}
                             </span>
-                            <span className="text-sm text-zinc-500 font-medium">
+                            <span className="text-sm text-zinc-400 font-medium">
                                 {date.toLocaleDateString(locale === 'de' ? 'de-DE' : 'en-US', { month: 'long', day: 'numeric' })}
                             </span>
                         </div>
                         <div className={`flex items-center justify-center w-12 h-12 rounded-2xl text-xl font-black transition-all shadow-sm ${
                             isCurrentDay 
                             ? 'bg-blue-600 text-white shadow-blue-600/20' 
-                            : 'bg-zinc-50 text-zinc-900 group-hover/day:bg-zinc-100'
+                            : 'bg-white/5 text-white group-hover/day:bg-white/10'
                         }`}>
                             {date.getDate()}
                         </div>

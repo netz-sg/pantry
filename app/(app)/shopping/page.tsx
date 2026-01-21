@@ -1,11 +1,13 @@
 'use client';
 
-import { useState, useEffect } from 'react';
-import { Plus, Trash2, ShoppingBag } from 'lucide-react';
+import { useState, useEffect, useMemo } from 'react';
+import { Trash2, ShoppingBag, CheckCircle2, Circle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import ShoppingItem from '@/components/shopping/shopping-item';
 import ShoppingDialog from '@/components/shopping/shopping-dialog';
+import QuickAdd from '@/components/shopping/quick-add';
 import { getShoppingList, clearCheckedItems } from '@/app/actions/shopping';
+import { categorizeItem, getCategoryLabel, CATEGORIES_LIST } from '@/lib/shopping-utils';
 
 export const dynamic = 'force-dynamic';
 
@@ -33,10 +35,6 @@ export default function ShoppingPage() {
     setItems(data);
   };
 
-  const handleAddClick = () => {
-    setDialogOpen(true);
-  };
-
   const handleDialogClose = (open: boolean) => {
     setDialogOpen(open);
     if (!open) {
@@ -45,88 +43,169 @@ export default function ShoppingPage() {
   };
 
   const handleClearChecked = async () => {
+    // Optimistic update could go here, but for safety we confirm
     if (confirm('Möchtest du alle erledigten Artikel löschen?')) {
       await clearCheckedItems();
       loadItems();
     }
   };
 
-  const uncheckedItems = items.filter((item) => !item.checked);
-  const checkedItems = items.filter((item) => item.checked);
+  // Grouping Logic
+  const { groupedItems, sortedCategories, uncheckedCount, checkedItems, progress } = useMemo(() => {
+    const unchecked = items.filter((i) => !i.checked);
+    const checked = items.filter((i) => i.checked);
+    
+    // Group unchecked items
+    const groups: Record<string, ShoppingListItem[]> = {};
+    
+    unchecked.forEach(item => {
+      const name = locale === 'de' ? item.nameDe : item.nameEn;
+      const catKey = categorizeItem(name || '');
+      if (!groups[catKey]) groups[catKey] = [];
+      groups[catKey].push(item);
+    });
+
+    // Calculate progress
+    const total = items.length;
+    const done = checked.length;
+    const prog = total === 0 ? 0 : Math.round((done / total) * 100);
+
+    // Sort categories based on the defined list order, with 'other' at the end
+    const categoryOrder = CATEGORIES_LIST.map(c => c.id);
+    const sorted = Object.keys(groups).sort((a, b) => {
+      if (a === 'other') return 1;
+      if (b === 'other') return -1;
+      
+      const idxA = categoryOrder.indexOf(a);
+      const idxB = categoryOrder.indexOf(b);
+      
+      // If both are known categories, sort by predefined order
+      if (idxA !== -1 && idxB !== -1) return idxA - idxB;
+      // If one is unknown (shouldn't happen with current logic but safe fallback), push to end
+      if (idxA === -1) return 1;
+      if (idxB === -1) return -1;
+      
+      return a.localeCompare(b);
+    });
+
+    return {
+      groupedItems: groups,
+      sortedCategories: sorted,
+      uncheckedCount: unchecked.length,
+      checkedItems: checked,
+      progress: prog
+    };
+  }, [items, locale]);
 
   return (
-    <div className="space-y-8 max-w-4xl mx-auto animate-in fade-in slide-in-from-bottom-2 duration-700">
-      {/* Header */}
-      <div className="flex items-end justify-between border-b border-zinc-200/50 pb-6">
-        <div>
-          <h1 className="text-4xl font-extrabold tracking-tight text-zinc-900 mb-2">Einkaufsliste</h1>
-          <p className="text-zinc-500 font-medium text-lg">
-             <span className="text-black font-bold">{uncheckedItems.length}</span> Dinge zu erledigen
-          </p>
+    <div className="space-y-6 max-w-2xl mx-auto pb-24 animate-in fade-in slide-in-from-bottom-2 duration-700">
+      
+      {/* Header Section */}
+      <div className="space-y-6 sticky top-0 z-10 bg-zinc-950/80 backdrop-blur-xl -mx-4 px-4 py-4 border-b border-white/5">
+        <div className="flex items-center justify-between">
+            <div>
+                <h1 className="text-2xl font-bold text-white tracking-tight">Einkauf</h1>
+                <p className="text-zinc-400 text-sm">
+                    {uncheckedCount > 0 
+                        ? `${uncheckedCount} Produkte offen`
+                        : "Alles erledigt"}
+                </p>
+            </div>
+            
+            {/* Progress Ring or Percentage */}
+            <div className="flex items-center gap-3">
+                 {items.length > 0 && (
+                     <div className="text-right">
+                         <span className="text-2xl font-black text-white/20">{progress}%</span>
+                     </div>
+                 )}
+                 <Button 
+                    onClick={() => setDialogOpen(true)} 
+                    variant="ghost" 
+                    size="icon"
+                    className="h-10 w-10 text-white bg-white/5 hover:bg-white/10 rounded-full"
+                >
+                    <ShoppingBag size={20} />
+                 </Button>
+            </div>
         </div>
-        <div className="flex gap-3">
-          {checkedItems.length > 0 && (
-            <Button variant="ghost" onClick={handleClearChecked} className="text-red-500 hover:text-red-600 hover:bg-red-50 rounded-xl">
-              <Trash2 size={18} className="mr-2" />
-              Aufräumen
-            </Button>
-          )}
-          <Button onClick={handleAddClick} className="bg-black hover:bg-zinc-800 text-white rounded-xl font-bold px-6 shadow-lg shadow-zinc-900/20">
-            <Plus size={18} className="mr-2" />
-            Hinzufügen
-          </Button>
-        </div>
+
+        {/* Progress Bar */}
+        {items.length > 0 && (
+            <div className="h-1.5 w-full bg-zinc-800 rounded-full overflow-hidden">
+                <div 
+                    className="h-full bg-gradient-to-r from-blue-600 to-indigo-500 transition-all duration-500 ease-out"
+                    style={{ width: `${progress}%` }}
+                />
+            </div>
+        )}
+
+        {/* Quick Add */}
+        <QuickAdd onItemAdded={loadItems} locale={locale} />
       </div>
 
-      {/* Empty State */}
-      {items.length === 0 ? (
-        <div className="flex flex-col items-center justify-center py-32 text-center bg-white rounded-[32px] border-4 border-dashed border-zinc-100">
-          <div className="w-24 h-24 bg-blue-50 rounded-full flex items-center justify-center mb-6 shadow-inner">
-             <ShoppingBag size={40} className="text-blue-500" />
+      {/* Main List */}
+      <div className="space-y-8 min-h-[300px]">
+        {items.length === 0 ? (
+          <div className="flex flex-col items-center justify-center py-20 text-center opacity-50">
+             <div className="w-20 h-20 bg-zinc-900 rounded-full flex items-center justify-center mb-4 border border-white/5">
+                <ShoppingBag className="text-zinc-600" size={32} />
+             </div>
+             <p className="text-zinc-500">Deine Liste ist leer</p>
           </div>
-          <h3 className="text-2xl font-bold text-zinc-900 mb-3">
-            Alles erledigt!
-          </h3>
-          <p className="text-zinc-500 mb-8 max-w-sm text-lg">
-            Deine Liste ist leer. Zeit, den Kühlschrank wieder aufzufüllen?
-          </p>
-          <Button onClick={handleAddClick} className="h-12 px-8 rounded-xl font-bold bg-zinc-900 text-white hover:bg-zinc-800 transition-all hover:-translate-y-1 shadow-xl">
-            Ersten Artikel hinzufügen
-          </Button>
-        </div>
-      ) : (
-        <div className="bg-white rounded-[32px] p-8 shadow-xl shadow-zinc-200/50 min-h-[500px]">
-          {/* Unchecked Items */}
-          {uncheckedItems.length > 0 && (
-            <div className="space-y-4 mb-10">
-              <h3 className="text-xs font-bold text-zinc-400 uppercase tracking-[0.2em] px-2 mb-4">
-                Noch zu kaufen
-              </h3>
-              <div className="space-y-2">
-                {uncheckedItems.map((item) => (
-                  <ShoppingItem key={item.id} item={item} locale={locale} />
-                ))}
-              </div>
-            </div>
-          )}
+        ) : (
+          <>
+            {/* Categories */}
+            {sortedCategories.map(catKey => (
+                <div key={catKey} className="space-y-3">
+                    <h3 className="text-xs font-bold text-zinc-500 uppercase tracking-widest pl-1">
+                        {getCategoryLabel(catKey, locale as 'de' | 'en')}
+                    </h3>
+                    <div className="bg-zinc-900/40 border border-white/5 rounded-2xl overflow-hidden backdrop-blur-sm divide-y divide-white/5 shadow-sm">
+                        {groupedItems[catKey].map(item => (
+                            <ShoppingItem 
+                                key={item.id} 
+                                item={item} 
+                                locale={locale} 
+                                onUpdate={loadItems} 
+                            />
+                        ))}
+                    </div>
+                </div>
+            ))}
 
-          {/* Checked Items */}
-          {checkedItems.length > 0 && (
-            <div className="space-y-4">
-               <h3 className="text-xs font-bold text-zinc-300 uppercase tracking-[0.2em] px-2 mb-4">
-                Bereits im Wagen ({checkedItems.length})
-              </h3>
-              <div className="space-y-2 opacity-60 hover:opacity-100 transition-opacity">
-                {checkedItems.map((item) => (
-                  <ShoppingItem key={item.id} item={item} locale={locale} />
-                ))}
-              </div>
-            </div>
-          )}
-        </div>
-      )}
+            {/* Checked Items Section */}
+            {checkedItems.length > 0 && (
+                <div className="pt-8">
+                    <div className="flex items-center justify-between mb-4 px-1">
+                        <h3 className="text-xs font-bold text-zinc-600 uppercase tracking-widest">
+                            Erledigt ({checkedItems.length})
+                        </h3>
+                        <Button 
+                            variant="ghost" 
+                            size="sm"
+                            onClick={handleClearChecked}
+                            className="h-6 text-xs text-red-900 hover:text-red-400 hover:bg-red-950/30 px-2 rounded-full"
+                        >
+                            Alle löschen
+                        </Button>
+                    </div>
+                    <div className="space-y-1 opacity-60 hover:opacity-100 transition-opacity">
+                        {checkedItems.map(item => (
+                             <ShoppingItem 
+                                key={item.id} 
+                                item={item} 
+                                locale={locale} 
+                                onUpdate={loadItems} 
+                             />
+                        ))}
+                    </div>
+                </div>
+            )}
+          </>
+        )}
+      </div>
 
-      {/* Add Dialog */}
       <ShoppingDialog
         open={dialogOpen}
         onOpenChange={handleDialogClose}
@@ -135,3 +214,4 @@ export default function ShoppingPage() {
     </div>
   );
 }
+
