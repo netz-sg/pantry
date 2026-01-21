@@ -110,6 +110,7 @@ export const updateMealPlanSchema = z.object({
 // User Schemas
 export const updateUserProfileSchema = z.object({
   name: z.string().min(2, 'Name must be at least 2 characters').optional(),
+  username: z.string().min(3, 'Benutzername muss mindestens 3 Zeichen lang sein').optional(),
 });
 
 // Type exports

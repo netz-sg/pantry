@@ -23,12 +23,31 @@ export async function updateProfile(prevState: any, formData: FormData): Promise
   if (!session?.user?.id) return { error: "Nicht authentifiziert" }
 
   const name = formData.get("name") as string
+  const username = formData.get("username") as string
   const imageFile = formData.get("image") as File | null
 
   try {
-    const updateData: { name?: string; image?: string } = {}
+    const updateData: { name?: string; username?: string; image?: string } = {}
     
     if (name) updateData.name = name
+    
+    // Check if username should be updated
+    if (username) {
+      if (username.length < 3) {
+        return { error: "Benutzername muss mindestens 3 Zeichen lang sein." }
+      }
+      
+      // Check if username is already taken by another user
+      const existingUser = await db.query.users.findFirst({
+        where: eq(users.username, username)
+      })
+      
+      if (existingUser && existingUser.id !== session.user.id) {
+        return { error: "Dieser Benutzername ist bereits vergeben." }
+      }
+      
+      updateData.username = username
+    }
 
     if (imageFile && imageFile.size > 0) {
         if (!imageFile.type.startsWith("image/")) {

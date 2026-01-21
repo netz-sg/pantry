@@ -38,7 +38,9 @@ COPY docker-entrypoint.sh /app/
 # Create data directory for SQLite
 RUN mkdir -p /app/data && chown nextjs:nodejs /app/data
 RUN mkdir -p /app/public/uploads && chown nextjs:nodejs /app/public/uploads
+RUN mkdir -p /app/.next/cache
 RUN chmod +x /app/docker-entrypoint.sh
+RUN chown -R nextjs:nodejs /app
 
 # Switch to non-root user
 USER nextjs

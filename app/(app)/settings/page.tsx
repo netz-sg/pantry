@@ -30,6 +30,7 @@ export default async function SettingsPage() {
         user={{
             id: user.id,
             name: user.name,
+            username: user.username,
             image: user.image,
         }} 
       />

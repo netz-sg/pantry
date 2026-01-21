@@ -14,6 +14,7 @@ import Image from 'next/image'
 type UserData = {
     id: string
     name: string | null
+    username: string
     image: string | null
 }
 
@@ -111,7 +112,18 @@ function ProfileSection({ user }: { user: UserData }) {
                     </div>
 
                     <div className="space-y-2">
-                        <Label htmlFor="name">Name</Label>
+                        <Label htmlFor="username">Benutzername (für Login)</Label>
+                        <Input 
+                            id="username" 
+                            name="username" 
+                            defaultValue={user.username || ''} 
+                            placeholder="Benutzername" 
+                            minLength={3}
+                        />
+                    </div>
+
+                    <div className="space-y-2">
+                        <Label htmlFor="name">Anzeigename</Label>
                         <Input 
                             id="name" 
                             name="name" 
