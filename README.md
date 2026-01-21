@@ -134,37 +134,37 @@ When using Docker, your data is persisted in volumes:
 <div align="center">
 
 ### Dashboard
-Die Übersicht zeigt deine neuesten Rezepte und Quick-Stats auf einen Blick.
+Your overview showing recent recipes and quick stats at a glance.
 
 <img src="public/screenshots/Screenshot 2026-01-21 180956.png" alt="Dashboard Overview" width="100%" />
 
 ---
 
-### Rezepte verwalten
-Erstelle und verwalte deine Rezepte mit Bildern, Zutaten und Schritt-für-Schritt-Anleitungen.
+### Recipe Management
+Create and manage your recipes with images, ingredients, and step-by-step instructions.
 
 <img src="public/screenshots/Screenshot 2026-01-21 181005.png" alt="Recipe Management" width="100%" />
 
 ---
 
-### Rezept-Detail-Ansicht
-Detaillierte Ansicht eines Rezepts mit allen Zutaten, Anweisungen und Nährwertangaben.
+### Recipe Detail View
+Detailed view of a recipe with all ingredients, instructions, and nutritional information.
 
 <img src="public/screenshots/Screenshot 2026-01-21 181017.png" alt="Recipe Detail View" width="100%" />
 
 ---
 
 ### Meal Planner
-Plane deine Mahlzeiten für die Woche im übersichtlichen Kalender.
+Plan your meals for the week in a clear calendar view.
 
-<img src="public/screenshots/Screenshot 2026-01-21 181022.png" alt="Meal Planner" width="100%" />
+<img src="public/screenshots/Screenshot 2026-01-21 181028.png" alt="Meal Planner" width="100%" />
 
 ---
 
-### Einkaufsliste
-Deine smarte Einkaufsliste mit Check-Off-Funktion für erledigte Artikel.
+### Shopping List
+Your smart shopping list with check-off functionality for completed items.
 
-<img src="public/screenshots/Screenshot 2026-01-21 181028.png" alt="Shopping List" width="100%" />
+<img src="public/screenshots/Screenshot 2026-01-21 181022.png" alt="Shopping List" width="100%" />
 
 </div>
 
