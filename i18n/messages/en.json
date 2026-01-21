@@ -1,0 +1,156 @@
+{
+  "nav": {
+    "cooking": "Cooking",
+    "dashboard": "Dashboard",
+    "recipes": "Recipes",
+    "favorites": "Favorites",
+    "planner": "Weekly Planner",
+    "household": "Household",
+    "shopping": "Shopping",
+    "pantry": "Pantry",
+    "collections": "Collections",
+    "settings": "Settings",
+    "logout": "Logout"
+  },
+  "common": {
+    "save": "Save",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "edit": "Edit",
+    "add": "Add",
+    "close": "Close",
+    "search": "Search",
+    "loading": "Loading...",
+    "error": "Error",
+    "success": "Success",
+    "confirm": "Confirm"
+  },
+  "auth": {
+    "signin": "Sign In",
+    "signup": "Sign Up",
+    "signout": "Sign Out",
+    "email": "Email",
+    "password": "Password",
+    "name": "Name",
+    "forgotPassword": "Forgot password?",
+    "noAccount": "Don't have an account?",
+    "hasAccount": "Already have an account?",
+    "createAccount": "Create Account",
+    "welcome": "Welcome back",
+    "getStarted": "Get Started"
+  },
+  "dashboard": {
+    "greeting": "Good evening, Chef.",
+    "subtitle": "Your personal cooking archive is ready. You have {count} meals planned for this week.",
+    "featured": "Featured",
+    "recent": "Recent Recipes",
+    "viewAll": "View All",
+    "openRecipe": "Open Recipe"
+  },
+  "recipes": {
+    "title": "Recipes",
+    "new": "New Recipe",
+    "edit": "Edit Recipe",
+    "delete": "Delete Recipe",
+    "servings": "Servings",
+    "cookTime": "Cook Time",
+    "prepTime": "Prep Time",
+    "totalTime": "Total Time",
+    "calories": "Calories",
+    "ingredients": "Ingredients",
+    "instructions": "Instructions",
+    "addToShoppingList": "Add to Shopping List",
+    "print": "Print",
+    "share": "Share",
+    "category": "Category",
+    "tags": "Tags",
+    "description": "Description",
+    "image": "Image"
+  },
+  "favorites": {
+    "title": "My Favorites",
+    "subtitle": "The dishes that always work.",
+    "empty": "No favorites yet.",
+    "add": "Add to Favorites",
+    "remove": "Remove from Favorites"
+  },
+  "pantry": {
+    "title": "Pantry",
+    "subtitle": "Manage what you already have at home.",
+    "addItem": "Add Item",
+    "editItem": "Edit Item",
+    "deleteItem": "Delete Item",
+    "quantity": "Quantity",
+    "unit": "Unit",
+    "location": "Location",
+    "expiryDate": "Expiry Date",
+    "locations": {
+      "fridge": "Fridge",
+      "freezer": "Freezer",
+      "pantry": "Pantry",
+      "cabinet": "Cabinet"
+    }
+  },
+  "shopping": {
+    "title": "Shopping List",
+    "subtitle": "What you still need to get.",
+    "addItem": "Add Item",
+    "clearChecked": "Clear Checked",
+    "empty": "Shopping list is empty.",
+    "fromRecipe": "Generate from Recipe"
+  },
+  "planner": {
+    "title": "Weekly Planner",
+    "subtitle": "Plan your meals for the week.",
+    "addMeal": "Add Meal",
+    "removeMeal": "Remove Meal",
+    "mealTypes": {
+      "breakfast": "Breakfast",
+      "lunch": "Lunch",
+      "dinner": "Dinner",
+      "snack": "Snack"
+    },
+    "days": {
+      "monday": "Monday",
+      "tuesday": "Tuesday",
+      "wednesday": "Wednesday",
+      "thursday": "Thursday",
+      "friday": "Friday",
+      "saturday": "Saturday",
+      "sunday": "Sunday"
+    }
+  },
+  "settings": {
+    "title": "Settings",
+    "profile": "Profile",
+    "language": "Language",
+    "theme": "Theme",
+    "darkMode": "Dark Mode",
+    "lightMode": "Light Mode",
+    "account": "Account",
+    "privacy": "Privacy",
+    "export": "Export Data"
+  },
+  "categories": {
+    "breakfast": "Breakfast",
+    "lunch": "Lunch",
+    "dinner": "Dinner",
+    "snack": "Snack",
+    "dessert": "Dessert",
+    "asian": "Asian",
+    "italian": "Italian",
+    "mexican": "Mexican",
+    "vegetarian": "Vegetarian",
+    "vegan": "Vegan"
+  },
+  "units": {
+    "g": "g",
+    "kg": "kg",
+    "ml": "ml",
+    "l": "L",
+    "tsp": "tsp",
+    "tbsp": "tbsp",
+    "cup": "cup",
+    "piece": "pc"
+  }
+}
