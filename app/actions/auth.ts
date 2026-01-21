@@ -11,13 +11,19 @@ import { redirect } from 'next/navigation';
 import { auth } from '@/lib/auth';
 
 export async function registerUser(formData: FormData) {
-  const email = formData.get('email') as string;
+  const username = formData.get('username') as string;
   const password = formData.get('password') as string;
   const name = formData.get('name') as string;
 
+  // Check if any user exists (only one user allowed)
+  const userCount = await db.select().from(users);
+  if (userCount.length > 0) {
+    throw new Error('Registrierung nicht m\u00f6glich. Es existiert bereits ein Benutzer.');
+  }
+
   // Validate input
   const validationResult = signUpSchema.safeParse({
-    email,
+    username,
     password,
     name,
   });
@@ -26,13 +32,13 @@ export async function registerUser(formData: FormData) {
     throw new Error(validationResult.error.issues[0].message);
   }
 
-  // Check if user already exists
+  // Check if username already exists
   const existingUser = await db.query.users.findFirst({
-    where: eq(users.email, email),
+    where: eq(users.username, username),
   });
 
   if (existingUser) {
-    throw new Error('Ein Benutzer mit dieser E-Mail existiert bereits');
+    throw new Error('Ein Benutzer mit diesem Benutzernamen existiert bereits');
   }
 
   // Hash password
@@ -40,7 +46,7 @@ export async function registerUser(formData: FormData) {
 
   // Create user
   await db.insert(users).values({
-    email,
+    username,
     passwordHash,
     name,
     locale: 'de',
@@ -48,7 +54,7 @@ export async function registerUser(formData: FormData) {
 
   // Sign in the user (this will throw NEXT_REDIRECT - which is expected)
   await signIn('credentials', {
-    email,
+    username,
     password,
     redirectTo: '/dashboard',
   });
@@ -83,11 +89,11 @@ export async function updateUserProfile(formData: FormData) {
 }
 
 export async function signInUser(formData: FormData) {
-  const email = formData.get('email') as string;
+  const username = formData.get('username') as string;
   const password = formData.get('password') as string;
 
   await signIn('credentials', {
-    email,
+    username,
     password,
     redirectTo: '/dashboard',
   });

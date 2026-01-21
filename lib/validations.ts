@@ -2,16 +2,16 @@ import { z } from 'zod';
 
 // Auth Schemas
 export const signUpSchema = z.object({
-  email: z.string().email('Invalid email address'),
+  username: z.string().min(3, 'Benutzername muss mindestens 3 Zeichen lang sein'),
   password: z
     .string()
     .min(8, 'Passwort muss mindestens 8 Zeichen lang sein'),
-  name: z.string().min(2, 'Name must be at least 2 characters'),
+  name: z.string().min(2, 'Name muss mindestens 2 Zeichen lang sein'),
 });
 
 export const signInSchema = z.object({
-  email: z.string().email('Invalid email address'),
-  password: z.string().min(1, 'Password is required'),
+  username: z.string().min(1, 'Benutzername ist erforderlich'),
+  password: z.string().min(1, 'Passwort ist erforderlich'),
 });
 
 // Recipe Schemas

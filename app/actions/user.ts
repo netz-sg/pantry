@@ -55,7 +55,7 @@ export async function updateProfile(prevState: any, formData: FormData): Promise
         const filepath = path.join(uploadDir, filename)
         
         await writeFile(filepath, buffer)
-        updateData.image = `/uploads/${filename}`
+        updateData.image = `/api/uploads/${filename}`
     }
 
     if (Object.keys(updateData).length > 0) {

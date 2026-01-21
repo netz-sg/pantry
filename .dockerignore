@@ -1,0 +1,13 @@
+node_modules
+.next
+.git
+.env*.local
+*.log
+.DS_Store
+README.md
+data
+public/uploads/*
+!public/uploads/.gitkeep
+coverage
+.vscode
+.idea

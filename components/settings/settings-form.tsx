@@ -14,7 +14,6 @@ import Image from 'next/image'
 type UserData = {
     id: string
     name: string | null
-    email: string
     image: string | null
 }
 
@@ -119,16 +118,6 @@ function ProfileSection({ user }: { user: UserData }) {
                             defaultValue={user.name || ''} 
                             placeholder="Ihr Name" 
                         />
-                    </div>
-                     <div className="space-y-2">
-                        <Label htmlFor="email">Email</Label>
-                        <Input 
-                            id="email" 
-                            value={user.email} 
-                            disabled 
-                            className="bg-zinc-50" 
-                        />
-                        <p className="text-xs text-muted-foreground">Email kann nicht geändert werden.</p>
                     </div>
 
                     {state?.error && (

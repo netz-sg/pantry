@@ -5,7 +5,8 @@ import { createId } from '@paralleldrive/cuid2';
 // Users Table
 export const users = sqliteTable('users', {
   id: text('id').primaryKey().$defaultFn(() => createId()),
-  email: text('email').notNull().unique(),
+  username: text('username').notNull().unique(),
+  email: text('email'),
   passwordHash: text('password_hash').notNull(),
   name: text('name'),
   image: text('image'),

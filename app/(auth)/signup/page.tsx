@@ -3,14 +3,24 @@ import { Label } from '@/components/ui/label';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import { registerUser } from '@/app/actions/auth';
+import { checkRegistrationAllowed } from '@/app/actions/registration';
 import type { Metadata } from 'next';
 import { ArrowLeft } from 'lucide-react';
+import { redirect } from 'next/navigation';
 
 export const metadata: Metadata = {
   title: 'Registrieren - Pantry',
 };
 
-export default function SignUpPage() {
+export const dynamic = 'force-dynamic';
+
+export default async function SignUpPage() {
+  const canRegister = await checkRegistrationAllowed();
+  
+  if (!canRegister) {
+    redirect('/signin');
+  }
+  
   return (
     <div className="bg-zinc-900/50 backdrop-blur-xl border border-white/5 rounded-3xl p-8 shadow-2xl">
       <div className="mb-8 text-center">
@@ -34,15 +44,17 @@ export default function SignUpPage() {
         </div>
 
         <div className="space-y-2">
-          <Label htmlFor="email" className="text-zinc-300 text-xs font-medium uppercase tracking-wider ml-1">E-Mail</Label>
+          <Label htmlFor="username" className="text-zinc-300 text-xs font-medium uppercase tracking-wider ml-1">Benutzername</Label>
           <Input
-            id="email"
-            name="email"
-            type="email"
-            placeholder="max@example.com"
+            id="username"
+            name="username"
+            type="text"
+            placeholder="benutzername"
             required
+            minLength={3}
             className="bg-black/50 border-white/10 text-white placeholder:text-zinc-600 rounded-xl h-12 focus:ring-blue-500/50 focus:border-blue-500/50"
           />
+          <p className="text-[10px] text-zinc-500 ml-1">Mindestens 3 Zeichen.</p>
         </div>
 
         <div className="space-y-2">
