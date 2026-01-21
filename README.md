@@ -159,13 +159,6 @@ Plan your meals for the week in a clear calendar view.
 
 <img src="public/screenshots/Screenshot 2026-01-21 181028.png" alt="Meal Planner" width="100%" />
 
----
-
-### Shopping List
-Your smart shopping list with check-off functionality for completed items.
-
-<img src="public/screenshots/Screenshot 2026-01-21 181022.png" alt="Shopping List" width="100%" />
-
 </div>
 
 ## 📄 License
