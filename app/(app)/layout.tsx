@@ -1,6 +1,7 @@
 import { ReactNode } from 'react';
 import Header from '@/components/layout/header';
 import MobileNav from '@/components/layout/mobile-nav';
+import { UpdateBanner } from '@/components/layout/update-banner';
 
 export const dynamic = 'force-dynamic';
 
@@ -22,6 +23,9 @@ export default async function AppLayout({
 
       {/* Top Navigation Header */}
       <Header />
+      
+      {/* Update Banner */}
+      <UpdateBanner />
 
       {/* Main Content */}
       <main className="min-w-0 bg-transparent pt-24 min-h-screen relative z-10">

@@ -10,6 +10,7 @@ import { Label } from '@/components/ui/label'
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card'
 import { Camera, Save, Lock, User, Loader2 } from 'lucide-react'
 import Image from 'next/image'
+import { toast } from 'sonner'
 
 type UserData = {
     id: string
@@ -58,9 +59,13 @@ function ProfileSection({ user }: { user: UserData }) {
             } else {
                 update()
             }
+            toast.success(state.success)
             successRef.current = state.success
         }
-    }, [state?.success, state?.user, update])
+        if (state?.error) {
+            toast.error(state.error)
+        }
+    }, [state?.success, state?.error, state?.user, update])
 
     const fileInputRef = useRef<HTMLInputElement>(null)
 
@@ -156,6 +161,15 @@ function ProfileSection({ user }: { user: UserData }) {
 
 function PasswordSection() {
     const [state, action, isPending] = useActionState(changePassword, initialState)
+
+    useEffect(() => {
+        if (state?.success) {
+            toast.success(state.success)
+        }
+        if (state?.error) {
+            toast.error(state.error)
+        }
+    }, [state?.success, state?.error])
 
     return (
         <Card>
