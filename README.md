@@ -4,10 +4,10 @@
   <img src="public/logo.png" alt="Pantry Logo" width="120" height="auto" />
   <br/>
   
-  ### Dein persönlicher Koch- und Vorratsmanager
+  ### Your Personal Kitchen & Pantry Manager
   
   <p align="center">
-    Rezepte verwalten • Wochenplaner • Einkaufsliste • Vorratskammer
+    Manage Recipes • Meal Planner • Shopping List • Pantry Inventory
   </p>
 
   <div align="center">
@@ -21,69 +21,69 @@
 
 <br />
 
-## 📖 Über das Projekt
+## 📖 About the Project
 
-**Pantry** ist eine moderne, selbstgehostete Webanwendung, die dir hilft, deinen Haushalt digital zu organisieren. Von der Verwaltung deiner Lieblingsrezepte über die Planung der kompletten Woche bis hin zum automatischen Erstellen von Einkaufslisten – Pantry ist dein zentraler Ort für alles rund ums Essen.
+**Pantry** is a modern, self-hosted web application designed to help you organize your household digitally. From managing your favorite recipes and planning your entire week to automatically generating shopping lists – Pantry is your central hub for everything food-related.
 
-Entwickelt mit einem Fokus auf Ästhetik (Dark/Light Mode), Geschwindigkeit und Benutzerfreundlichkeit.
+Developed with a focus on aesthetics (Dark/Light Mode), performance, and user experience.
 
 ## ✨ Features
 
-- **👨‍🍳 Rezeptverwaltung**: Erstelle eigene Rezepte oder importiere sie automatisch von beliebten Kochseiten mittels URL-Scraper.
-- **📅 Interaktiver Wochenplaner**: Plane deine Mahlzeiten per Drag & Drop in einem visuellen "Masonry"-Grid.
-- **🏷️ Kategorien**: Organisiere Rezepte in Standard-Kategorien oder erstelle deine eigenen.
-- **🛒 Smarte Einkaufsliste**: Füge Zutaten direkt aus Rezepten hinzu.
-- **📦 Vorratskammer**: Behalte den Überblick über deinen Bestand zu Hause.
-- **👤 Personalisierung**: Benutzerprofile, Profilbilder und Einstellungen.
-- **🔐 Authentifizierung**: Sicheres Login-System mit NextAuth.
+- **👨‍🍳 Recipe Management**: Create your own recipes or import them automatically from popular cooking websites using the URL scraper.
+- **📅 Interactive Meal Planner**: Plan your meals using drag & drop in a visual "Masonry" grid layout.
+- **🏷️ Categories**: Organize recipes into standard categories or create your own custom ones.
+- **🛒 Smart Shopping List**: Add ingredients directly from recipes to your list.
+- **📦 Pantry Inventory**: Keep track of your home inventory and ingredients.
+- **👤 Personalization**: User profiles, custom profile pictures, and personalized settings.
+- **🔐 Authentication**: Secure login system powered by NextAuth.
 
 ## 🛠 Tech Stack
 
-Das Projekt basiert auf modernsten Web-Technologien:
+The project is built on cutting-edge web technologies:
 
 - **Framework**: [Next.js 15](https://nextjs.org/) (App Router)
-- **Sprache**: TypeScript
-- **Datenbank**: SQLite mit [Drizzle ORM](https://orm.drizzle.team/)
+- **Language**: TypeScript
+- **Database**: SQLite with [Drizzle ORM](https://orm.drizzle.team/)
 - **Styling**: [Tailwind CSS v4](https://tailwindcss.com/)
 - **Auth**: [Auth.js (NextAuth v5)](https://authjs.dev/)
 - **UI Components**: Radix UI & Lucide Icons
 
 ## 🚀 Installation & Start
 
-1. **Repository klonen**
+1. **Clone the repository**
    ```bash
    git clone https://github.com/netz-sg/pantry.git
    cd pantry
    ```
 
-2. **Abhängigkeiten installieren**
+2. **Install dependencies**
    ```bash
    npm install
-   # oder
+   # or
    yarn install
-   # oder
+   # or
    pnpm install
    ```
 
-3. **Datenbank einrichten**
-   Das Projekt nutzt SQLite. Die Datenbankdatei wird lokal erstellt.
+3. **Setup Database**
+   The project uses SQLite. The database file will be created locally.
    ```bash
    npm run db:push
    ```
 
-4. **Entwicklungsserver starten**
+4. **Start Development Server**
    ```bash
    npm run dev
    ```
-   Öffne [http://localhost:3000](http://localhost:3000) in deinem Browser.
+   Open [http://localhost:3000](http://localhost:3000) in your browser.
 
 ## 📸 Screenshots
 
-*(Platzhalter für Screenshots der Anwendung - Dashboard, Rezeptansicht, Planer)*
+*(Placeholders for application screenshots - Dashboard, Recipe View, Planner)*
 
-## 📄 Lizenz
+## 📄 License
 
-Dieses Projekt ist unter der MIT Lizenz veröffentlicht.
+This project is published under the MIT License.
 
 ---
 
