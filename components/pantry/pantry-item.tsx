@@ -4,7 +4,7 @@ import { useState, useTransition } from 'react';
 import { Minus, Plus, Trash2, Edit, AlertCircle } from 'lucide-react';
 import { updatePantryQuantity, deletePantryItem } from '@/app/actions/pantry';
 import { Button } from '@/components/ui/button';
-import { PANTRY_CATEGORIES } from '@/lib/constants';
+import { PANTRY_CATEGORIES, PANTRY_LOCATIONS } from '@/lib/constants';
 
 interface PantryItemProps {
   item: {
@@ -58,6 +58,7 @@ export default function PantryItem({ item, locale, onEdit }: PantryItemProps) {
   const isLowStock = item.lowStockThreshold !== null && item.quantity <= item.lowStockThreshold;
 
   const categoryInfo = PANTRY_CATEGORIES.find(cat => cat.value === item.category);
+  const locationInfo = PANTRY_LOCATIONS.find(loc => loc.value === item.location);
 
   return (
     <div
@@ -81,8 +82,10 @@ export default function PantryItem({ item, locale, onEdit }: PantryItemProps) {
         <div className="flex-1 min-w-0">
           <h3 className="font-semibold text-white truncate">{name || 'Unnamed Item'}</h3>
           <div className="flex items-center gap-2 text-xs text-zinc-400 mt-1 flex-wrap">
-            {item.location && (
-              <span className="px-2 py-0.5 bg-white/5 border border-white/5 rounded-full">{item.location}</span>
+            {locationInfo && (
+              <span className="px-2 py-0.5 bg-white/5 border border-white/5 rounded-full">
+                {locationInfo.icon} {locale === 'de' ? locationInfo.labelDe : locationInfo.labelEn}
+              </span>
             )}
             {categoryInfo && (
               <span className="px-2 py-0.5 bg-blue-500/10 border border-blue-500/20 text-blue-400 rounded-full">

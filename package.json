@@ -8,7 +8,9 @@
     "start": "next start",
     "lint": "eslint",
     "db:push": "drizzle-kit push",
-    "db:seed": "tsx drizzle/seed.ts"
+    "db:seed": "tsx drizzle/seed.ts",
+    "release": "powershell -ExecutionPolicy Bypass -File ./release.ps1",
+    "release:bash": "bash ./release.sh"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.2.2",
