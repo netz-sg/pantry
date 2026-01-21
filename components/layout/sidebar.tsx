@@ -153,15 +153,26 @@ export default function Sidebar({ locale }: { locale: string }) {
 
       {/* User / Settings Footer */}
       <div className="p-4 mx-4 mb-4 rounded-2xl bg-white/5 border border-white/5 backdrop-blur-md">
-        <div className="flex items-center gap-3 p-1 mb-3">
-          <div className="w-9 h-9 rounded-full bg-gradient-to-tr from-blue-500 to-indigo-500 flex items-center justify-center text-white font-bold text-xs shadow-lg shadow-blue-500/20 ring-2 ring-[#09090b]">
-            {initials}
+        <Link href="/settings" className="flex items-center gap-3 p-1 mb-3 group cursor-pointer">
+          <div className="w-9 h-9 rounded-full bg-gradient-to-tr from-blue-500 to-indigo-500 flex items-center justify-center text-white font-bold text-xs shadow-lg shadow-blue-500/20 ring-2 ring-[#09090b] overflow-hidden">
+            {session?.user?.image ? (
+                <div className="relative w-full h-full">
+                     {/* Using standard img tag if Next Image causes issues inside this specific component structure or just use Next Image */}
+                     <img 
+                        src={session.user.image} 
+                        alt="Avatar" 
+                        className="w-full h-full object-cover"
+                     />
+                </div>
+            ) : (
+                initials
+            )}
           </div>
           <div className="text-left flex-1 overflow-hidden">
-            <p className="text-sm font-semibold text-white truncate">{userName}</p>
+            <p className="text-sm font-semibold text-white truncate group-hover:text-blue-400 transition-colors">{userName}</p>
             <p className="text-[10px] text-zinc-500 truncate">{userEmail}</p>
           </div>
-        </div>
+        </Link>
         
         <button
           onClick={() => signOut({ callbackUrl: '/signin' })}

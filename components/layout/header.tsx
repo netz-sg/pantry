@@ -1,9 +1,10 @@
 'use client';
 
 import Link from 'next/link';
+import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import { signOut, useSession } from 'next-auth/react';
-import { ChefHat, LayoutGrid, BookOpen, Heart, Calendar, ShoppingBag, Package, LogOut } from 'lucide-react';
+import { LayoutGrid, BookOpen, Heart, Calendar, ShoppingBag, Package, LogOut, User } from 'lucide-react';
 import { useState, useEffect } from 'react';
 
 export default function Header() {
@@ -55,10 +56,15 @@ export default function Header() {
       <div className="max-w-7xl mx-auto px-6 md:px-12 flex items-center justify-between">
         {/* Logo */}
         <Link href="/dashboard" className="flex items-center gap-3 group">
-          <div className={`w-10 h-10 rounded-xl flex items-center justify-center shadow-xl transition-transform duration-300 group-hover:scale-105 ${
-            isDarkHeroState ? 'bg-white text-zinc-900 shadow-white/10' : 'bg-zinc-900 text-white shadow-zinc-900/20'
-          }`}>
-            <ChefHat size={20} />
+          <div className="relative w-10 h-10 transition-transform duration-300 group-hover:scale-105">
+            <Image 
+              src="/logo.png" 
+              alt="Pantry Logo" 
+              fill
+              className="object-contain"
+              sizes="40px"
+              priority
+            />
           </div>
           <span className={`font-bold text-xl tracking-tight ${isDarkHeroState ? 'text-white' : 'text-zinc-900'}`}>
             Pantry
@@ -79,14 +85,31 @@ export default function Header() {
 
         {/* User Profile */}
         <div className="flex items-center gap-4">
-          <div className="hidden md:flex flex-col items-end mr-2">
-            <span className={`text-sm font-bold ${isDarkHeroState ? 'text-white' : 'text-zinc-900'}`}>
-              {session?.user?.name || 'User'}
-            </span>
-            <span className={`text-[10px] uppercase tracking-wider font-medium ${isDarkHeroState ? 'text-zinc-300' : 'text-zinc-500'}`}>
-              Chefkoch
-            </span>
-          </div>
+          <Link href="/settings" className="flex items-center gap-3 group mr-2">
+            <div className="hidden md:flex flex-col items-end">
+              <span className={`text-sm font-bold ${isDarkHeroState ? 'text-white' : 'text-zinc-900'}`}>
+                {session?.user?.name || 'User'}
+              </span>
+              <span className={`text-[10px] uppercase tracking-wider font-medium ${isDarkHeroState ? 'text-zinc-300' : 'text-zinc-500'}`}>
+                Chefkoch
+              </span>
+            </div>
+            <div className={`w-10 h-10 rounded-full overflow-hidden flex items-center justify-center border-2 transition-all ${
+               isDarkHeroState ? 'border-white/20' : 'border-zinc-200'
+            }`}>
+              {session?.user?.image ? (
+                <img 
+                   src={session.user.image} 
+                   alt={session.user.name || 'User'} 
+                   className="w-full h-full object-cover"
+                />
+              ) : (
+                <div className={`w-full h-full flex items-center justify-center ${isDarkHeroState ? 'bg-white/10 text-white' : 'bg-zinc-100 text-zinc-500'}`}>
+                  <User size={20} />
+                </div>
+              )}
+            </div>
+          </Link>
           <button
             onClick={() => signOut({ callbackUrl: '/signin' })}
             className={`w-10 h-10 rounded-full flex items-center justify-center transition-all ${

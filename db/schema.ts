@@ -8,6 +8,7 @@ export const users = sqliteTable('users', {
   email: text('email').notNull().unique(),
   passwordHash: text('password_hash').notNull(),
   name: text('name'),
+  image: text('image'),
   locale: text('locale').notNull().default('de'), // 'de' | 'en'
   createdAt: integer('created_at', { mode: 'timestamp' }).$defaultFn(() => new Date()),
   updatedAt: integer('updated_at', { mode: 'timestamp' }).$defaultFn(() => new Date()),
@@ -104,6 +105,14 @@ export const shoppingListItems = sqliteTable('shopping_list_items', {
   updatedAt: integer('updated_at', { mode: 'timestamp' }).$defaultFn(() => new Date()),
 });
 
+// Categories Table
+export const categories = sqliteTable('categories', {
+  id: text('id').primaryKey().$defaultFn(() => createId()),
+  userId: text('user_id').references(() => users.id, { onDelete: 'cascade' }), // Nullable for global categories
+  name: text('name').notNull(),
+  createdAt: integer('created_at', { mode: 'timestamp' }).$defaultFn(() => new Date()),
+});
+
 // Relations
 export const usersRelations = relations(users, ({ many }) => ({
   recipes: many(recipes),
@@ -111,6 +120,14 @@ export const usersRelations = relations(users, ({ many }) => ({
   mealPlans: many(mealPlans),
   pantryItems: many(pantryItems),
   shoppingListItems: many(shoppingListItems),
+  categories: many(categories),
+}));
+
+export const categoriesRelations = relations(categories, ({ one }) => ({
+  user: one(users, {
+    fields: [categories.userId],
+    references: [users.id],
+  }),
 }));
 
 export const recipesRelations = relations(recipes, ({ one, many }) => ({

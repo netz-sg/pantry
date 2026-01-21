@@ -1,11 +1,19 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Plus, Minus, Loader2, Link as LinkIcon, Download } from 'lucide-react';
 import { createRecipe, updateRecipe, scrapeRecipe } from '@/app/actions/recipes';
+import { getCategories, createCategory, type CategoryOption } from '@/app/actions/categories';
+import {
+  Dialog,
+  DialogContent, // Fixed: Use DialogContent instead of DialogPortal/Overlay manually if possible, or follow existing. The file read shows DialogContent is exported.
+  DialogHeader,
+  DialogTitle,
+  DialogFooter,
+} from "@/components/ui/dialog"
 import { toast } from 'sonner'; // Assuming sonner is used, or I'll just use alert for failure if no toast component found. I will omit toast for now to avoid errors if not installed, or check imports. The file didn't have toast.
 
 interface Ingredient {
@@ -46,6 +54,45 @@ export default function RecipeForm({ locale, recipeId, initialData }: RecipeForm
   const [isScraping, setIsScraping] = useState(false);
   const [scrapedData, setScrapedData] = useState<any>(null);
   const [formKey, setFormKey] = useState(0);
+
+  // Category management
+  const [categories, setCategories] = useState<CategoryOption[]>([]);
+  const [selectedCategory, setSelectedCategory] = useState(initialData?.category || '');
+  const [showCategoryDialog, setShowCategoryDialog] = useState(false);
+  const [newCategoryName, setNewCategoryName] = useState('');
+  const [isCreatingCategory, setIsCreatingCategory] = useState(false);
+
+  useEffect(() => {
+    getCategories().then(setCategories);
+  }, []);
+
+  useEffect(() => {
+    if (scrapedData?.category) {
+       setSelectedCategory(scrapedData.category);
+    }
+  }, [scrapedData]);
+
+  const handleCreateCategory = async () => {
+    if (!newCategoryName.trim()) return;
+    setIsCreatingCategory(true);
+    try {
+        const result = await createCategory(newCategoryName);
+        if (result.error) {
+            alert(result.error);
+        } else if (result.data) {
+            const cats = await getCategories();
+            setCategories(cats);
+            setSelectedCategory(result.data.name);
+            setShowCategoryDialog(false);
+            setNewCategoryName('');
+        }
+    } catch(e) {
+        alert('Fehler beim Erstellen der Kategorie');
+    } finally {
+        setIsCreatingCategory(false);
+    }
+  };
+
 
   const [ingredients, setIngredients] = useState<Ingredient[]>(
     initialData?.ingredients && initialData.ingredients.length > 0
@@ -248,21 +295,31 @@ export default function RecipeForm({ locale, recipeId, initialData }: RecipeForm
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="space-y-2">
               <Label htmlFor="category">Kategorie</Label>
-              <select
-                id="category"
-                name="category"
-                className="w-full px-3 py-2 border border-zinc-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-zinc-900/10 text-sm"
-                defaultValue={data?.category || ''}
-              >
-                <option value="">Wähle eine Kategorie</option>
-                <option value="frühstück">Frühstück</option>
-                <option value="lunch">Mittagessen</option>
-                <option value="dinner">Abendessen</option>
-                <option value="snack">Snack</option>
-                <option value="dessert">Dessert</option>
-                <option value="asiatisch">Asiatisch</option>
-                <option value="italienisch">Italienisch</option>
-              </select>
+              <div className="flex gap-2">
+                <select
+                  id="category"
+                  name="category"
+                  className="flex-1 px-3 py-2 border border-zinc-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-zinc-900/10 text-sm bg-white"
+                  value={selectedCategory}
+                  onChange={(e) => setSelectedCategory(e.target.value)}
+                >
+                  <option value="">Wähle eine Kategorie</option>
+                  {categories.map((cat) => (
+                    <option key={cat.id} value={cat.value}>
+                      {cat.label}
+                    </option>
+                  ))}
+                </select>
+                <Button 
+                  type="button" 
+                  variant="outline" 
+                  className="px-3"
+                  onClick={() => setShowCategoryDialog(true)}
+                  title="Neue Kategorie erstellen"
+                >
+                  <Plus size={16} />
+                </Button>
+              </div>
             </div>
             <div className="space-y-2">
               <Label htmlFor="imageUrl">Bild URL</Label>
@@ -386,6 +443,39 @@ export default function RecipeForm({ locale, recipeId, initialData }: RecipeForm
           </Button>
         </div>
       </form>
+
+      <Dialog open={showCategoryDialog} onOpenChange={setShowCategoryDialog}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Neue Kategorie erstellen</DialogTitle>
+          </DialogHeader>
+          <div className="space-y-4 py-4">
+            <div className="space-y-2">
+              <Label htmlFor="new-category">Name der Kategorie</Label>
+              <Input 
+                id="new-category" 
+                placeholder="z.B. Meine Spezialrezepte" 
+                value={newCategoryName}
+                onChange={(e) => setNewCategoryName(e.target.value)}
+                onKeyDown={(e) => {
+                    if (e.key === 'Enter') {
+                        e.preventDefault();
+                        handleCreateCategory();
+                    }
+                }}
+              />
+            </div>
+          </div>
+          <DialogFooter>
+            <Button variant="outline" onClick={() => setShowCategoryDialog(false)}>Abbrechen</Button>
+            <Button onClick={handleCreateCategory} disabled={!newCategoryName.trim() || isCreatingCategory}>
+              {isCreatingCategory && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+              Erstellen
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+
     </div>
   );
 }
