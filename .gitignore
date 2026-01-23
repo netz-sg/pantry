@@ -46,3 +46,7 @@ next-env.d.ts
 .claude/
 claude
 
+# release scripts (internal use only)
+release.ps1
+release.sh
+
