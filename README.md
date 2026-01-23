@@ -37,6 +37,8 @@ Designed as a **single-user application** for personal or household use, with ea
 - **📦 Pantry Inventory**: Keep track of your pantry items, expiry dates, and low stock alerts.
 - **👤 Personalization**: User profile with custom profile picture and settings.
 - **🔐 Secure Authentication**: Username/password login with NextAuth.
+- **📱 REST API**: Complete REST API with JWT authentication for mobile app integration.
+- **🌍 Internationalization**: Full support for English, German, and Chinese with bilingual data storage.
 - **🐳 Docker Ready**: One-command deployment with Docker Compose.
 
 ## 🛠 Tech Stack
@@ -109,13 +111,37 @@ After starting the application:
 
 **Important**: This is a single-user application. After the first user registers, no additional registrations are possible.
 
+## 📱 REST API
+
+Pantry includes a complete **REST API** for mobile app integration. All endpoints support full CRUD operations with JWT-based authentication.
+
+### Available Endpoints
+
+- **🔐 Authentication**: Login & token verification (`POST /api/auth/login`, `GET /api/auth/verify`)
+- **👨‍🍳 Recipes**: Complete recipe management with ingredients & instructions (`/api/recipes`)
+- **📦 Pantry**: Pantry inventory management (`/api/pantry`)
+- **🛒 Shopping List**: Shopping list operations (`/api/shopping`)
+- **📅 Meal Planner**: Weekly meal planning with date range queries (`/api/planner`)
+- **⭐ Favorites**: Manage favorite recipes (`/api/favorites`)
+- **👤 User**: Profile and settings management (`/api/user`)
+
+### Key Features
+
+- **JWT Authentication**: 30-day token validity with Bearer authentication
+- **Bilingual Support**: All content fields include both German and English variants
+- **Complete Data**: Recipe endpoints return full details including ingredients, instructions, and favorite status
+- **Relational Data**: Efficient queries with automatic relation loading
+- **Standardized Responses**: Consistent success/error response format
+
+📖 **Full API Documentation**: See [API.md](API.md) for detailed endpoint specifications, request/response examples, and authentication flow.
+
 ## 📦 Environment Variables
 
 Optional environment variables (with defaults):
 
 ```env
 # Authentication
-AUTH_SECRET=your-secret-key-here
+AUTH_SECRET=your-secret-key-here  # Used for NextAuth and JWT signing
 NEXTAUTH_URL=http://localhost:3000
 
 # Database (SQLite)
