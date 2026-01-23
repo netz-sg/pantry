@@ -14,17 +14,17 @@ export default function AuthLayout({ children }: { children: ReactNode }) {
         {/* Logo */}
         <div className="mb-8 flex flex-col items-center gap-4">
           <div className="relative w-20 h-20 transition-transform hover:scale-105 duration-500">
-             <Image 
-                src="/logo.png" 
-                alt="Pantry Logo" 
-                fill
-                className="object-contain drop-shadow-2xl"
-                priority
-             />
+            <Image
+              src="/logo.png"
+              alt="Pantry Logo"
+              fill
+              className="object-contain drop-shadow-2xl"
+              priority
+            />
           </div>
           <div className="text-center">
-             <span className="font-bold text-3xl tracking-tight text-white block">Pantry</span>
-             <p className="text-zinc-500 text-sm font-medium tracking-wide">Dein digitales Kochbuch</p>
+            <span className="font-bold text-3xl tracking-tight text-white block">Pantry</span>
+            <p className="text-zinc-500 text-sm font-medium tracking-wide">Your Digital Cookbook</p>
           </div>
         </div>
 
@@ -35,7 +35,7 @@ export default function AuthLayout({ children }: { children: ReactNode }) {
 
         {/* Footer */}
         <div className="mt-8 text-center text-xs text-zinc-600">
-          <p>© 2026 Pantry App. Alle Rechte vorbehalten.</p>
+          <p>© 2026 Pantry App. All rights reserved.</p>
         </div>
       </div>
     </div>

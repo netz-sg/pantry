@@ -10,6 +10,7 @@ import PantryStats from '@/components/pantry/pantry-stats';
 import PantryQuickAdd from '@/components/pantry/pantry-quick-add';
 import { getPantryItems } from '@/app/actions/pantry';
 import { PANTRY_LOCATIONS, PANTRY_CATEGORIES } from '@/lib/constants';
+import { useTranslations } from 'next-intl';
 
 export const dynamic = 'force-dynamic';
 
@@ -39,7 +40,9 @@ export default function PantryPage() {
   const [categoryFilter, setCategoryFilter] = useState<string>('all');
   const [statusFilter, setStatusFilter] = useState<StatusFilter>('all');
   const [sortBy, setSortBy] = useState<SortOption>('recent');
-  const locale = 'de';
+  const locale = 'en' as 'de' | 'en';
+  const t = useTranslations('pantry');
+  const tCommon = useTranslations('common');
 
   useEffect(() => {
     loadItems();
@@ -148,14 +151,14 @@ export default function PantryPage() {
       {/* Header */}
       <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-6 pt-4">
         <div>
-          <h1 className="text-4xl font-extrabold tracking-tight text-white mb-2">Vorratskammer</h1>
+          <h1 className="text-4xl font-extrabold tracking-tight text-white mb-2">{t('title')}</h1>
           <p className="text-zinc-400 text-lg">
-            Behalte den Überblick über deine Bestände.
+            {t('subtitle')}
           </p>
         </div>
         <Button onClick={handleAddClick} className="bg-white hover:bg-zinc-200 text-black rounded-xl font-bold px-6 py-6 shadow-lg shadow-white/5 transition-all hover:-translate-y-0.5">
           <Plus size={20} className="mr-2" />
-          Artikel erfassen
+          {t('addItem')}
         </Button>
       </div>
 
@@ -176,7 +179,7 @@ export default function PantryPage() {
             <Input
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              placeholder="Artikel suchen..."
+              placeholder={tCommon('search') + '...'}
               className="h-12 pl-12 pr-4 rounded-xl bg-zinc-900/50 border-white/10 text-white placeholder:text-zinc-500 focus-visible:ring-white/20"
             />
           </div>
@@ -187,23 +190,21 @@ export default function PantryPage() {
             <div className="flex gap-2 flex-wrap">
               <button
                 onClick={() => setLocationFilter('all')}
-                className={`px-3 py-1.5 rounded-full text-sm font-medium transition-all ${
-                  locationFilter === 'all'
-                    ? 'bg-white/10 border-white/20 text-white'
-                    : 'bg-zinc-900/50 border-white/10 text-zinc-400 hover:bg-white/5'
-                } border`}
+                className={`px-3 py-1.5 rounded-full text-sm font-medium transition-all ${locationFilter === 'all'
+                  ? 'bg-white/10 border-white/20 text-white'
+                  : 'bg-zinc-900/50 border-white/10 text-zinc-400 hover:bg-white/5'
+                  } border`}
               >
-                Alle Standorte
+                {t('allLocations')}
               </button>
               {PANTRY_LOCATIONS.map(loc => (
                 <button
                   key={loc.value}
                   onClick={() => setLocationFilter(loc.value)}
-                  className={`px-3 py-1.5 rounded-full text-sm font-medium transition-all ${
-                    locationFilter === loc.value
-                      ? 'bg-white/10 border-white/20 text-white'
-                      : 'bg-zinc-900/50 border-white/10 text-zinc-400 hover:bg-white/5'
-                  } border`}
+                  className={`px-3 py-1.5 rounded-full text-sm font-medium transition-all ${locationFilter === loc.value
+                    ? 'bg-white/10 border-white/20 text-white'
+                    : 'bg-zinc-900/50 border-white/10 text-zinc-400 hover:bg-white/5'
+                    } border`}
                 >
                   {loc.icon} {locale === 'de' ? loc.labelDe : loc.labelEn}
                 </button>
@@ -216,23 +217,21 @@ export default function PantryPage() {
             <div className="flex gap-2 flex-wrap">
               <button
                 onClick={() => setCategoryFilter('all')}
-                className={`px-3 py-1.5 rounded-full text-sm font-medium transition-all ${
-                  categoryFilter === 'all'
-                    ? 'bg-white/10 border-white/20 text-white'
-                    : 'bg-zinc-900/50 border-white/10 text-zinc-400 hover:bg-white/5'
-                } border`}
+                className={`px-3 py-1.5 rounded-full text-sm font-medium transition-all ${categoryFilter === 'all'
+                  ? 'bg-white/10 border-white/20 text-white'
+                  : 'bg-zinc-900/50 border-white/10 text-zinc-400 hover:bg-white/5'
+                  } border`}
               >
-                Alle Kategorien
+                {t('allCategories')}
               </button>
               {PANTRY_CATEGORIES.slice(0, 5).map(cat => (
                 <button
                   key={cat.value}
                   onClick={() => setCategoryFilter(cat.value)}
-                  className={`px-3 py-1.5 rounded-full text-sm font-medium transition-all ${
-                    categoryFilter === cat.value
-                      ? 'bg-white/10 border-white/20 text-white'
-                      : 'bg-zinc-900/50 border-white/10 text-zinc-400 hover:bg-white/5'
-                  } border`}
+                  className={`px-3 py-1.5 rounded-full text-sm font-medium transition-all ${categoryFilter === cat.value
+                    ? 'bg-white/10 border-white/20 text-white'
+                    : 'bg-zinc-900/50 border-white/10 text-zinc-400 hover:bg-white/5'
+                    } border`}
                 >
                   {cat.icon} {locale === 'de' ? cat.labelDe : cat.labelEn}
                 </button>
@@ -245,43 +244,39 @@ export default function PantryPage() {
             <div className="flex gap-2 flex-wrap">
               <button
                 onClick={() => setStatusFilter('all')}
-                className={`px-3 py-1.5 rounded-full text-sm font-medium transition-all ${
-                  statusFilter === 'all'
-                    ? 'bg-white/10 border-white/20 text-white'
-                    : 'bg-zinc-900/50 border-white/10 text-zinc-400 hover:bg-white/5'
-                } border`}
+                className={`px-3 py-1.5 rounded-full text-sm font-medium transition-all ${statusFilter === 'all'
+                  ? 'bg-white/10 border-white/20 text-white'
+                  : 'bg-zinc-900/50 border-white/10 text-zinc-400 hover:bg-white/5'
+                  } border`}
               >
-                Alle Status
+                {t('allStatus')}
               </button>
               <button
                 onClick={() => setStatusFilter('fresh')}
-                className={`px-3 py-1.5 rounded-full text-sm font-medium transition-all ${
-                  statusFilter === 'fresh'
-                    ? 'bg-white/10 border-white/20 text-white'
-                    : 'bg-zinc-900/50 border-white/10 text-zinc-400 hover:bg-white/5'
-                } border`}
+                className={`px-3 py-1.5 rounded-full text-sm font-medium transition-all ${statusFilter === 'fresh'
+                  ? 'bg-white/10 border-white/20 text-white'
+                  : 'bg-zinc-900/50 border-white/10 text-zinc-400 hover:bg-white/5'
+                  } border`}
               >
-                Frisch
+                {t('fresh')}
               </button>
               <button
                 onClick={() => setStatusFilter('expiring')}
-                className={`px-3 py-1.5 rounded-full text-sm font-medium transition-all ${
-                  statusFilter === 'expiring'
-                    ? 'bg-orange-500/10 border-orange-500/20 text-orange-400'
-                    : 'bg-zinc-900/50 border-white/10 text-zinc-400 hover:bg-white/5'
-                } border`}
+                className={`px-3 py-1.5 rounded-full text-sm font-medium transition-all ${statusFilter === 'expiring'
+                  ? 'bg-orange-500/10 border-orange-500/20 text-orange-400'
+                  : 'bg-zinc-900/50 border-white/10 text-zinc-400 hover:bg-white/5'
+                  } border`}
               >
-                Bald abgelaufen
+                {t('expiringSoon')}
               </button>
               <button
                 onClick={() => setStatusFilter('expired')}
-                className={`px-3 py-1.5 rounded-full text-sm font-medium transition-all ${
-                  statusFilter === 'expired'
-                    ? 'bg-red-500/10 border-red-500/20 text-red-400'
-                    : 'bg-zinc-900/50 border-white/10 text-zinc-400 hover:bg-white/5'
-                } border`}
+                className={`px-3 py-1.5 rounded-full text-sm font-medium transition-all ${statusFilter === 'expired'
+                  ? 'bg-red-500/10 border-red-500/20 text-red-400'
+                  : 'bg-zinc-900/50 border-white/10 text-zinc-400 hover:bg-white/5'
+                  } border`}
               >
-                Abgelaufen
+                {t('expired')}
               </button>
             </div>
 
@@ -293,10 +288,10 @@ export default function PantryPage() {
               onChange={(e) => setSortBy(e.target.value as SortOption)}
               className="px-3 py-1.5 rounded-full text-sm font-medium bg-zinc-900/50 border border-white/10 text-white hover:bg-white/5 transition-all"
             >
-              <option value="recent">Zuletzt hinzugefügt</option>
-              <option value="name-asc">Name A-Z</option>
-              <option value="quantity-desc">Menge (hoch-niedrig)</option>
-              <option value="expiry-asc">Ablaufdatum</option>
+              <option value="recent">{t('recentlyAdded')}</option>
+              <option value="name-asc">{t('nameAZ')}</option>
+              <option value="quantity-desc">{t('quantityHighLow')}</option>
+              <option value="expiry-asc">{t('expiryDateSort')}</option>
             </select>
 
             {/* Clear Filters */}
@@ -306,7 +301,7 @@ export default function PantryPage() {
                 className="px-3 py-1.5 rounded-full text-sm font-medium bg-red-500/10 border border-red-500/20 text-red-400 hover:bg-red-500/20 transition-all flex items-center gap-1"
               >
                 <X size={14} />
-                Filter zurücksetzen
+                {t('clearFilters')}
               </button>
             )}
           </div>
@@ -319,26 +314,26 @@ export default function PantryPage() {
           <div className="w-24 h-24 bg-amber-500/10 rounded-full flex items-center justify-center mb-6 shadow-inner ring-1 ring-amber-500/20">
             <Package size={40} className="text-amber-500" />
           </div>
-          <h3 className="text-2xl font-bold text-white mb-3">Gähnende Leere</h3>
-          <p className="text-zinc-400 mb-8 max-w-sm text-lg">Erfasse deine Vorräte, um Lebensmittelverschwendung zu vermeiden.</p>
+          <h3 className="text-2xl font-bold text-white mb-3">{t('noItems')}</h3>
+          <p className="text-zinc-400 mb-8 max-w-sm text-lg">{t('noItemsDescription')}</p>
           <Button onClick={handleAddClick} className="h-12 px-8 rounded-xl font-bold bg-white text-black hover:bg-zinc-200 transition-all hover:-translate-y-1 shadow-xl shadow-white/5">
-            Ersten Artikel hinzufügen
+            {t('addFirstItem')}
           </Button>
         </div>
       ) : filteredAndSortedItems.length === 0 ? (
         <div className="flex flex-col items-center justify-center py-32 text-center bg-zinc-900/50 backdrop-blur-md rounded-[32px] border-2 border-dashed border-white/10">
           <Search size={40} className="text-zinc-500 mb-4" />
-          <h3 className="text-xl font-bold text-white mb-2">Keine Artikel gefunden</h3>
-          <p className="text-zinc-400 mb-6">Passe deine Filter an oder füge neue Artikel hinzu.</p>
+          <h3 className="text-xl font-bold text-white mb-2">{t('noItemsFound')}</h3>
+          <p className="text-zinc-400 mb-6">{t('adjustFilters')}</p>
           <Button onClick={clearFilters} variant="outline" className="border-white/10 text-white hover:bg-white/10">
-            Filter zurücksetzen
+            {t('clearFilters')}
           </Button>
         </div>
       ) : (
         <>
           <div className="flex justify-between items-center">
             <p className="text-sm text-zinc-400">
-              {filteredAndSortedItems.length} von {items.length} Artikeln
+              {t('itemsOf', { filtered: filteredAndSortedItems.length, total: items.length })}
             </p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">

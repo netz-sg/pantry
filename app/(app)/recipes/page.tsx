@@ -2,11 +2,14 @@ import { Plus } from 'lucide-react';
 import { getRecipes } from '@/app/actions/recipes';
 import RecipeCard from '@/components/recipes/recipe-card';
 import Link from 'next/link';
+import { getTranslations } from 'next-intl/server';
 
 export const dynamic = 'force-dynamic';
 
 export default async function RecipesPage() {
-  const locale = 'de';
+  const locale = 'en' as 'de' | 'en';
+  const t = await getTranslations('recipes');
+  const tDashboard = await getTranslations('dashboard');
 
   const recipes = await getRecipes();
 
@@ -15,17 +18,17 @@ export default async function RecipesPage() {
       {/* Header */}
       <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-6 pt-4">
         <div>
-          <h1 className="text-4xl font-extrabold tracking-tight text-white mb-2">Rezepte</h1>
-          <p className="text-zinc-400 text-lg">Verwalte deine kulinarischen Meisterwerke.</p>
+          <h1 className="text-4xl font-extrabold tracking-tight text-white mb-2">{t('title')}</h1>
+          <p className="text-zinc-400 text-lg">{t('subtitle')}</p>
         </div>
         <Link
           href="/recipes/new"
           className="flex items-center gap-2 px-5 py-3 bg-white text-black text-sm font-bold rounded-xl hover:bg-zinc-200 transition-all hover:-translate-y-0.5 shadow-lg shadow-white/5"
         >
-          <Plus size={18} /> Neues Rezept
+          <Plus size={18} /> {t('newRecipe')}
         </Link>
       </div>
-      
+
       <div className="h-px bg-white/10" />
 
       {/* Recipe Grid */}
@@ -40,15 +43,15 @@ export default async function RecipesPage() {
           <div className="w-24 h-24 bg-white/5 rounded-full flex items-center justify-center mb-6 ring-1 ring-white/10">
             <Plus size={32} className="text-zinc-500" />
           </div>
-          <h2 className="text-2xl font-bold text-white mb-3">Deine Sammlung ist leer</h2>
+          <h2 className="text-2xl font-bold text-white mb-3">{tDashboard('kitchenEmpty')}</h2>
           <p className="text-zinc-400 max-w-md mb-8 text-lg">
-            Es wird Zeit, den Kochlöffel zu schwingen.
+            {tDashboard('startJourney')}
           </p>
           <Link
             href="/recipes/new"
             className="px-6 py-3 bg-white text-black rounded-xl hover:bg-zinc-200 transition-colors font-medium"
           >
-            Erstes Rezept erstellen
+            {tDashboard('createFirstRecipe')}
           </Link>
         </div>
       )}

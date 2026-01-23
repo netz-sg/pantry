@@ -5,10 +5,12 @@ import { eq } from "drizzle-orm"
 import { redirect } from "next/navigation"
 import { SettingsForm } from "@/components/settings/settings-form"
 import { User, Shield } from "lucide-react"
+import { getTranslations } from 'next-intl/server'
 
 export default async function SettingsPage() {
   const session = await auth()
-  
+  const t = await getTranslations('settings')
+
   if (!session?.user?.id) {
     redirect("/signin")
   }
@@ -31,23 +33,24 @@ export default async function SettingsPage() {
           </div>
           <div>
             <h1 className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
-              Einstellungen
+              {t('title')}
             </h1>
             <p className="text-sm text-zinc-400 mt-1">
-              Verwalten Sie Ihr Profil und Ihre Sicherheitseinstellungen
+              {t('subtitle')}
             </p>
           </div>
         </div>
       </div>
 
-      <SettingsForm 
+      <SettingsForm
         user={{
-            id: user.id,
-            name: user.name,
-            username: user.username,
-            image: user.image,
-        }} 
+          id: user.id,
+          name: user.name,
+          username: user.username,
+          image: user.image,
+        }}
       />
     </div>
   )
 }
+

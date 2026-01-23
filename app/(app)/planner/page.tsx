@@ -11,6 +11,7 @@ import {
 import { getRecipes } from '@/app/actions/recipes';
 import MealSlot from '@/components/planner/meal-slot';
 import AddMealDialog from '@/components/planner/add-meal-dialog';
+import { useTranslations } from 'next-intl';
 
 export const dynamic = 'force-dynamic';
 
@@ -43,7 +44,15 @@ export default function PlannerPage() {
   const [recipes, setRecipes] = useState<any[]>([]);
   const [dialogOpen, setDialogOpen] = useState(false);
   const [selectedSlot, setSelectedSlot] = useState<{ date: string; mealType: string } | null>(null);
-  const locale = 'de';
+  const locale = 'en' as 'de' | 'en';
+  const t = useTranslations('planner');
+
+  const MEAL_TYPE_LABELS: Record<string, string> = {
+    breakfast: t('breakfast'),
+    lunch: t('lunch'),
+    dinner: t('dinner'),
+    snack: t('snack'),
+  };
 
   useEffect(() => {
     loadWeeklyPlan();
@@ -98,8 +107,7 @@ export default function PlannerPage() {
 
   const handleGenerateShoppingList = async () => {
     const count = await generateWeeklyShoppingList(formatDate(currentWeekStart));
-    // Could use toast here instead of alert
-    alert(`${count} Artikel zur Einkaufsliste hinzugefügt!`);
+    alert(t('itemsAddedToList', { count }));
   };
 
   const weekDays = Array.from({ length: 7 }, (_, i) => {
@@ -118,94 +126,93 @@ export default function PlannerPage() {
       {/* Header Area */}
       <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 pb-6 border-b border-white/10">
         <div className="space-y-1">
-           <h1 className="text-3xl md:text-4xl font-black tracking-tight text-white">Wochenplaner</h1>
-           <div className="flex items-center gap-2 text-zinc-400 font-medium">
-                <CalendarIcon size={18} />
-                <span>{formatWeekRange(currentWeekStart)}</span>
-           </div>
+          <h1 className="text-3xl md:text-4xl font-black tracking-tight text-white">{t('title')}</h1>
+          <div className="flex items-center gap-2 text-zinc-400 font-medium">
+            <CalendarIcon size={18} />
+            <span>{formatWeekRange(currentWeekStart)}</span>
+          </div>
         </div>
 
         <div className="flex items-center gap-3">
-             <div className="flex items-center bg-zinc-900 border border-white/10 rounded-xl shadow-sm p-1">
-                <Button onClick={handlePrevWeek} variant="ghost" size="icon" className="h-9 w-9 hover:bg-white/10 rounded-lg text-zinc-400 hover:text-white">
-                    <ChevronLeft size={20} />
-                </Button>
-                <div className="w-px h-5 bg-white/10 mx-1" />
-                <Button onClick={handleJumpToToday} variant="ghost" className="h-9 px-3 text-xs font-bold uppercase tracking-wider text-zinc-400 hover:text-white hover:bg-white/10 rounded-lg">
-                    Heute
-                </Button>
-                <div className="w-px h-5 bg-white/10 mx-1" />
-                <Button onClick={handleNextWeek} variant="ghost" size="icon" className="h-9 w-9 hover:bg-white/10 rounded-lg text-zinc-400 hover:text-white">
-                    <ChevronRight size={20} />
-                </Button>
-             </div>
-             
-             <Button 
-                onClick={handleGenerateShoppingList} 
-                className="h-11 px-5 rounded-xl gap-2 font-semibold shadow-lg shadow-blue-500/10 bg-white hover:bg-zinc-200 text-black border border-white/20"
-             >
-                <ShoppingBag size={18} />
-                <span className="hidden md:inline">Einkaufsliste</span>
+          <div className="flex items-center bg-zinc-900 border border-white/10 rounded-xl shadow-sm p-1">
+            <Button onClick={handlePrevWeek} variant="ghost" size="icon" className="h-9 w-9 hover:bg-white/10 rounded-lg text-zinc-400 hover:text-white">
+              <ChevronLeft size={20} />
             </Button>
+            <div className="w-px h-5 bg-white/10 mx-1" />
+            <Button onClick={handleJumpToToday} variant="ghost" className="h-9 px-3 text-xs font-bold uppercase tracking-wider text-zinc-400 hover:text-white hover:bg-white/10 rounded-lg">
+              {t('today')}
+            </Button>
+            <div className="w-px h-5 bg-white/10 mx-1" />
+            <Button onClick={handleNextWeek} variant="ghost" size="icon" className="h-9 w-9 hover:bg-white/10 rounded-lg text-zinc-400 hover:text-white">
+              <ChevronRight size={20} />
+            </Button>
+          </div>
+
+          <Button
+            onClick={handleGenerateShoppingList}
+            className="h-11 px-5 rounded-xl gap-2 font-semibold shadow-lg shadow-blue-500/10 bg-white hover:bg-zinc-200 text-black border border-white/20"
+          >
+            <ShoppingBag size={18} />
+            <span className="hidden md:inline">{t('shoppingList')}</span>
+          </Button>
         </div>
       </div>
 
       {/* Week Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-6">
         {weekDays.map((date) => {
-            const isCurrentDay = isToday(date);
-            return (
-                <div 
-                    key={date.toISOString()} 
-                    className={`
+          const isCurrentDay = isToday(date);
+          return (
+            <div
+              key={date.toISOString()}
+              className={`
                         flex flex-col gap-4 p-5 rounded-[2rem] border transition-all duration-500 relative overflow-hidden group/day
-                        ${isCurrentDay 
-                            ? 'bg-gradient-to-br from-blue-900/40 to-zinc-900 border-blue-500/30 shadow-xl shadow-blue-900/20' 
-                            : 'bg-zinc-900/50 border-white/5 shadow-sm hover:shadow-xl hover:shadow-black/20 hover:border-white/10'
-                        }
+                        ${isCurrentDay
+                  ? 'bg-gradient-to-br from-blue-900/40 to-zinc-900 border-blue-500/30 shadow-xl shadow-blue-900/20'
+                  : 'bg-zinc-900/50 border-white/5 shadow-sm hover:shadow-xl hover:shadow-black/20 hover:border-white/10'
+                }
                     `}
-                >
-                    {/* Background decorations */}
-                    <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-transparent to-white/5 rounded-bl-[4rem] -z-10 opacity-0 group-hover/day:opacity-100 transition-opacity" />
+            >
+              {/* Background decorations */}
+              <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-transparent to-white/5 rounded-bl-[4rem] -z-10 opacity-0 group-hover/day:opacity-100 transition-opacity" />
 
-                    {/* Day Header */}
-                    <div className="flex items-center justify-between pb-4 border-b border-white/5">
-                        <div className="flex flex-col">
-                            <span className={`text-xs font-bold uppercase tracking-[0.2em] mb-0.5 ${isCurrentDay ? 'text-blue-400' : 'text-zinc-500'}`}>
-                                {date.toLocaleDateString(locale === 'de' ? 'de-DE' : 'en-US', { weekday: 'long' })}
-                            </span>
-                            <span className="text-sm text-zinc-400 font-medium">
-                                {date.toLocaleDateString(locale === 'de' ? 'de-DE' : 'en-US', { month: 'long', day: 'numeric' })}
-                            </span>
-                        </div>
-                        <div className={`flex items-center justify-center w-12 h-12 rounded-2xl text-xl font-black transition-all shadow-sm ${
-                            isCurrentDay 
-                            ? 'bg-blue-600 text-white shadow-blue-600/20' 
-                            : 'bg-white/5 text-white group-hover/day:bg-white/10'
-                        }`}>
-                            {date.getDate()}
-                        </div>
-                    </div>
-
-                    {/* Meal Slots */}
-                    <div className="flex-1 flex flex-col gap-3 min-h-[200px]">
-                        {MEAL_TYPES.map((mealType) => {
-                            const meal = getMealForSlot(date, mealType);
-                            return (
-                                <MealSlot
-                                    key={mealType}
-                                    mealType={mealType}
-                                    mealTypeLabel={MEAL_TYPE_LABELS[mealType]}
-                                    meal={meal}
-                                    locale={locale}
-                                    onAdd={() => handleAddMeal(formatDate(date), mealType)}
-                                    onRemove={() => meal && handleRemoveMeal(meal.id)}
-                                />
-                            );
-                        })}
-                    </div>
+              {/* Day Header */}
+              <div className="flex items-center justify-between pb-4 border-b border-white/5">
+                <div className="flex flex-col">
+                  <span className={`text-xs font-bold uppercase tracking-[0.2em] mb-0.5 ${isCurrentDay ? 'text-blue-400' : 'text-zinc-500'}`}>
+                    {date.toLocaleDateString(locale === 'de' ? 'de-DE' : 'en-US', { weekday: 'long' })}
+                  </span>
+                  <span className="text-sm text-zinc-400 font-medium">
+                    {date.toLocaleDateString(locale === 'de' ? 'de-DE' : 'en-US', { month: 'long', day: 'numeric' })}
+                  </span>
                 </div>
-            );
+                <div className={`flex items-center justify-center w-12 h-12 rounded-2xl text-xl font-black transition-all shadow-sm ${isCurrentDay
+                    ? 'bg-blue-600 text-white shadow-blue-600/20'
+                    : 'bg-white/5 text-white group-hover/day:bg-white/10'
+                  }`}>
+                  {date.getDate()}
+                </div>
+              </div>
+
+              {/* Meal Slots */}
+              <div className="flex-1 flex flex-col gap-3 min-h-[200px]">
+                {MEAL_TYPES.map((mealType) => {
+                  const meal = getMealForSlot(date, mealType);
+                  return (
+                    <MealSlot
+                      key={mealType}
+                      mealType={mealType}
+                      mealTypeLabel={MEAL_TYPE_LABELS[mealType]}
+                      meal={meal}
+                      locale={locale}
+                      onAdd={() => handleAddMeal(formatDate(date), mealType)}
+                      onRemove={() => meal && handleRemoveMeal(meal.id)}
+                    />
+                  );
+                })}
+              </div>
+            </div>
+          );
         })}
       </div>
 

@@ -25,7 +25,7 @@ interface PantryItemProps {
 
 export default function PantryItem({ item, locale, onEdit }: PantryItemProps) {
   const [isPending, startTransition] = useTransition();
-  const name = locale === 'de' ? item.nameDe : item.nameEn;
+  const name = locale === 'de' ? (item.nameDe || item.nameEn) : (item.nameEn || item.nameDe);
 
   const handleIncrement = () => {
     startTransition(() => {
@@ -62,15 +62,14 @@ export default function PantryItem({ item, locale, onEdit }: PantryItemProps) {
 
   return (
     <div
-      className={`border rounded-xl p-4 hover:shadow-md transition-all ${
-        isExpired
-            ? 'border-red-500/30 bg-red-950/20'
-            : isExpiringSoon
+      className={`border rounded-xl p-4 hover:shadow-md transition-all ${isExpired
+          ? 'border-red-500/30 bg-red-950/20'
+          : isExpiringSoon
             ? 'border-orange-500/30 bg-orange-950/20'
             : isLowStock
-            ? 'border-yellow-500/30 bg-yellow-950/20'
-            : 'border-white/10 bg-zinc-900/50 backdrop-blur-md hover:border-white/20'
-      }`}
+              ? 'border-yellow-500/30 bg-yellow-950/20'
+              : 'border-white/10 bg-zinc-900/50 backdrop-blur-md hover:border-white/20'
+        }`}
     >
       <div className="flex items-start gap-3">
         {/* Icon */}
@@ -100,13 +99,12 @@ export default function PantryItem({ item, locale, onEdit }: PantryItemProps) {
             )}
             {item.expiryDate && (
               <span
-                className={`px-2 py-0.5 rounded-full border ${
-                  isExpired
+                className={`px-2 py-0.5 rounded-full border ${isExpired
                     ? 'bg-red-500/10 border-red-500/20 text-red-400'
                     : isExpiringSoon
-                    ? 'bg-orange-500/10 border-orange-500/20 text-orange-400'
-                    : 'bg-white/5 border-white/5'
-                }`}
+                      ? 'bg-orange-500/10 border-orange-500/20 text-orange-400'
+                      : 'bg-white/5 border-white/5'
+                  }`}
               >
                 {new Date(item.expiryDate).toLocaleDateString(locale === 'de' ? 'de-DE' : 'en-US')}
               </span>

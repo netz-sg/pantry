@@ -14,46 +14,47 @@ declare module 'next-auth' {
   }
 }
 
+// Credentials provider for username/password login
+const CredentialsProvider = Credentials({
+  credentials: {
+    username: { label: 'Username', type: 'text' },
+    password: { label: 'Password', type: 'password' },
+  },
+  authorize: async (credentials) => {
+    if (!credentials?.username || !credentials?.password) {
+      return null;
+    }
+
+    const user = await db.query.users.findFirst({
+      where: eq(users.username, credentials.username as string),
+    });
+
+    if (!user) {
+      return null;
+    }
+
+    const isValid = await bcrypt.compare(
+      credentials.password as string,
+      user.passwordHash
+    );
+
+    if (!isValid) {
+      return null;
+    }
+
+    return {
+      id: user.id,
+      email: user.email,
+      name: user.name,
+      image: user.image,
+    };
+  },
+});
+
 export const { handlers, signIn, signOut, auth } = NextAuth({
   secret: process.env.AUTH_SECRET,
   trustHost: true,
-  providers: [
-    Credentials({
-      credentials: {
-        username: { label: 'Username', type: 'text' },
-        password: { label: 'Password', type: 'password' },
-      },
-      authorize: async (credentials) => {
-        if (!credentials?.username || !credentials?.password) {
-          return null;
-        }
-
-        const user = await db.query.users.findFirst({
-          where: eq(users.username, credentials.username as string),
-        });
-
-        if (!user) {
-          return null;
-        }
-
-        const isValid = await bcrypt.compare(
-          credentials.password as string,
-          user.passwordHash
-        );
-
-        if (!isValid) {
-          return null;
-        }
-
-        return {
-          id: user.id,
-          email: user.email,
-          name: user.name,
-          image: user.image,
-        };
-      },
-    }),
-  ],
+  providers: [CredentialsProvider],
   session: {
     strategy: 'jwt',
   },
@@ -75,7 +76,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     async session({ session, token }) {
       if (session.user) {
         session.user.id = token.id as string;
-        session.user.image = token.picture;
+        session.user.image = token.picture as string;
       }
       return session;
     },

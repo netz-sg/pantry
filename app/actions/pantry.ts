@@ -30,7 +30,7 @@ export async function addPantryItem(formData: FormData) {
   }
 
   const nameDe = formData.get('nameDe') as string;
-  const nameEn = formData.get('nameEn') as string;
+  const nameEn = (formData.get('nameEn') as string) || nameDe; // Use nameDe as fallback
   const quantity = parseFloat(formData.get('quantity') as string) || 1;
   const unit = formData.get('unit') as string;
   const location = formData.get('location') as string;
@@ -72,7 +72,7 @@ export async function updatePantryItem(itemId: string, formData: FormData) {
   }
 
   const nameDe = formData.get('nameDe') as string;
-  const nameEn = formData.get('nameEn') as string;
+  const nameEn = (formData.get('nameEn') as string) || nameDe; // Use nameDe as fallback
   const quantity = parseFloat(formData.get('quantity') as string) || 1;
   const unit = formData.get('unit') as string;
   const location = formData.get('location') as string;
