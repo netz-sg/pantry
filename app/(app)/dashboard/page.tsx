@@ -4,12 +4,16 @@ import { getRecipes } from '@/app/actions/recipes';
 import FeaturedRecipe from '@/components/recipes/featured-recipe';
 import RecipeCard from '@/components/recipes/recipe-card';
 import Link from 'next/link';
+import { getTranslations } from 'next-intl/server';
 
 export const dynamic = 'force-dynamic';
 
 export default async function DashboardPage() {
-  const locale = 'de';
+  const locale = 'en' as 'de' | 'en';
   const session = await auth();
+  const t = await getTranslations('dashboard');
+  const tRecipes = await getTranslations('recipes');
+  const tCommon = await getTranslations('common');
 
   const allRecipes = await getRecipes();
   const featuredRecipe = allRecipes[0];
@@ -23,35 +27,34 @@ export default async function DashboardPage() {
         <div className="relative z-10 flex flex-col md:flex-row justify-between items-start md:items-center gap-8">
           <div className="space-y-4 max-w-2xl">
             <span className="inline-block px-4 py-1.5 rounded-full bg-white/10 border border-white/10 text-sm font-medium backdrop-blur-md">
-              👋 Willkommen zurück, {session?.user?.name?.split(' ')[0]}
+              👋 {t('welcome')}, {session?.user?.name?.split(' ')[0]}
             </span>
             <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight leading-none">
-              Was kochen wir <br/> <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-indigo-400">heute?</span>
+              {t('whatToCook')} <br /> <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-indigo-400">{t('today')}</span>
             </h1>
             <p className="text-zinc-300 text-lg leading-relaxed max-w-lg">
-              Du hast <strong className="text-white">{allRecipes.length} Rezepte</strong> in deiner Sammlung. 
-              Entdecke neue Ideen oder plane deine Woche.
+              {t('recipesInCollection', { count: allRecipes.length })}
             </p>
           </div>
-          
+
           <div className="flex flex-col gap-3 w-full md:w-auto">
-             <Link
+            <Link
               href="/recipes/new"
               className="flex items-center justify-center gap-2 px-8 py-4 bg-white text-black rounded-2xl font-bold hover:bg-zinc-100 transition-all hover:scale-105 shadow-xl shadow-white/10"
             >
               <Plus size={20} />
-              Neues Rezept
+              {tRecipes('newRecipe')}
             </Link>
             <div className="relative w-full md:w-80 h-14 group">
-                <div className="absolute inset-0 bg-white/5 rounded-2xl blur-sm group-hover:bg-white/10 transition-all" />
-                <div className="relative h-full flex items-center px-4 rounded-2xl bg-white/10 border border-white/10 backdrop-blur-xl hover:bg-white/15 transition-colors">
-                  <Search className="text-zinc-400 mr-3" size={20} />
-                  <input
-                    type="text"
-                    placeholder="Suche nach Rezepten..."
-                    className="bg-transparent border-none focus:outline-none text-white w-full placeholder:text-zinc-400 placeholder:font-medium"
-                  />
-               </div>
+              <div className="absolute inset-0 bg-white/5 rounded-2xl blur-sm group-hover:bg-white/10 transition-all" />
+              <div className="relative h-full flex items-center px-4 rounded-2xl bg-white/10 border border-white/10 backdrop-blur-xl hover:bg-white/15 transition-colors">
+                <Search className="text-zinc-400 mr-3" size={20} />
+                <input
+                  type="text"
+                  placeholder={tRecipes('searchRecipes')}
+                  className="bg-transparent border-none focus:outline-none text-white w-full placeholder:text-zinc-400 placeholder:font-medium"
+                />
+              </div>
             </div>
           </div>
         </div>
@@ -61,8 +64,8 @@ export default async function DashboardPage() {
       {featuredRecipe && (
         <section className="space-y-6">
           <div className="flex items-center gap-4">
-             <div className="w-1 h-8 bg-white rounded-full" />
-             <h2 className="text-2xl font-bold text-white tracking-tight">Empfehlung des Tages</h2>
+            <div className="w-1 h-8 bg-white rounded-full" />
+            <h2 className="text-2xl font-bold text-white tracking-tight">{t('recommendedToday')}</h2>
           </div>
           <FeaturedRecipe recipe={featuredRecipe} locale={locale} />
         </section>
@@ -73,14 +76,14 @@ export default async function DashboardPage() {
         <section className="space-y-8">
           <div className="flex justify-between items-end px-2">
             <div>
-              <h2 className="text-2xl font-bold text-white tracking-tight mb-1">Frisch gekocht</h2>
-               <p className="text-zinc-400 text-sm font-medium">Deine neuesten Kreationen</p>
+              <h2 className="text-2xl font-bold text-white tracking-tight mb-1">{t('freshlyCooked')}</h2>
+              <p className="text-zinc-400 text-sm font-medium">{t('yourLatestCreations')}</p>
             </div>
             <Link
               href="/recipes"
               className="px-5 py-2.5 rounded-xl bg-white/5 border border-white/10 text-sm font-bold text-zinc-300 hover:text-white hover:border-white hover:bg-white/10 transition-all"
             >
-              Alle ansehen
+              {t('viewAll')}
             </Link>
           </div>
 
@@ -98,18 +101,19 @@ export default async function DashboardPage() {
           <div className="w-24 h-24 bg-white/5 rounded-full flex items-center justify-center mb-8 shadow-inner ring-1 ring-white/10">
             <Plus size={40} className="text-zinc-500" />
           </div>
-          <h2 className="text-3xl font-bold text-white mb-4 tracking-tight">Deine Küche ist leer</h2>
+          <h2 className="text-3xl font-bold text-white mb-4 tracking-tight">{t('kitchenEmpty')}</h2>
           <p className="text-zinc-400 max-w-md mb-8 text-lg">
-            Starte deine kulinarische Reise und füge dein allererstes Rezept hinzu.
+            {t('startJourney')}
           </p>
           <Link
             href="/recipes/new"
             className="px-8 py-4 bg-white text-black rounded-2xl font-bold hover:bg-zinc-200 transition-all hover:-translate-y-1 shadow-xl shadow-white/5"
           >
-            Erstes Rezept erstellen
+            {t('createFirstRecipe')}
           </Link>
         </div>
       )}
     </div>
   );
 }
+

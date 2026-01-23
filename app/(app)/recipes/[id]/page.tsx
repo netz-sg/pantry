@@ -10,7 +10,7 @@ export default async function RecipeDetailPage({
   params: Promise<{ id: string }>;
 }) {
   const { id } = await params;
-  const locale = 'de';
+  const locale = 'en' as 'de' | 'en';
 
   const recipe = await getRecipeById(id);
 

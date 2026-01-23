@@ -47,6 +47,7 @@ export default function RecipeCard({ recipe, locale }: RecipeCardProps) {
           <img
             src={recipe.imageUrl}
             alt={title || 'Recipe'}
+            referrerPolicy="no-referrer"
             className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
           />
         ) : (
@@ -55,10 +56,10 @@ export default function RecipeCard({ recipe, locale }: RecipeCardProps) {
           </div>
         )}
         <div className="absolute inset-0 bg-gradient-to-t from-[#09090b] via-transparent to-transparent opacity-80 group-hover:opacity-60 transition-opacity" />
-        
+
         {/* Badges over image */}
         <div className="absolute bottom-4 left-4 right-4 flex justify-between items-end">
-           <span className="px-3 py-1 bg-black/40 backdrop-blur-md rounded-full text-white text-[10px] font-bold uppercase tracking-widest border border-white/10">
+          <span className="px-3 py-1 bg-black/40 backdrop-blur-md rounded-full text-white text-[10px] font-bold uppercase tracking-widest border border-white/10">
             {recipe.category || 'Rezept'}
           </span>
           {totalTime > 0 && (
@@ -73,7 +74,7 @@ export default function RecipeCard({ recipe, locale }: RecipeCardProps) {
             <Heart size={14} fill="currentColor" />
           </div>
         )}
-        
+
         <button
           onClick={handleFavoriteClick}
           disabled={isPending}
@@ -90,10 +91,10 @@ export default function RecipeCard({ recipe, locale }: RecipeCardProps) {
         <p className="text-sm text-zinc-400 line-clamp-2 leading-relaxed mb-6 font-medium group-hover:text-zinc-300 transition-colors">
           {description || 'Keine Beschreibung verfügbar.'}
         </p>
-        
+
         <div className="mt-auto pt-6 border-t border-white/5 flex items-center justify-between">
           <div className="flex -space-x-2">
-           {/* Mock avatars or just a nice generic indicator */}
+            {/* Mock avatars or just a nice generic indicator */}
             <div className="w-6 h-6 rounded-full bg-zinc-800 border-2 border-[#121214] flex items-center justify-center text-[10px] text-zinc-500">🍽️</div>
             <span className="pl-3 text-xs font-bold text-zinc-500 self-center uppercase tracking-wider group-hover:text-zinc-400">
               {recipe.servings} Portionen

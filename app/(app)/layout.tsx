@@ -10,7 +10,7 @@ export default async function AppLayout({
 }: {
   children: ReactNode;
 }) {
-  const locale = 'de';
+  const locale = 'en' as 'de' | 'en';
 
   return (
     <div className="min-h-screen bg-[#09090b] text-zinc-100 font-sans relative overflow-x-hidden">

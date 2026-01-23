@@ -6,7 +6,7 @@ const DATABASE_URL = process.env.DATABASE_URL?.replace('file:', '') || './data/p
 
 export function initializeDatabase() {
   console.log('🔧 Initializing database schema...');
-  
+
   const sqlite = new Database(DATABASE_URL);
   const db = drizzle(sqlite, { schema });
 
@@ -24,7 +24,7 @@ export function initializeDatabase() {
       created_at INTEGER NOT NULL,
       updated_at INTEGER NOT NULL
     )`,
-    
+
     // Recipes table
     `CREATE TABLE IF NOT EXISTS recipes (
       id TEXT PRIMARY KEY NOT NULL,
@@ -46,7 +46,7 @@ export function initializeDatabase() {
       created_at INTEGER NOT NULL,
       updated_at INTEGER NOT NULL
     )`,
-    
+
     // Recipe ingredients table
     `CREATE TABLE IF NOT EXISTS recipe_ingredients (
       id TEXT PRIMARY KEY NOT NULL,
@@ -57,7 +57,7 @@ export function initializeDatabase() {
       unit TEXT NOT NULL,
       "order" INTEGER NOT NULL DEFAULT 0
     )`,
-    
+
     // Recipe instructions table
     `CREATE TABLE IF NOT EXISTS recipe_instructions (
       id TEXT PRIMARY KEY NOT NULL,
@@ -66,7 +66,7 @@ export function initializeDatabase() {
       instruction_de TEXT,
       instruction_en TEXT
     )`,
-    
+
     // Favorites table
     `CREATE TABLE IF NOT EXISTS favorites (
       id TEXT PRIMARY KEY NOT NULL,
@@ -74,7 +74,7 @@ export function initializeDatabase() {
       recipe_id TEXT NOT NULL REFERENCES recipes(id) ON DELETE CASCADE,
       created_at INTEGER NOT NULL
     )`,
-    
+
     // Meal plans table
     `CREATE TABLE IF NOT EXISTS meal_plans (
       id TEXT PRIMARY KEY NOT NULL,
@@ -86,7 +86,7 @@ export function initializeDatabase() {
       notes TEXT,
       created_at INTEGER NOT NULL
     )`,
-    
+
     // Pantry items table
     `CREATE TABLE IF NOT EXISTS pantry_items (
       id TEXT PRIMARY KEY NOT NULL,
@@ -103,7 +103,7 @@ export function initializeDatabase() {
       created_at INTEGER NOT NULL,
       updated_at INTEGER NOT NULL
     )`,
-    
+
     // Shopping list items table
     `CREATE TABLE IF NOT EXISTS shopping_list_items (
       id TEXT PRIMARY KEY NOT NULL,
@@ -117,7 +117,7 @@ export function initializeDatabase() {
       created_at INTEGER NOT NULL,
       updated_at INTEGER NOT NULL
     )`,
-    
+
     // Categories table
     `CREATE TABLE IF NOT EXISTS categories (
       id TEXT PRIMARY KEY NOT NULL,

@@ -9,11 +9,12 @@ import { createRecipe, updateRecipe, scrapeRecipe } from '@/app/actions/recipes'
 import { getCategories, createCategory, type CategoryOption } from '@/app/actions/categories';
 import {
   Dialog,
-  DialogContent, // Fixed: Use DialogContent instead of DialogPortal/Overlay manually if possible, or follow existing. The file read shows DialogContent is exported.
+  DialogContent,
   DialogHeader,
   DialogTitle,
   DialogFooter,
 } from "@/components/ui/dialog"
+import { useTranslations } from 'next-intl';
 
 interface Ingredient {
   name: string;
@@ -49,6 +50,9 @@ interface RecipeFormProps {
 }
 
 export default function RecipeForm({ locale, recipeId, initialData }: RecipeFormProps) {
+  const t = useTranslations('recipes');
+  const tCommon = useTranslations('common');
+  const tCategories = useTranslations('recipeCategories');
   const [scrapeUrl, setScrapeUrl] = useState('');
   const [isScraping, setIsScraping] = useState(false);
   const [scrapedData, setScrapedData] = useState<any>(null);
@@ -67,7 +71,7 @@ export default function RecipeForm({ locale, recipeId, initialData }: RecipeForm
 
   useEffect(() => {
     if (scrapedData?.category) {
-       setSelectedCategory(scrapedData.category);
+      setSelectedCategory(scrapedData.category);
     }
   }, [scrapedData]);
 
@@ -75,20 +79,20 @@ export default function RecipeForm({ locale, recipeId, initialData }: RecipeForm
     if (!newCategoryName.trim()) return;
     setIsCreatingCategory(true);
     try {
-        const result = await createCategory(newCategoryName);
-        if (result.error) {
-            alert(result.error);
-        } else if (result.data) {
-            const cats = await getCategories();
-            setCategories(cats);
-            setSelectedCategory(result.data.name);
-            setShowCategoryDialog(false);
-            setNewCategoryName('');
-        }
-    } catch(e) {
-        alert('Fehler beim Erstellen der Kategorie');
+      const result = await createCategory(newCategoryName);
+      if (result.error) {
+        alert(result.error);
+      } else if (result.data) {
+        const cats = await getCategories();
+        setCategories(cats);
+        setSelectedCategory(result.data.name);
+        setShowCategoryDialog(false);
+        setNewCategoryName('');
+      }
+    } catch (e) {
+      alert(t('errorCreatingCategory'));
     } finally {
-        setIsCreatingCategory(false);
+      setIsCreatingCategory(false);
     }
   };
 
@@ -96,29 +100,29 @@ export default function RecipeForm({ locale, recipeId, initialData }: RecipeForm
   const [ingredients, setIngredients] = useState<Ingredient[]>(
     initialData?.ingredients && initialData.ingredients.length > 0
       ? initialData.ingredients.map((ing) => ({
-          name: ing.nameDe || '',
-          amount: ing.amount.toString(),
-          unit: ing.unit,
-        }))
+        name: ing.nameDe || '',
+        amount: ing.amount.toString(),
+        unit: ing.unit,
+      }))
       : [{ name: '', amount: '', unit: 'g' }]
   );
   const [instructions, setInstructions] = useState<Instruction[]>(
     initialData?.instructions && initialData.instructions.length > 0
       ? initialData.instructions.map((inst) => ({
-          instruction: inst.instructionDe || '',
-        }))
+        instruction: inst.instructionDe || '',
+      }))
       : [{ instruction: '' }]
   );
 
   const handleScrape = async () => {
     if (!scrapeUrl) return;
-    
+
     setIsScraping(true);
     try {
       const data = await scrapeRecipe(scrapeUrl);
       if (data) {
         setScrapedData(data);
-        
+
         // Update ingredients
         if (data.ingredients && data.ingredients.length > 0) {
           setIngredients(data.ingredients.map((ing: any) => ({
@@ -138,11 +142,11 @@ export default function RecipeForm({ locale, recipeId, initialData }: RecipeForm
         // Force form re-render to update default values
         setFormKey(prev => prev + 1);
       } else {
-        alert('Konnte Rezept nicht von dieser URL laden.');
+        alert(t('scrapeError'));
       }
     } catch (error) {
       console.error(error);
-      alert('Ein Fehler ist aufgetreten.');
+      alert(t('errorOccurred'));
     } finally {
       setIsScraping(false);
     }
@@ -190,30 +194,30 @@ export default function RecipeForm({ locale, recipeId, initialData }: RecipeForm
         <div className="bg-zinc-900 p-6 rounded-2xl border border-white/10 shadow-lg shadow-black/20">
           <h3 className="font-bold text-lg mb-4 flex items-center gap-2 text-white">
             <Download size={20} className="text-blue-400" />
-            Rezept importieren
+            {t('importRecipe')}
           </h3>
           <div className="flex gap-2">
-             <div className="relative flex-1">
-                <LinkIcon className="absolute left-3 top-1/2 -translate-y-1/2 text-zinc-500" size={16} />
-                <Input 
-                  placeholder="Rezept URL (z.B. Chefkoch...)" 
-                  className="pl-9 bg-zinc-950 border-white/10 text-white placeholder:text-zinc-600 focus-visible:ring-blue-500/50" 
-                  value={scrapeUrl}
-                  onChange={(e) => setScrapeUrl(e.target.value)}
-                  onKeyDown={(e) => {
-                      if (e.key === 'Enter') {
-                          e.preventDefault();
-                          handleScrape();
-                      }
-                  }}
-                />
-             </div>
-             <Button onClick={handleScrape} disabled={isScraping || !scrapeUrl} className="bg-white text-black hover:bg-zinc-200">
-               {isScraping ? <Loader2 className="animate-spin" size={18} /> : 'Importieren'}
-             </Button>
+            <div className="relative flex-1">
+              <LinkIcon className="absolute left-3 top-1/2 -translate-y-1/2 text-zinc-500" size={16} />
+              <Input
+                placeholder={t('recipeUrlPlaceholder')}
+                className="pl-9 bg-zinc-950 border-white/10 text-white placeholder:text-zinc-600 focus-visible:ring-blue-500/50"
+                value={scrapeUrl}
+                onChange={(e) => setScrapeUrl(e.target.value)}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter') {
+                    e.preventDefault();
+                    handleScrape();
+                  }
+                }}
+              />
+            </div>
+            <Button onClick={handleScrape} disabled={isScraping || !scrapeUrl} className="bg-white text-black hover:bg-zinc-200">
+              {isScraping ? <Loader2 className="animate-spin" size={18} /> : t('import')}
+            </Button>
           </div>
           <p className="text-xs text-zinc-500 mt-2">
-            Unterstützt viele gängige Rezept-Webseiten.
+            {t('supportsWebsites')}
           </p>
         </div>
       )}
@@ -224,35 +228,35 @@ export default function RecipeForm({ locale, recipeId, initialData }: RecipeForm
 
         {/* Basic Info */}
         <div className="space-y-6 bg-zinc-900/50 p-6 rounded-2xl border border-white/5 backdrop-blur-sm">
-          <h3 className="font-bold text-xl text-white">Grundinformationen</h3>
+          <h3 className="font-bold text-xl text-white">{t('basicInfo')}</h3>
 
           <div className="space-y-2">
-            <Label htmlFor="titleDe" className="text-zinc-400">Titel *</Label>
+            <Label htmlFor="titleDe" className="text-zinc-400">{t('recipeTitle')} *</Label>
             <Input
               id="titleDe"
               name="titleDe"
               required
-              placeholder="z.B. Spaghetti Carbonara"
+              placeholder={t('titlePlaceholder')}
               defaultValue={data?.titleDe || ''}
               className="bg-zinc-950 border-white/10 text-white placeholder:text-zinc-600 focus-visible:ring-white/20"
             />
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="descriptionDe" className="text-zinc-400">Beschreibung</Label>
+            <Label htmlFor="descriptionDe" className="text-zinc-400">{t('description')}</Label>
             <textarea
               id="descriptionDe"
               name="descriptionDe"
               className="w-full px-3 py-2 bg-zinc-950 border border-white/10 rounded-lg text-white placeholder:text-zinc-600 focus:outline-none focus:ring-2 focus:ring-white/20 text-sm min-h-[100px]"
               rows={3}
-              placeholder="Beschreibe dein Rezept..."
+              placeholder={t('descriptionPlaceholder')}
               defaultValue={data?.descriptionDe || ''}
             />
           </div>
 
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             <div className="space-y-2">
-              <Label htmlFor="prepTime" className="text-zinc-400">Vorbereitungszeit (Min)</Label>
+              <Label htmlFor="prepTime" className="text-zinc-400">{t('prepTimeLabel')}</Label>
               <Input
                 id="prepTime"
                 name="prepTime"
@@ -263,7 +267,7 @@ export default function RecipeForm({ locale, recipeId, initialData }: RecipeForm
               />
             </div>
             <div className="space-y-2">
-              <Label htmlFor="cookTime" className="text-zinc-400">Kochzeit (Min)</Label>
+              <Label htmlFor="cookTime" className="text-zinc-400">{t('cookTimeLabel')}</Label>
               <Input
                 id="cookTime"
                 name="cookTime"
@@ -274,7 +278,7 @@ export default function RecipeForm({ locale, recipeId, initialData }: RecipeForm
               />
             </div>
             <div className="space-y-2">
-              <Label htmlFor="servings" className="text-zinc-400">Portionen</Label>
+              <Label htmlFor="servings" className="text-zinc-400">{t('servingsLabel')}</Label>
               <Input
                 id="servings"
                 name="servings"
@@ -284,7 +288,7 @@ export default function RecipeForm({ locale, recipeId, initialData }: RecipeForm
               />
             </div>
             <div className="space-y-2">
-              <Label htmlFor="calories" className="text-zinc-400">Kalorien</Label>
+              <Label htmlFor="calories" className="text-zinc-400">{t('caloriesLabel')}</Label>
               <Input
                 id="calories"
                 name="calories"
@@ -298,37 +302,37 @@ export default function RecipeForm({ locale, recipeId, initialData }: RecipeForm
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="space-y-2">
-              <Label htmlFor="category" className="text-zinc-400">Kategorie</Label>
+              <Label htmlFor="category" className="text-zinc-400">{t('categoryLabel')}</Label>
               <div className="flex gap-2">
-                 <div className="relative flex-1">
-                    <select
-                      id="category"
-                      name="category"
-                      className="w-full appearance-none px-3 py-2 bg-zinc-950 border border-white/10 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-white/20 text-sm"
-                      value={selectedCategory}
-                      onChange={(e) => setSelectedCategory(e.target.value)}
-                    >
-                      <option value="" className="bg-zinc-900">Wähle eine Kategorie</option>
-                      {categories.map((cat) => (
-                        <option key={cat.id} value={cat.value} className="bg-zinc-900">
-                          {cat.label}
-                        </option>
-                      ))}
-                    </select>
-                 </div>
-                <Button 
-                  type="button" 
-                  variant="outline" 
+                <div className="relative flex-1">
+                  <select
+                    id="category"
+                    name="category"
+                    className="w-full appearance-none px-3 py-2 bg-zinc-950 border border-white/10 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-white/20 text-sm"
+                    value={selectedCategory}
+                    onChange={(e) => setSelectedCategory(e.target.value)}
+                  >
+                    <option value="" className="bg-zinc-900">{t('selectCategory')}</option>
+                    {categories.map((cat) => (
+                      <option key={cat.id} value={cat.value} className="bg-zinc-900">
+                        {cat.isSystem ? tCategories(cat.value) : cat.label}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+                <Button
+                  type="button"
+                  variant="outline"
                   className="px-3 border-white/10 bg-zinc-900 text-white hover:bg-zinc-800 hover:text-white"
                   onClick={() => setShowCategoryDialog(true)}
-                  title="Neue Kategorie erstellen"
+                  title={t('createNewCategory')}
                 >
                   <Plus size={16} />
                 </Button>
               </div>
             </div>
             <div className="space-y-2">
-              <Label htmlFor="imageUrl" className="text-zinc-400">Bild URL</Label>
+              <Label htmlFor="imageUrl" className="text-zinc-400">{t('imageUrl')}</Label>
               <Input
                 id="imageUrl"
                 name="imageUrl"
@@ -344,9 +348,9 @@ export default function RecipeForm({ locale, recipeId, initialData }: RecipeForm
         {/* Ingredients */}
         <div className="space-y-4 bg-zinc-900/50 p-6 rounded-2xl border border-white/5 backdrop-blur-sm">
           <div className="flex justify-between items-center">
-            <h3 className="font-bold text-xl text-white">Zutaten *</h3>
+            <h3 className="font-bold text-xl text-white">{t('ingredientsTitle')} *</h3>
             <Button type="button" onClick={addIngredient} size="sm" variant="outline" className="border-white/10 text-white hover:bg-white/10">
-              <Plus size={14} className="mr-1" /> Zutat
+              <Plus size={14} className="mr-1" /> {t('ingredient')}
             </Button>
           </div>
 
@@ -355,14 +359,14 @@ export default function RecipeForm({ locale, recipeId, initialData }: RecipeForm
               <div key={index} className="flex gap-2 items-start bg-zinc-900/50 p-3 rounded-lg border border-white/5">
                 <div className="flex-1 grid grid-cols-3 gap-2">
                   <Input
-                    placeholder="Zutat"
+                    placeholder={t('ingredient')}
                     value={ingredient.name}
                     onChange={(e) => updateIngredient(index, 'name', e.target.value)}
                     required
                     className="bg-zinc-950 border-white/10 text-white placeholder:text-zinc-600 focus-visible:ring-white/20"
                   />
                   <Input
-                    placeholder="Menge"
+                    placeholder={t('amount')}
                     type="number"
                     step="0.1"
                     value={ingredient.amount}
@@ -404,9 +408,9 @@ export default function RecipeForm({ locale, recipeId, initialData }: RecipeForm
         {/* Instructions */}
         <div className="space-y-4 bg-zinc-900/50 p-6 rounded-2xl border border-white/5 backdrop-blur-sm">
           <div className="flex justify-between items-center">
-            <h3 className="font-bold text-xl text-white">Zubereitung *</h3>
+            <h3 className="font-bold text-xl text-white">{t('instructionsTitle')} *</h3>
             <Button type="button" onClick={addInstruction} size="sm" variant="outline" className="border-white/10 text-white hover:bg-white/10">
-              <Plus size={14} className="mr-1" /> Schritt
+              <Plus size={14} className="mr-1" /> {t('step')}
             </Button>
           </div>
 
@@ -418,7 +422,7 @@ export default function RecipeForm({ locale, recipeId, initialData }: RecipeForm
                 </div>
                 <div className="flex-1">
                   <textarea
-                    placeholder="Anleitung"
+                    placeholder={t('instruction')}
                     value={instruction.instruction}
                     onChange={(e) => updateInstruction(index, 'instruction', e.target.value)}
                     className="w-full px-3 py-2 bg-zinc-950 border border-white/10 rounded-lg text-white placeholder:text-zinc-600 focus:outline-none focus:ring-2 focus:ring-white/20 text-sm"
@@ -442,13 +446,12 @@ export default function RecipeForm({ locale, recipeId, initialData }: RecipeForm
           </div>
         </div>
 
-        {/* Submit */}
         <div className="flex gap-3 pt-6 border-t border-white/10">
           <Button type="submit" className="flex-1 bg-white text-black hover:bg-zinc-200">
-            {recipeId ? 'Rezept aktualisieren' : 'Rezept erstellen'}
+            {recipeId ? t('updateRecipe') : t('createRecipe')}
           </Button>
           <Button type="button" variant="outline" onClick={() => window.history.back()} className="border-white/10 text-white hover:bg-white/10 hover:text-white">
-            Abbrechen
+            {tCommon('cancel')}
           </Button>
         </div>
       </form>
@@ -456,31 +459,31 @@ export default function RecipeForm({ locale, recipeId, initialData }: RecipeForm
       <Dialog open={showCategoryDialog} onOpenChange={setShowCategoryDialog}>
         <DialogContent className="bg-zinc-900 border-white/10 text-white">
           <DialogHeader>
-            <DialogTitle className="text-white">Neue Kategorie erstellen</DialogTitle>
+            <DialogTitle className="text-white">{t('createNewCategory')}</DialogTitle>
           </DialogHeader>
           <div className="space-y-4 py-4">
             <div className="space-y-2">
-              <Label htmlFor="new-category" className="text-zinc-400">Name der Kategorie</Label>
-              <Input 
-                id="new-category" 
-                placeholder="z.B. Meine Spezialrezepte" 
+              <Label htmlFor="new-category" className="text-zinc-400">{t('categoryName')}</Label>
+              <Input
+                id="new-category"
+                placeholder={t('categoryNamePlaceholder')}
                 value={newCategoryName}
                 onChange={(e) => setNewCategoryName(e.target.value)}
                 onKeyDown={(e) => {
-                    if (e.key === 'Enter') {
-                        e.preventDefault();
-                        handleCreateCategory();
-                    }
+                  if (e.key === 'Enter') {
+                    e.preventDefault();
+                    handleCreateCategory();
+                  }
                 }}
                 className="bg-zinc-950 border-white/10 text-white placeholder:text-zinc-600 focus-visible:ring-white/20"
               />
             </div>
           </div>
           <DialogFooter>
-            <Button variant="outline" onClick={() => setShowCategoryDialog(false)} className="border-white/10 text-white hover:bg-white/10 hover:text-white">Abbrechen</Button>
+            <Button variant="outline" onClick={() => setShowCategoryDialog(false)} className="border-white/10 text-white hover:bg-white/10 hover:text-white">{tCommon('cancel')}</Button>
             <Button onClick={handleCreateCategory} disabled={!newCategoryName.trim() || isCreatingCategory} className="bg-white text-black hover:bg-zinc-200">
               {isCreatingCategory && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-              Erstellen
+              {tCommon('create')}
             </Button>
           </DialogFooter>
         </DialogContent>
