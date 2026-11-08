@@ -4,6 +4,7 @@ import { daysUntil, expiryState, weekDays, weekStart } from '@/lib/dates';
 import { foodKey, keysMatch } from '@/lib/food-key';
 import { parseIngredientLine } from '@/lib/quantity';
 import { convert, formatAmount, formatQuantity, parseUnit } from '@/lib/units';
+import { isPushEndpoint } from '@/server/lib/push-endpoint';
 import { isPrivateAddress } from '@/server/lib/safe-fetch';
 import { parseDuration, parseRecipeHtml } from '@/server/services/importer';
 
@@ -131,4 +132,23 @@ describe('Rezept-Import', () => {
     expect(r.input.steps[0]!.text).toBe('Kochen.');
     expect(r.imageUrl).toBe('https://example.com/dal.jpg');
   });
+});
+
+describe('Push-Endpunkte', () => {
+  it.each([
+    'https://fcm.googleapis.com/fcm/send/abc',
+    'https://updates.push.services.mozilla.com/wpush/v2/abc',
+    'https://web.push.apple.com/abc',
+    'https://wns2-par02p.notify.windows.com/w/?token=abc',
+  ])('erlaubt %s', (url) => expect(isPushEndpoint(url)).toBe(true));
+
+  it.each([
+    'http://fcm.googleapis.com/fcm/send/abc',
+    'https://127.0.0.1/abc',
+    'https://localhost/abc',
+    'https://fcm.googleapis.com.evil.example/abc',
+    'https://evilfcm.googleapis.com.example/abc',
+    'https://fcm.googleapis.com:8443/abc',
+    'kein link',
+  ])('lehnt %s ab', (url) => expect(isPushEndpoint(url)).toBe(false));
 });

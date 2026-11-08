@@ -3,7 +3,9 @@ import * as webpush from 'web-push';
 import { today } from '@/lib/dates';
 import { getDb, type DB } from '../db';
 import { pushSubscription, user } from '../db/schema';
+import { AppError } from '../lib/errors';
 import { logger } from '../lib/logger';
+import { isPushEndpoint } from '../lib/push-endpoint';
 import { listPantry } from './pantry';
 
 export function pushConfigured() {
@@ -23,6 +25,7 @@ export function saveSubscription(
   sub: { endpoint: string; keys: { p256dh: string; auth: string } },
   db: DB = getDb(),
 ) {
+  if (!isPushEndpoint(sub.endpoint)) throw new AppError('validation', 'Unbekannter Push-Dienst');
   db.insert(pushSubscription)
     .values({ userId, endpoint: sub.endpoint, p256dh: sub.keys.p256dh, auth: sub.keys.auth })
     .onConflictDoUpdate({
@@ -69,6 +72,7 @@ export async function sendExpiryNotifications(db: DB = getDb()) {
           ? `${urgent.length} 种食材即将过期：${names}`
           : `${urgent.length} Lebensmittel sollten weg, zum Beispiel ${names}`;
     for (const s of subs) {
+      if (!isPushEndpoint(s.endpoint)) continue;
       try {
         await webpush.sendNotification(
           { endpoint: s.endpoint, keys: { p256dh: s.p256dh, auth: s.auth } },
