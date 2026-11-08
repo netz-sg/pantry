@@ -1,0 +1,62 @@
+{
+  "title": "Vorrat",
+  "summary": "{count, plural, one {# Lebensmittel} other {# Lebensmittel}} an {places, plural, one {# Ort} other {# Orten}}",
+  "summaryNoPlaces": "{count, plural, one {# Lebensmittel} other {# Lebensmittel}}",
+  "add": "Hinzufügen",
+  "addTitle": "In den Vorrat",
+  "editTitle": "Vorrat bearbeiten",
+  "search": "Vorrat durchsuchen",
+  "locations": "Lagerort",
+  "all": "Alle",
+  "noLocation": "Ohne Lagerort",
+  "alerts": {
+    "label": "Ablauf",
+    "urgent": "abgelaufen oder morgen fällig",
+    "week": "diese Woche fällig"
+  },
+  "filters": {
+    "label": "Filter",
+    "low": "Fast leer",
+    "clear": "Alle zeigen",
+    "urgent": "Dringend",
+    "week": "Diese Woche"
+  },
+  "restock": "Fast Leeres auf die Liste",
+  "restocked": "{count, plural, =0 {Alles steht schon auf der Liste} one {1 Eintrag auf die Einkaufsliste gesetzt} other {# Einträge auf die Einkaufsliste gesetzt}}",
+  "toShopping": "Zur Liste",
+  "expiry": {
+    "expiredYesterday": "seit gestern",
+    "expiredDays": "seit {count} Tagen",
+    "today": "heute",
+    "tomorrow": "morgen",
+    "inDays": "in {count} Tagen",
+    "low": "fast leer",
+    "empty": "leer"
+  },
+  "fields": {
+    "name": "Name",
+    "quantity": "Menge",
+    "unit": "Einheit",
+    "location": "Lagerort",
+    "expiresOn": "Haltbar bis",
+    "purchasedOn": "Gekauft am",
+    "minQuantity": "Mindestmenge",
+    "minHint": "Ab hier gilt es als fast leer.",
+    "barcode": "Barcode",
+    "barcodeHint": "8 bis 14 Ziffern, Name und Menge kommen von Open Food Facts.",
+    "lookup": "Nachschlagen",
+    "note": "Notiz"
+  },
+  "lookupFound": "{name} übernommen",
+  "lookupNotFound": "Zu diesem Barcode gibt es kein Produkt",
+  "stepper": "Menge",
+  "decrease": "{name} verringern",
+  "increase": "{name} erhöhen",
+  "quickAmount": "Gleich gesichert",
+  "created": "{name} ist im Vorrat",
+  "deleted": "{name} gelöscht",
+  "emptyTitle": "Dein Vorrat ist leer",
+  "emptyText": "Trag ein, was in Kühlschrank und Schrank liegt. Dann siehst du, was bald abläuft, und Rezepte zeigen, was schon da ist. Nach dem Einkauf kommt Abgehaktes von selbst hierher.",
+  "noResultsTitle": "Nichts gefunden",
+  "noResultsText": "Probier einen anderen Suchbegriff oder Filter."
+}

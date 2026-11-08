@@ -1,32 +1,28 @@
+# Pantry 2.0
+# Vorher eine .env anlegen (Vorlage .env.example), mindestens AUTH_SECRET und APP_URL setzen.
 services:
   pantry:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    container_name: pantry-app
+    image: ghcr.io/netz-sg/pantry:2
+    build: .
+    container_name: pantry
     restart: unless-stopped
-    env_file:
-      - .env
     ports:
-      - "3000:3000"
+      - '3000:3000'
+    env_file: .env
     environment:
-      - NODE_ENV=production
-      - DATABASE_URL=file:/app/data/pantry.db
-      - AUTH_SECRET=${AUTH_SECRET:-H61bRLTkh50J7f2NlD2W6eEIEausK+2Gxj2q5PaiFEI=}
-      - NEXTAUTH_URL=${NEXTAUTH_URL:-http://localhost:3000}
-      - AUTH_TRUST_HOST=true
+      AUTH_SECRET: ${AUTH_SECRET:?AUTH_SECRET fehlt, siehe .env.example}
+      DATABASE_PATH: /app/data/pantry.db
+      UPLOAD_DIR: /app/data/uploads
     volumes:
       - pantry-data:/app/data
-      - pantry-uploads:/app/public/uploads
-    healthcheck:
-      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost:3000"]
-      interval: 30s
-      timeout: 10s
-      retries: 3
-      start_period: 40s
+    read_only: true
+    tmpfs:
+      - /tmp
+      - /app/.next/cache
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
 
 volumes:
   pantry-data:
-    driver: local
-  pantry-uploads:
-    driver: local

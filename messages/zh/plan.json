@@ -1,0 +1,98 @@
+{
+  "title": "每周计划",
+  "subtitle": "第 {week} 周，{range}",
+  "range": "{from} 至 {to}",
+  "today": "今天",
+  "gridLabel": "以网格显示本周",
+  "cell": "{date}{slot}",
+  "addTo": "安排{date}{slot}",
+  "nav": {
+    "label": "切换周",
+    "prev": "上一周",
+    "next": "下一周",
+    "today": "今天"
+  },
+  "empty": {
+    "title": "这周还是空的",
+    "text": "安排几顿饭吧。Pantry 一键就能把它们变成购物清单。",
+    "action": "安排菜谱"
+  },
+  "day": {
+    "picker": "选择日期",
+    "withCount": "{date}，已安排 {count, plural, other {# 顿}}",
+    "add": "安排{slot}",
+    "addMore": "再安排一些"
+  },
+  "snack": {
+    "show": "显示加餐",
+    "hide": "隐藏加餐"
+  },
+  "entry": {
+    "untitled": "未命名",
+    "open": "编辑{title}",
+    "cooked": "做过了",
+    "free": "无菜谱"
+  },
+  "dnd": {
+    "role": "可移动",
+    "instructions": "拖动即可移动，在触摸屏上请先长按。使用键盘时，请打开条目后在其中更改日期或餐次。",
+    "start": "已拿起{title}",
+    "over": "{title}位于{target}上方",
+    "end": "已将{title}移到{target}",
+    "cancel": "已取消移动"
+  },
+  "fields": {
+    "date": "日期",
+    "slot": "餐次",
+    "servings": "份数",
+    "note": "备注",
+    "notePlaceholder": "例如 做双份，留到明天"
+  },
+  "add": {
+    "title": "安排一顿饭",
+    "mode": "条目类型",
+    "tabRecipe": "菜谱",
+    "tabFree": "无菜谱",
+    "search": "搜索菜谱",
+    "searchPlaceholder": "搜索菜谱",
+    "allThere": "食材齐全",
+    "missing": "缺少 {count} 种",
+    "selected": "已选择",
+    "noResults": "没有找到合适的菜谱",
+    "noRecipes": "你还没有菜谱",
+    "newRecipe": "新建菜谱",
+    "freeTitle": "吃什么",
+    "freePlaceholder": "例如 出去吃",
+    "suggest": {
+      "eatOut": "出去吃",
+      "leftovers": "吃剩菜",
+      "takeaway": "叫外卖"
+    },
+    "submit": "安排",
+    "added": "已安排"
+  },
+  "edit": {
+    "title": "编辑条目",
+    "cook": "开始做",
+    "toRecipe": "打开菜谱",
+    "move": "移动",
+    "deduct": "从储藏中扣除食材",
+    "markCooked": "标记为做过",
+    "cookedDone": "已标记为做过",
+    "isCooked": "已经做过",
+    "unmark": "撤销",
+    "deleted": "条目已删除"
+  },
+  "actions": {
+    "label": "本周操作",
+    "shopping": "生成购物清单",
+    "shoppingDone": "{count, plural, other {已将 # 种食材加入清单}}",
+    "shoppingNone": "本周不缺任何东西",
+    "toList": "打开清单",
+    "copy": "复制到下一周",
+    "copyDone": "{count, plural, other {已复制 # 个条目}}",
+    "copyNone": "本周没有可复制的内容",
+    "toWeek": "查看",
+    "calendar": "导出日历"
+  }
+}

@@ -1,0 +1,62 @@
+{
+  "title": "储藏",
+  "summary": "共 {count, plural, other {# 项}}，存放在 {places, plural, other {# 个位置}}",
+  "summaryNoPlaces": "共 {count, plural, other {# 项}}",
+  "add": "添加",
+  "addTitle": "加入储藏",
+  "editTitle": "编辑储藏物品",
+  "search": "搜索储藏",
+  "locations": "存放位置",
+  "all": "全部",
+  "noLocation": "无存放位置",
+  "alerts": {
+    "label": "保质期",
+    "urgent": "已过期或明天到期",
+    "week": "本周到期"
+  },
+  "filters": {
+    "label": "筛选",
+    "low": "快用完了",
+    "clear": "显示全部",
+    "urgent": "紧急",
+    "week": "本周"
+  },
+  "restock": "将快用完的加入清单",
+  "restocked": "{count, plural, =0 {都已在清单上了} other {已将 # 项加入购物清单}}",
+  "toShopping": "打开清单",
+  "expiry": {
+    "expiredYesterday": "昨天已过期",
+    "expiredDays": "已过期 {count} 天",
+    "today": "今天",
+    "tomorrow": "明天",
+    "inDays": "{count} 天后",
+    "low": "快用完了",
+    "empty": "已用完"
+  },
+  "fields": {
+    "name": "名称",
+    "quantity": "数量",
+    "unit": "单位",
+    "location": "存放位置",
+    "expiresOn": "最佳食用日期",
+    "purchasedOn": "购买日期",
+    "minQuantity": "最低数量",
+    "minHint": "低于此数量时视为快用完了。",
+    "barcode": "条形码",
+    "barcodeHint": "8 到 14 位数字，名称和数量来自 Open Food Facts。",
+    "lookup": "查询",
+    "note": "备注"
+  },
+  "lookupFound": "已填入{name}",
+  "lookupNotFound": "找不到此条形码对应的商品",
+  "stepper": "数量",
+  "decrease": "减少{name}",
+  "increase": "增加{name}",
+  "quickAmount": "已立即保存",
+  "created": "{name}已加入储藏",
+  "deleted": "{name}已删除",
+  "emptyTitle": "你的储藏是空的",
+  "emptyText": "把冰箱和橱柜里的东西添加进来。这样你能看到哪些快过期了，菜谱也会显示你已有的食材。购物完成后，勾选的条目会自动放到这里。",
+  "noResultsTitle": "没有找到结果",
+  "noResultsText": "试试其他搜索词或筛选条件。"
+}

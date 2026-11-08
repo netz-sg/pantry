@@ -1,0 +1,71 @@
+{
+  "appName": "Pantry",
+  "nav": {
+    "today": "Today",
+    "recipes": "Recipes",
+    "plan": "Plan",
+    "planLong": "Meal plan",
+    "shopping": "Shopping",
+    "pantry": "Pantry",
+    "settings": "Settings",
+    "search": "Search",
+    "collections": "Collections",
+    "favorites": "Favourites",
+    "quick": "Under 30 minutes",
+    "cookable": "Ready to cook",
+    "main": "Main navigation",
+    "tabs": "Tabs",
+    "skip": "Skip to content",
+    "signOut": "Sign out"
+  },
+  "actions": {
+    "save": "Save",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "edit": "Edit",
+    "add": "Add",
+    "close": "Close",
+    "back": "Back",
+    "done": "Done",
+    "undo": "Undo",
+    "retry": "Try again",
+    "all": "All",
+    "more": "More",
+    "increase": "Increase {label}",
+    "decrease": "Decrease {label}"
+  },
+  "search": {
+    "placeholder": "Search recipes, ingredients or commands",
+    "recipes": "Recipes",
+    "actions": "Actions",
+    "goTo": "Go to",
+    "empty": "Nothing found",
+    "newRecipe": "New recipe",
+    "importRecipe": "Import recipe from link",
+    "addShopping": "Add to shopping list",
+    "addPantry": "Add to pantry",
+    "shortcut": "⌘K"
+  },
+  "slots": {
+    "breakfast": "Breakfast",
+    "lunch": "Lunch",
+    "dinner": "Dinner",
+    "snack": "Snack"
+  },
+  "minutes": "{count} min",
+  "servings": "{count, plural, one {# serving} other {# servings}}",
+  "errors": {
+    "generic": "Something went wrong. Please try again.",
+    "notFoundTitle": "Page not found",
+    "notFoundText": "This page doesn’t exist or has moved.",
+    "toHome": "Go to Today",
+    "errorTitle": "That didn’t work",
+    "errorText": "Something went wrong while loading. Your data is safe."
+  },
+  "offline": "You’re offline. Changes will sync when you’re back online.",
+  "update": {
+    "available": "Pantry {version} is available",
+    "howTo": "How to update"
+  },
+  "mealsPlanned": "{count, plural, =0 {Nothing planned yet} one {1 meal planned} other {# meals planned}}"
+}

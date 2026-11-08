@@ -1,0 +1,71 @@
+{
+  "appName": "Pantry",
+  "nav": {
+    "today": "Heute",
+    "recipes": "Rezepte",
+    "plan": "Plan",
+    "planLong": "Wochenplan",
+    "shopping": "Einkauf",
+    "pantry": "Vorrat",
+    "settings": "Einstellungen",
+    "search": "Suchen",
+    "collections": "Sammlungen",
+    "favorites": "Favoriten",
+    "quick": "Unter 30 Minuten",
+    "cookable": "Jetzt kochbar",
+    "main": "Hauptnavigation",
+    "tabs": "Tabs",
+    "skip": "Zum Inhalt springen",
+    "signOut": "Abmelden"
+  },
+  "actions": {
+    "save": "Sichern",
+    "cancel": "Abbrechen",
+    "delete": "Löschen",
+    "edit": "Bearbeiten",
+    "add": "Hinzufügen",
+    "close": "Schließen",
+    "back": "Zurück",
+    "done": "Fertig",
+    "undo": "Rückgängig",
+    "retry": "Erneut versuchen",
+    "all": "Alle",
+    "more": "Mehr",
+    "increase": "{label} erhöhen",
+    "decrease": "{label} verringern"
+  },
+  "search": {
+    "placeholder": "Rezepte, Zutaten oder Befehle suchen",
+    "recipes": "Rezepte",
+    "actions": "Aktionen",
+    "goTo": "Gehe zu",
+    "empty": "Nichts gefunden",
+    "newRecipe": "Neues Rezept",
+    "importRecipe": "Rezept aus Link importieren",
+    "addShopping": "Auf die Einkaufsliste",
+    "addPantry": "In den Vorrat",
+    "shortcut": "⌘K"
+  },
+  "slots": {
+    "breakfast": "Frühstück",
+    "lunch": "Mittag",
+    "dinner": "Abend",
+    "snack": "Snack"
+  },
+  "minutes": "{count} Min",
+  "servings": "{count, plural, one {# Portion} other {# Portionen}}",
+  "errors": {
+    "generic": "Etwas ist schiefgelaufen. Bitte versuche es noch einmal.",
+    "notFoundTitle": "Seite nicht gefunden",
+    "notFoundText": "Diese Seite gibt es nicht oder nicht mehr.",
+    "toHome": "Zur Startseite",
+    "errorTitle": "Das hat nicht geklappt",
+    "errorText": "Beim Laden ist ein Fehler passiert. Deine Daten sind sicher."
+  },
+  "offline": "Keine Verbindung. Änderungen werden gesendet, sobald du wieder online bist.",
+  "update": {
+    "available": "Pantry {version} ist verfügbar",
+    "howTo": "So aktualisierst du"
+  },
+  "mealsPlanned": "{count, plural, =0 {Noch nichts geplant} one {1 Mahlzeit geplant} other {# Mahlzeiten geplant}}"
+}
