@@ -1,0 +1,62 @@
+{
+  "title": "Pantry",
+  "summary": "{count, plural, one {# item} other {# items}} in {places, plural, one {# place} other {# places}}",
+  "summaryNoPlaces": "{count, plural, one {# item} other {# items}}",
+  "add": "Add",
+  "addTitle": "Add to pantry",
+  "editTitle": "Edit pantry item",
+  "search": "Search pantry",
+  "locations": "Location",
+  "all": "All",
+  "noLocation": "No location",
+  "alerts": {
+    "label": "Expiry",
+    "urgent": "expired or due tomorrow",
+    "week": "due this week"
+  },
+  "filters": {
+    "label": "Filters",
+    "low": "Running low",
+    "clear": "Show all",
+    "urgent": "Urgent",
+    "week": "This week"
+  },
+  "restock": "Add low items to the list",
+  "restocked": "{count, plural, =0 {Everything is already on the list} one {1 item added to the shopping list} other {# items added to the shopping list}}",
+  "toShopping": "Open list",
+  "expiry": {
+    "expiredYesterday": "since yesterday",
+    "expiredDays": "since {count} days",
+    "today": "today",
+    "tomorrow": "tomorrow",
+    "inDays": "in {count} days",
+    "low": "running low",
+    "empty": "empty"
+  },
+  "fields": {
+    "name": "Name",
+    "quantity": "Amount",
+    "unit": "Unit",
+    "location": "Location",
+    "expiresOn": "Best before",
+    "purchasedOn": "Bought on",
+    "minQuantity": "Minimum amount",
+    "minHint": "Below this it counts as running low.",
+    "barcode": "Barcode",
+    "barcodeHint": "8 to 14 digits, name and amount come from Open Food Facts.",
+    "lookup": "Look up",
+    "note": "Note"
+  },
+  "lookupFound": "Filled in {name}",
+  "lookupNotFound": "No product found for this barcode",
+  "stepper": "Amount",
+  "decrease": "Decrease {name}",
+  "increase": "Increase {name}",
+  "quickAmount": "Saved right away",
+  "created": "{name} is in the pantry",
+  "deleted": "{name} deleted",
+  "emptyTitle": "Your pantry is empty",
+  "emptyText": "Add what's in your fridge and cupboards. You'll see what expires soon, and recipes show what you already have. After shopping, checked items land here on their own.",
+  "noResultsTitle": "Nothing found",
+  "noResultsText": "Try a different search or filter."
+}

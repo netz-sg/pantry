@@ -1,0 +1,98 @@
+{
+  "title": "Meal plan",
+  "subtitle": "Week {week}, {range}",
+  "range": "{from} to {to}",
+  "today": "Today",
+  "gridLabel": "Week as grid",
+  "cell": "{slot} on {date}",
+  "addTo": "Plan {slot} on {date}",
+  "nav": {
+    "label": "Change week",
+    "prev": "Previous week",
+    "next": "Next week",
+    "today": "Today"
+  },
+  "empty": {
+    "title": "This week is still empty",
+    "text": "Plan a few meals. Pantry turns them into a shopping list with one tap.",
+    "action": "Plan a recipe"
+  },
+  "day": {
+    "picker": "Choose a day",
+    "withCount": "{date}, {count, plural, one {1 meal} other {# meals}} planned",
+    "add": "Plan {slot}",
+    "addMore": "Plan something else"
+  },
+  "snack": {
+    "show": "Show snack",
+    "hide": "Hide snack"
+  },
+  "entry": {
+    "untitled": "Untitled",
+    "open": "Edit {title}",
+    "cooked": "Cooked",
+    "free": "No recipe"
+  },
+  "dnd": {
+    "role": "movable",
+    "instructions": "Drag to move, on touch screens press and hold first. With the keyboard, open the entry and change the day or meal there.",
+    "start": "Picked up {title}",
+    "over": "{title} over {target}",
+    "end": "Moved {title} to {target}",
+    "cancel": "Move cancelled"
+  },
+  "fields": {
+    "date": "Day",
+    "slot": "Meal",
+    "servings": "Servings",
+    "note": "Note",
+    "notePlaceholder": "For example cook double for tomorrow"
+  },
+  "add": {
+    "title": "Plan a meal",
+    "mode": "Entry type",
+    "tabRecipe": "Recipe",
+    "tabFree": "No recipe",
+    "search": "Search recipes",
+    "searchPlaceholder": "Search recipes",
+    "allThere": "All there",
+    "missing": "{count} missing",
+    "selected": "Selected",
+    "noResults": "No matching recipe found",
+    "noRecipes": "You have no recipes yet",
+    "newRecipe": "New recipe",
+    "freeTitle": "What's on",
+    "freePlaceholder": "For example eating out",
+    "suggest": {
+      "eatOut": "Eating out",
+      "leftovers": "Leftovers",
+      "takeaway": "Takeaway"
+    },
+    "submit": "Plan",
+    "added": "Planned"
+  },
+  "edit": {
+    "title": "Edit entry",
+    "cook": "Cook",
+    "toRecipe": "Open recipe",
+    "move": "Move",
+    "deduct": "Deduct ingredients from pantry",
+    "markCooked": "Mark as cooked",
+    "cookedDone": "Marked as cooked",
+    "isCooked": "Already cooked",
+    "unmark": "Undo",
+    "deleted": "Entry deleted"
+  },
+  "actions": {
+    "label": "Week actions",
+    "shopping": "Create shopping list",
+    "shoppingDone": "{count, plural, one {Added 1 ingredient to the list} other {Added # ingredients to the list}}",
+    "shoppingNone": "Nothing is missing this week",
+    "toList": "Open list",
+    "copy": "Copy to next week",
+    "copyDone": "{count, plural, one {Copied 1 entry} other {Copied # entries}}",
+    "copyNone": "Nothing to copy this week",
+    "toWeek": "View",
+    "calendar": "Export calendar"
+  }
+}

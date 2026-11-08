@@ -1,10 +1,10 @@
-import type { Config } from 'drizzle-kit';
+import { defineConfig } from 'drizzle-kit';
 
-export default {
-  schema: './db/schema.ts',
-  out: './drizzle/migrations',
+export default defineConfig({
+  schema: './src/server/db/schema.ts',
+  out: './drizzle',
   dialect: 'sqlite',
-  dbCredentials: {
-    url: process.env.DATABASE_URL || 'file:./data/pantry.db',
-  },
-} satisfies Config;
+  dbCredentials: { url: process.env.DATABASE_PATH ?? './data/pantry.db' },
+  strict: true,
+  verbose: true,
+});

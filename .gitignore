@@ -1,52 +1,30 @@
-# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
-
-# dependencies
+# Abhängigkeiten
 /node_modules
-/.pnp
-.pnp.*
-.yarn/*
-!.yarn/patches
-!.yarn/plugins
-!.yarn/releases
-!.yarn/versions
 
-# testing
-/coverage
-
-# next.js
+# Next.js
 /.next/
 /out/
+next-env.d.ts
+*.tsbuildinfo
 
-# production
-/build
+# Daten, nie einchecken
+/data/
+*.db
+*.db-shm
+*.db-wal
 
-# misc
+# Umgebung, nur die Vorlage wird eingecheckt
+.env
+.env.*
+!.env.example
+
+# Tests
+/coverage
+/playwright-report
+/test-results
+
+# Sonstiges
 .DS_Store
 *.pem
-
-# debug
 npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-.pnpm-debug.log*
-
-# env files (can opt-in for committing if needed)
-.env*
-!.env
-.env.local
-
-# vercel
-.vercel
-
-# typescript
-*.tsbuildinfo
-next-env.d.ts
-
-# claude
 .claude/
-claude
-
-# release scripts (internal use only)
-release.ps1
-release.sh
-

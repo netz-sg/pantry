@@ -1,0 +1,98 @@
+{
+  "title": "Wochenplan",
+  "subtitle": "KW {week}, {range}",
+  "range": "{from} bis {to}",
+  "today": "Heute",
+  "gridLabel": "Woche als Raster",
+  "cell": "{slot} am {date}",
+  "addTo": "{slot} am {date} planen",
+  "nav": {
+    "label": "Woche wechseln",
+    "prev": "Vorige Woche",
+    "next": "Nächste Woche",
+    "today": "Heute"
+  },
+  "empty": {
+    "title": "Diese Woche ist noch leer",
+    "text": "Plane ein paar Mahlzeiten. Pantry macht daraus mit einem Tipp die Einkaufsliste.",
+    "action": "Rezept planen"
+  },
+  "day": {
+    "picker": "Tag wählen",
+    "withCount": "{date}, {count, plural, one {1 Mahlzeit} other {# Mahlzeiten}} geplant",
+    "add": "{slot} planen",
+    "addMore": "Noch etwas planen"
+  },
+  "snack": {
+    "show": "Snack einblenden",
+    "hide": "Snack ausblenden"
+  },
+  "entry": {
+    "untitled": "Ohne Titel",
+    "open": "{title} bearbeiten",
+    "cooked": "Gekocht",
+    "free": "Ohne Rezept"
+  },
+  "dnd": {
+    "role": "verschiebbar",
+    "instructions": "Zum Verschieben ziehen, am Touchscreen vorher kurz halten. Mit der Tastatur öffnest du den Eintrag und änderst dort Tag oder Mahlzeit.",
+    "start": "{title} aufgenommen",
+    "over": "{title} über {target}",
+    "end": "{title} nach {target} verschoben",
+    "cancel": "Verschieben abgebrochen"
+  },
+  "fields": {
+    "date": "Tag",
+    "slot": "Mahlzeit",
+    "servings": "Portionen",
+    "note": "Notiz",
+    "notePlaceholder": "Zum Beispiel doppelt kochen für morgen"
+  },
+  "add": {
+    "title": "Mahlzeit planen",
+    "mode": "Art des Eintrags",
+    "tabRecipe": "Rezept",
+    "tabFree": "Ohne Rezept",
+    "search": "Rezepte durchsuchen",
+    "searchPlaceholder": "Rezept suchen",
+    "allThere": "Alles da",
+    "missing": "{count} fehlt",
+    "selected": "Ausgewählt",
+    "noResults": "Kein passendes Rezept gefunden",
+    "noRecipes": "Du hast noch keine Rezepte",
+    "newRecipe": "Neues Rezept",
+    "freeTitle": "Was gibt es",
+    "freePlaceholder": "Zum Beispiel Essen gehen",
+    "suggest": {
+      "eatOut": "Essen gehen",
+      "leftovers": "Reste",
+      "takeaway": "Bestellen"
+    },
+    "submit": "Planen",
+    "added": "Eingeplant"
+  },
+  "edit": {
+    "title": "Eintrag bearbeiten",
+    "cook": "Kochen",
+    "toRecipe": "Zum Rezept",
+    "move": "Verschieben",
+    "deduct": "Zutaten vom Vorrat abziehen",
+    "markCooked": "Als gekocht markieren",
+    "cookedDone": "Als gekocht markiert",
+    "isCooked": "Schon gekocht",
+    "unmark": "Zurücknehmen",
+    "deleted": "Eintrag gelöscht"
+  },
+  "actions": {
+    "label": "Aktionen der Woche",
+    "shopping": "Einkaufsliste erstellen",
+    "shoppingDone": "{count, plural, one {1 Zutat auf die Liste gesetzt} other {# Zutaten auf die Liste gesetzt}}",
+    "shoppingNone": "Für diese Woche fehlt nichts",
+    "toList": "Zur Liste",
+    "copy": "In nächste Woche kopieren",
+    "copyDone": "{count, plural, one {1 Eintrag kopiert} other {# Einträge kopiert}}",
+    "copyNone": "Diese Woche hat nichts zum Kopieren",
+    "toWeek": "Ansehen",
+    "calendar": "Kalender exportieren"
+  }
+}

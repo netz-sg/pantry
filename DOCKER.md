@@ -1,119 +1,94 @@
-# Pantry - Docker Deployment
+# Pantry mit Docker betreiben
 
-## Schnellstart
+## Einrichtung
 
-### 1. Repository klonen
+1. `docker-compose.yml` und `.env.example` herunterladen, `.env.example` in `.env` umbenennen.
+2. In `.env` setzen
+   - `AUTH_SECRET`, mindestens 32 Zeichen, z. B. `openssl rand -base64 32`
+   - `APP_URL`, die Adresse, unter der du Pantry aufrufst, z. B. `https://pantry.example.com`
+   - optional `SETUP_TOKEN`, dann muss beim Anlegen des Kontos dieser Code eingegeben werden
+3. `docker compose up -d`
+
+Ohne `AUTH_SECRET` startet der Container nicht. Das ist Absicht, es gibt keinen Standardwert mehr.
+
+## Daten
+
+Alles liegt im Volume `pantry-data` unter `/app/data`
+
+- `pantry.db` ist die Datenbank
+- `uploads/` enthält Fotos und Profilbilder
+- `backups/` enthält die nächtlichen Sicherungen, die letzten 14 bleiben erhalten
+
+### Sicherung von Hand
+
 ```bash
-git clone <your-repo-url>
-cd pantry
+docker compose exec pantry node -e "require('better-sqlite3')('/app/data/pantry.db').prepare('VACUUM INTO ?').run('/app/data/backups/manuell.db')"
+docker compose cp pantry:/app/data ./pantry-sicherung
 ```
 
-### 2. Environment Variables (optional)
-Erstellen Sie eine `.env` Datei im Root-Verzeichnis:
+Alternativ in Pantry unter Einstellungen, Daten. Dort gibt es auch einen Export aller Inhalte als JSON.
 
-```env
-AUTH_SECRET=your-secret-key-here
-NEXTAUTH_URL=http://localhost:3000
-```
-
-Oder nutzen Sie die Standardwerte aus `docker-compose.yml`.
-
-### 3. Docker Container starten
+### Wiederherstellen
 
 ```bash
-docker-compose up -d
+docker compose down
+docker run --rm -v pantry_pantry-data:/data -v "$PWD/pantry-sicherung:/backup" alpine sh -c "cp -a /backup/. /data/"
+docker compose up -d
 ```
 
-Die Anwendung ist dann unter http://localhost:3000 erreichbar.
+## Updates
 
-### 4. Ersten Benutzer registrieren
-
-Nach dem ersten Start:
-1. Öffnen Sie http://localhost:3000
-2. Sie werden automatisch zur Anmeldeseite weitergeleitet
-3. Klicken Sie auf "Jetzt registrieren"
-4. Erstellen Sie Ihren Account mit:
-   - Name
-   - Benutzername (mindestens 3 Zeichen)
-   - Passwort (mindestens 8 Zeichen)
-
-**WICHTIG:** Nach der Registrierung des ersten Benutzers ist keine weitere Registrierung möglich. Dies ist eine Single-User-Anwendung.
-
-## Docker Befehle
-
-### Container stoppen
 ```bash
-docker-compose down
+docker compose pull
+docker compose up -d
 ```
 
-### Container neu starten
+Datenbank-Migrationen laufen beim Start automatisch. Pantry zeigt unter Einstellungen an, wenn eine neue Version erschienen ist, aktualisiert sich aber nicht selbst. Wer automatische Updates möchte, kann [Watchtower](https://containrrr.dev/watchtower/) nutzen.
+
+## Hinter einem Reverse Proxy
+
+`APP_URL` muss die öffentliche Adresse mit `https://` sein. Beispiel für Caddy
+
+```
+pantry.example.com {
+  reverse_proxy localhost:3000
+}
+```
+
+Mit `https://` in `APP_URL` setzt Pantry sichere Cookies.
+
+## Push-Benachrichtigungen
+
+Für Erinnerungen an ablaufende Lebensmittel braucht der Server ein Schlüsselpaar
+
 ```bash
-docker-compose restart
+npx web-push generate-vapid-keys
 ```
 
-### Logs anzeigen
-```bash
-docker-compose logs -f
-```
+Die beiden Werte als `VAPID_PUBLIC_KEY` und `VAPID_PRIVATE_KEY` in `.env` eintragen, dazu `VAPID_SUBJECT=mailto:du@example.com`. Push funktioniert nur über `https://`.
 
-### Volumes löschen (Datenbank zurücksetzen)
-```bash
-docker-compose down -v
-```
+## Von Pantry 0.x umsteigen
 
-⚠️ **Warnung:** Dies löscht alle Daten!
+1. Die alte Datenbank aus dem alten Container holen
 
-## Datenbank
-
-Die Anwendung verwendet SQLite. Die Daten werden in einem Docker Volume gespeichert:
-- `pantry-data`: Datenbank-Dateien
-- `pantry-uploads`: Hochgeladene Bilder (Profilbilder etc.)
-
-**Hinweis**: Hochgeladene Bilder werden über die API-Route `/api/uploads/[filename]` serviert, nicht direkt aus dem `public` Ordner. Dies ist notwendig für Next.js Standalone Builds in Docker.
-
-## Ports
-
-Die Anwendung läuft standardmäßig auf Port 3000. Um einen anderen Port zu verwenden, ändern Sie in `docker-compose.yml`:
-
-```yaml
-ports:
-  - "8080:3000"  # Ändert den externen Port auf 8080
-```
-
-## Produktion
-
-Für einen Produktionseinsatz empfehlen wir:
-
-1. Setzen Sie einen sicheren `AUTH_SECRET`:
    ```bash
-   openssl rand -base64 32
+   docker cp <alter-container>:/app/data/pantry.db ./pantry-0x.db
    ```
 
-2. Verwenden Sie einen Reverse Proxy (nginx, traefik) mit SSL
-3. Regelmäßige Backups der Docker Volumes erstellen
+2. Pantry 2.0 starten und das Konto anlegen.
+3. Die neue Datenbank kurz herauskopieren, den Import lokal mit einer Kopie dieses Repositorys ausführen und zurückspielen
 
-### Backup erstellen
-```bash
-docker run --rm -v pantry-data:/data -v $(pwd):/backup alpine tar czf /backup/pantry-backup.tar.gz /data
-```
+   ```bash
+   docker compose stop pantry
+   docker compose cp pantry:/app/data/pantry.db ./pantry.db
+   npm install
+   DATABASE_PATH=./pantry.db npm run import:legacy -- ./pantry-0x.db
+   docker compose cp ./pantry.db pantry:/app/data/pantry.db
+   docker compose start pantry
+   ```
 
-### Backup wiederherstellen
-```bash
-docker run --rm -v pantry-data:/data -v $(pwd):/backup alpine tar xzf /backup/pantry-backup.tar.gz -C /
-```
+Übernommen werden Rezepte, Favoriten, Vorrat, offene Einkaufseinträge und der Wochenplan.
 
-## Troubleshooting
+## Gesundheitscheck
 
-### Container startet nicht
-```bash
-docker-compose logs pantry
-```
-
-### Datenbank zurücksetzen
-```bash
-docker-compose down -v
-docker-compose up -d
-```
-
-### Port bereits belegt
-Ändern Sie den Port in `docker-compose.yml` oder stoppen Sie den Dienst, der Port 3000 verwendet.
+`GET /api/health` antwortet mit Version und Datenbankzustand. Der Container nutzt das für seinen eigenen Healthcheck.

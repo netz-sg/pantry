@@ -1,0 +1,71 @@
+{
+  "appName": "Pantry",
+  "nav": {
+    "today": "今天",
+    "recipes": "菜谱",
+    "plan": "计划",
+    "planLong": "每周计划",
+    "shopping": "购物清单",
+    "pantry": "储藏",
+    "settings": "设置",
+    "search": "搜索",
+    "collections": "合集",
+    "favorites": "收藏",
+    "quick": "30 分钟以内",
+    "cookable": "现在就能做",
+    "main": "主导航",
+    "tabs": "标签页",
+    "skip": "跳到内容",
+    "signOut": "退出登录"
+  },
+  "actions": {
+    "save": "保存",
+    "cancel": "取消",
+    "delete": "删除",
+    "edit": "编辑",
+    "add": "添加",
+    "close": "关闭",
+    "back": "返回",
+    "done": "完成",
+    "undo": "撤销",
+    "retry": "重试",
+    "all": "全部",
+    "more": "更多",
+    "increase": "增加{label}",
+    "decrease": "减少{label}"
+  },
+  "search": {
+    "placeholder": "搜索菜谱、食材或命令",
+    "recipes": "菜谱",
+    "actions": "操作",
+    "goTo": "前往",
+    "empty": "没有找到结果",
+    "newRecipe": "新建菜谱",
+    "importRecipe": "从链接导入菜谱",
+    "addShopping": "加入购物清单",
+    "addPantry": "加入储藏",
+    "shortcut": "⌘K"
+  },
+  "slots": {
+    "breakfast": "早餐",
+    "lunch": "午餐",
+    "dinner": "晚餐",
+    "snack": "加餐"
+  },
+  "minutes": "{count} 分钟",
+  "servings": "{count, plural, other {# 份}}",
+  "errors": {
+    "generic": "出了点问题，请重试。",
+    "notFoundTitle": "找不到页面",
+    "notFoundText": "此页面不存在或已移动。",
+    "toHome": "前往今天",
+    "errorTitle": "操作未成功",
+    "errorText": "加载时出了点问题。你的数据很安全。"
+  },
+  "offline": "你已离线。恢复联网后，更改会自动同步。",
+  "update": {
+    "available": "Pantry {version} 已推出",
+    "howTo": "如何更新"
+  },
+  "mealsPlanned": "{count, plural, =0 {还没有安排} other {已安排 # 餐}}"
+}

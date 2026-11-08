@@ -1,0 +1,346 @@
+@import 'tailwindcss';
+
+/*
+  Pantry 2.0 Designsystem „Kino“.
+  Standardmäßig dunkel, große Fotos über die ganze Breite, Reihen aus Fotokarten,
+  schwebende Glas-Navigation und ein warmes Korallrot als einziger Akzent.
+  Hell nur, wenn es in den Einstellungen ausdrücklich gewählt ist.
+*/
+
+:root {
+  --bg: #080808;
+  --surface: #141414;
+  --surface-2: #1d1d1d;
+  --raised: #151515;
+  --ink: #f4f4f4;
+  --on-ink: #0a0a0a;
+  --label: #f4f4f4;
+  --label-2: #a3a3a3;
+  --label-3: #6b6b6b;
+  --separator: rgba(255, 255, 255, 0.1);
+  --fill: rgba(255, 255, 255, 0.07);
+  --fill-strong: rgba(255, 255, 255, 0.12);
+  /* Warmes Korallrot als einziger Akzent */
+  --tint: #ff8a6b;
+  --tint-hi: #ff9c82;
+  --tint-hover: #ff9c82;
+  --tint-strong: #ffa48d;
+  --tint-soft: rgba(255, 138, 107, 0.14);
+  --on-tint: #1a0500;
+  --green: #4ade80;
+  --green-text: #5fe398;
+  --green-soft: rgba(74, 222, 128, 0.14);
+  --orange: #ffc46b;
+  --orange-text: #ffc46b;
+  --orange-soft: rgba(255, 196, 107, 0.14);
+  --on-orange: #241500;
+  --red: #ff6b5b;
+  --red-text: #ff8e80;
+  --red-soft: rgba(255, 107, 91, 0.14);
+  --on-red: #240300;
+  --blue: #7ab1ff;
+  --glass: rgba(20, 20, 20, 0.86);
+  --glass-edge: rgba(255, 255, 255, 0.1);
+  --glass-line: rgba(255, 255, 255, 0.1);
+  --glass-shadow: 0 18px 44px -14px rgba(0, 0, 0, 0.8);
+  --card-shadow: 0 0 0 0 transparent;
+  --card-shadow-hover: 0 0 0 0 transparent;
+  --photo-shadow: 0 0 0 0 transparent;
+  --input-ring: 0 0 0 0 transparent;
+  --thumb: #3a3a3a;
+  color-scheme: dark;
+}
+
+:root[data-theme='light'] {
+  --bg: #ffffff;
+  --surface: #f3f3f4;
+  --surface-2: #e8e8ea;
+  --raised: #ffffff;
+  --ink: #0a0a0a;
+  --on-ink: #ffffff;
+  --label: #0a0a0a;
+  --label-2: #5f6168;
+  --label-3: #9a9ca3;
+  --separator: rgba(0, 0, 0, 0.1);
+  --fill: rgba(0, 0, 0, 0.05);
+  --fill-strong: rgba(0, 0, 0, 0.09);
+  --tint: #c4381c;
+  --tint-hi: #d2462a;
+  --tint-hover: #a92f16;
+  --tint-strong: #a92f16;
+  --tint-soft: rgba(196, 56, 28, 0.09);
+  --on-tint: #ffffff;
+  --green: #22a05a;
+  --green-text: #1a7a44;
+  --green-soft: rgba(34, 160, 90, 0.12);
+  --orange: #f2a20c;
+  --orange-text: #9a4a05;
+  --orange-soft: rgba(242, 162, 12, 0.15);
+  --on-orange: #2a1700;
+  --red: #d93025;
+  --red-text: #b8241a;
+  --red-soft: rgba(217, 48, 37, 0.09);
+  --on-red: #ffffff;
+  --blue: #1f6feb;
+  --glass: rgba(255, 255, 255, 0.9);
+  --glass-edge: rgba(255, 255, 255, 0.9);
+  --glass-line: rgba(0, 0, 0, 0.08);
+  --glass-shadow: 0 16px 40px -14px rgba(0, 0, 0, 0.28);
+  --thumb: #ffffff;
+  color-scheme: light;
+}
+
+@theme inline {
+  --font-sans:
+    var(--font-brand), -apple-system, BlinkMacSystemFont, 'Helvetica Neue', 'Segoe UI', Roboto, Arial,
+    sans-serif;
+  --color-bg: var(--bg);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-raised: var(--raised);
+  --color-ink: var(--ink);
+  --color-on-ink: var(--on-ink);
+  --color-label: var(--label);
+  --color-label-2: var(--label-2);
+  --color-label-3: var(--label-3);
+  --color-separator: var(--separator);
+  --color-fill: var(--fill);
+  --color-fill-strong: var(--fill-strong);
+  --color-tint: var(--tint);
+  --color-tint-hover: var(--tint-hover);
+  --color-tint-soft: var(--tint-soft);
+  --color-tint-strong: var(--tint-strong);
+  --color-on-tint: var(--on-tint);
+  --color-green: var(--green);
+  --color-green-soft: var(--green-soft);
+  --color-on-orange: var(--on-orange);
+  --color-on-red: var(--on-red);
+  --color-orange: var(--orange);
+  --color-orange-soft: var(--orange-soft);
+  --color-red: var(--red);
+  --color-red-soft: var(--red-soft);
+  --color-blue: var(--blue);
+  --radius-card: 14px;
+  --radius-hero: 18px;
+  --shadow-glass: var(--glass-shadow);
+  --shadow-elevated: var(--card-shadow);
+  --shadow-elevated-hover: var(--card-shadow-hover);
+  --shadow-photo: var(--photo-shadow);
+  --shadow-input: var(--input-ring);
+  --text-large-title: 2.125rem;
+  --text-large-title--line-height: 1.15;
+  --text-large-title--letter-spacing: -0.035em;
+  --text-title: 1.75rem;
+  --text-title--line-height: 1.12;
+  --text-title--letter-spacing: -0.03em;
+  --text-title-2: 1.375rem;
+  --text-title-2--line-height: 1.2;
+  --text-title-2--letter-spacing: -0.025em;
+  --text-body: 1.0625rem;
+  --text-body--line-height: 1.35;
+  --text-callout: 1rem;
+  --text-callout--line-height: 1.35;
+  --text-subhead: 0.9375rem;
+  --text-subhead--line-height: 1.35;
+  --text-footnote: 0.8125rem;
+  --text-footnote--line-height: 1.3;
+  --text-caption: 0.6875rem;
+  --text-caption--line-height: 1.25;
+}
+
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+    -webkit-tap-highlight-color: transparent;
+  }
+  html,
+  body {
+    height: 100%;
+  }
+  body {
+    background: var(--bg);
+    position: relative;
+    color: var(--label);
+    font-family: var(--font-sans);
+    font-size: 17px;
+    line-height: 1.4;
+    letter-spacing: -0.011em;
+    -webkit-font-smoothing: antialiased;
+  }
+  h1,
+  h2,
+  h3 {
+    text-wrap: balance;
+  }
+  :focus-visible {
+    outline: 3px solid var(--tint);
+    outline-offset: 2px;
+    border-radius: 8px;
+  }
+  input,
+  textarea,
+  select,
+  button {
+    font: inherit;
+    color: inherit;
+    letter-spacing: inherit;
+  }
+  ::selection {
+    background: var(--tint-soft);
+  }
+}
+
+@layer components {
+  /* Kräftige, eng gesetzte Titel */
+  .headline {
+    font-weight: 800;
+    letter-spacing: -0.035em;
+    line-height: 1;
+  }
+  /* Bricht aus der Inhaltsbreite aus und geht über das ganze Fenster */
+  .bleed {
+    width: 100vw;
+    margin-left: calc(50% - 50vw);
+  }
+  /* Waagerechte Reihen laufen bis zum Fensterrand, beginnen aber bündig mit dem Inhalt */
+  .row-bleed {
+    --row-pad: 1.25rem;
+    width: 100vw;
+    margin-left: calc(50% - 50vw);
+    padding-inline: var(--row-pad);
+    scroll-padding-inline: var(--row-pad);
+  }
+  @media (min-width: 768px) {
+    .row-bleed {
+      --row-pad: max(3rem, calc((100vw - 1360px) / 2 + 3rem));
+    }
+  }
+  /* Glas für Knöpfe auf Fotos, immer dunkel, damit es in beiden Modi lesbar bleibt */
+  .glass-dark {
+    background: rgba(0, 0, 0, 0.42);
+    -webkit-backdrop-filter: blur(16px) saturate(150%);
+    backdrop-filter: blur(16px) saturate(150%);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    color: #fff;
+  }
+  /* Große Bilder lösen sich nach unten weich in den Seitenhintergrund auf */
+  .hero-media {
+    -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 52%, rgb(0 0 0 / 0.6) 74%, transparent 100%);
+    mask-image: linear-gradient(to bottom, #000 0%, #000 52%, rgb(0 0 0 / 0.6) 74%, transparent 100%);
+  }
+  .glass-pill {
+    background: var(--glass);
+    -webkit-backdrop-filter: blur(20px) saturate(160%);
+    backdrop-filter: blur(20px) saturate(160%);
+    border: 1px solid var(--glass-line);
+  }
+  .glass {
+    background: var(--glass);
+    -webkit-backdrop-filter: blur(28px) saturate(190%);
+    backdrop-filter: blur(28px) saturate(190%);
+    box-shadow:
+      var(--glass-shadow),
+      inset 0 1px 0 var(--glass-edge),
+      inset 0 0 0 0.5px var(--glass-line);
+  }
+  /* Karten mit feiner Kante und weichem Schatten */
+  .card {
+    background: var(--surface);
+    border-radius: var(--radius-card);
+  }
+  .press {
+    transition:
+      transform 180ms cubic-bezier(0.2, 0.8, 0.2, 1),
+      box-shadow 220ms ease;
+  }
+  .press:active {
+    transform: scale(0.975);
+  }
+  @media (hover: hover) {
+    .lift:hover {
+      transform: translateY(-3px);
+    }
+  }
+  .lift {
+    transition:
+      transform 220ms cubic-bezier(0.2, 0.8, 0.2, 1),
+      box-shadow 220ms ease;
+  }
+  .shimmer {
+    background: linear-gradient(100deg, var(--fill) 30%, var(--fill-strong) 50%, var(--fill) 70%);
+    background-size: 200% 100%;
+    animation: shimmer 1.4s linear infinite;
+  }
+  @keyframes shimmer {
+    to {
+      background-position: -200% 0;
+    }
+  }
+  @keyframes page-in {
+    from {
+      opacity: 0;
+      transform: translateY(6px);
+    }
+  }
+  /* Nur rückwärts füllen, sonst bleibt eine Transformation stehen und fixierte Elemente der Seite verrutschen */
+  .page-in {
+    animation: page-in 260ms cubic-bezier(0.2, 0.8, 0.2, 1) backwards;
+  }
+  .glass-on-photo {
+    background: rgba(255, 255, 255, 0.2);
+    -webkit-backdrop-filter: blur(20px) saturate(170%);
+    backdrop-filter: blur(20px) saturate(170%);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.45),
+      inset 0 0 0 0.5px rgba(255, 255, 255, 0.35);
+    color: #fff;
+  }
+  .hairline-top {
+    box-shadow: inset 0 0.5px 0 var(--separator);
+  }
+  .no-scrollbar {
+    scrollbar-width: none;
+  }
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .tabular {
+    font-variant-numeric: tabular-nums;
+  }
+  .safe-bottom {
+    padding-bottom: max(env(safe-area-inset-bottom), 0px);
+  }
+}
+
+/* Schrift in Signalfarben nutzt die kräftigeren Töne, Flächen bleiben leuchtend */
+@layer utilities {
+  .text-green {
+    color: var(--green-text);
+  }
+  .text-orange {
+    color: var(--orange-text);
+  }
+  .text-red {
+    color: var(--red-text);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+@media print {
+  .no-print {
+    display: none !important;
+  }
+  body {
+    background: #fff;
+    color: #000;
+  }
+}
